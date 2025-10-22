@@ -1,0 +1,235 @@
+<div id="part-ch10" class="chapter-title">
+# Multivariate time series models
+</div>
+
+So far, we have considered univariate models, such as AR and ARMA models, where only one time series is analyzed at hand.
+
+- That is the "pure time series approach" as formulated at the beginning of the material.
+
+Modelling multiple time series simultaneously is, however, often much more of interest in different applications. Using multivariate time series implies larger predictive information, which may improve the accuracy of empirical analyses such as forecasts.
+
+We will next briefly introduce three important extensions to the univariate models, which have extensively been used in the econometric (statistics) literature:
+
+- Linear (predictive) regressions with time series variables
+<!-- , including some basics of shrinkage-based estimators from machine and statistical learning to such predictive regressions (this section) -->
+
+- Vector autoregressive (VAR) models 
+<!-- (Chapter \@ref(varmodel)) -->
+
+- Cointegration (in connection to nonstationary time series)
+<!-- (Chapter \@ref(cointeg)) -->
+
+
+## Predictive regressions: Background and starting point
+
+Let us assume, for simplicity, throughout this section that we have two sets of variables: $y_t$ is still the dependent variable and one ($M=1$) or generally multiple ($M>1$) additional predictive variables $(x_{1t}, \ldots, x_{Mt})$. We are mainly interested in a linear regression model, but now with time series, where the lags of predictive variables are used as predictors. For example, one possible model specification is
+\begin{equation*}
+y_t= \beta_0 + x_{1, t-1} \beta_1 + \cdots + x_{M, t-1} \beta_M + u_t \equiv \boldsymbol{x}^{\prime}_t \boldsymbol{\beta} + u_t,
+\end{equation*}
+where $\boldsymbol{x}_t$ contains predictors and $u_t$ is $\mathsf{iid}$ error term or at least serially uncorrelated and uncorrelated with the regressors $\boldsymbol{x}_t$. The parameters of this type of model, contained in $\boldsymbol{\beta}$, can be estimated by the (conditional) least squares (in a similar fashion as discussed, e.g., in connection to the AR($p$) model. That is minimizing the OLS criterion (with required initial values)
+\begin{equation*}
+\widehat{\boldsymbol{\beta}} = \mathrm{arg}\,\underset{\boldsymbol{\beta}}{\mathrm{min}} \sum_{t=1}^{T} (y_t -\boldsymbol{x}^{\prime}_t \boldsymbol{\beta})^2,
+\end{equation*}
+resulting in the OLS estimator (and estimates)
+\begin{equation*}
+\widehat{\boldsymbol{\beta}} = \Big(\sum_{t=1}^{T} \boldsymbol{x}_t \boldsymbol{x}^{\prime}_t \Big)^{-1}  \sum_{t=1}^{T} \boldsymbol{x}_t y_{t}.
+\end{equation*}
+
+In contrast to the model specification above, at times we are also considering other linear regressions:
+
+- Simultaneous values of predictive variables, instead of their lags, can be used as predictors in certain circumstances and applications. As an example and for simplicity $K=1$, the model can be
+\begin{equation*}
+y_t= \beta_0 + x_{1t} \beta_1 + u_t.
+\end{equation*}
+
+- Including also the lags of $y_t$ on the right hand side of the model equation. These are then autoregressive models with additional predictive variables, often denoted by ARX or ADL (Autoregressive Distributed Lag) models. One example of such a model is 
+\begin{equation*} 
+y_t= \beta_0 + \phi_1 y_{t-1} + \beta_1 x_{1, t-1} + u_t, 
+\end{equation*} 
+which can be straightforwardly extended by allowing more lags of $y_t$ and $x_{1t}$. 
+
+- Including an autocorrelated error term is also possible. That is, especially in the somewhat already distant literature $u_t = \phi u_{t-1} + \varepsilon_t, \, \varepsilon_t \thicksim \mathsf{iid}(0,\sigma^2)$ (see, e.g., Verbeek, Chapters 4.6-4.7). Notice that adding the lags of $y_t$, we can try to address the possible autocorrelation in the error term.
+
+Subsequent (sub)sections are organized as follows:
+
+- The case where all the (dependent and predictive/explanatory) variables are stationary variables.
+
+- When there are also nonstationary variables present.
+
+- At end of this section, we also briefly introduce the case where $K$ is high-dimensional. That is the number of predictive variables can be very large. Otherwise in this section, we restrict ourselves to the idea that have only one or only a few predictive variables (i.e. $K$ is relatively small).
+
+
+&nbsp;
+
+
+## Stationary variables
+
+Let us start with the case (assumption) that all variables $y_t$ and $x_{1t}, \ldots, x_{Kt}$ are stationary, which means that their respective time series plots do not contain strong stochastic or deterministic trends. Broadly speaking then, under the following two conditions $\mathrm{(i)}$ and $\mathrm{(ii)}$, the OLS estimator $\widehat{\boldsymbol{\beta}}$ of the parameters of interest in a linear regression model
+\begin{equation*}
+y_t= \boldsymbol{x}^{\prime}_t \boldsymbol{\beta} + u_t,
+\end{equation*}
+where $\boldsymbol{x}_t = (x_{1t}, \ldots, x_{Mt})$ or, e.g., $\boldsymbol{x}_t = (x_{1, t-1}, \ldots, x_{M, t-1})$, is consistent and asymptotically normal when
+
+- $\mathrm{(i)}$ The error term $u_t$ is serially uncorrelated and uncorrelated with the regressors included in $\boldsymbol{x}_t$.
+
+- $\mathrm{(ii)}$ All the regressors in $\boldsymbol{x}_t$ are either deterministic or stationary random variables.
+
+If not otherwise mentioned, we assume that $\mathrm{(i)}$ and $\mathrm{(ii)}$ are valid. 
+
+After estimation of the model, the same residual diagnostic methods as for ARMA models are available for assessing the residuals and hence the adequacy of the model. The resulting asymptotic distribution result for the OLS estimator is 
+\begin{equation*}
+\sqrt{T} (\widehat{\boldsymbol{\beta}}  - \boldsymbol{\beta}) \underset{d}{\longrightarrow} \mathsf{N}\Bigg(\boldsymbol{0}, \Big(\sum_{t=1}^{T} \boldsymbol{x}_t \boldsymbol{x}^{\prime}_t \Big)^{-1} \Bigg),
+\end{equation*}
+where $\underset{d}{\longrightarrow}$ denotes converge in distribution. It turns out that, in fact, even (mild) autocorrelation of the residuals can be accepted without losing many of the useful asymptotic properties of the (conditional) OLS estimator. If autocorrelation occurs after the initial formation of the model, we can proceed in essentially two different ways (see detailed discussion below): 
+
+- form a (linear) model where the error term is autocorrelated.
+
+- (preferable alternative) adjust the covariance matrix of the estimated parameters $\widehat{\boldsymbol{\beta}}$ (see below)
+
+&nbsp;
+
+<div class="toggle-button" onclick="toggleCode('Extra17')">Extra: Remaining autocorrelation in the linear (predictive) regression</div>
+<div id="Extra17" style="display:none;">
+
+Consider a linear regression (as above), but this time we set ARMA such as an MA(1) structure for the error term. This would lead to the model 
+\begin{equation*} 
+y_t = \boldsymbol{x}^{\prime}_t \boldsymbol{\beta} + u_t, \quad u_t = a_t + \theta_1 a_{t-1}, 
+\end{equation*} 
+where $a_t$ is now an $\mathsf{iid} process (or white noise). However, in macro and especially financial econometrics, it is typical to proceed using the latter option, which is discussed next.
+
+As stated, the OLS estimator can be shown to be still consistent and asymptotically normal, even if the error term is autocorrelated and possibly also (conditionally) heteroskedastic. This is practically the message of the quasi-maximum likelihood estimator (QMLE). 
+
+- Cf., for example, the section concerning the AR-GARCH model.
+
+In such a situation, a heteroskedasticity-autocorrelation consistent (HAC) covariance matrix estimator is used, indicating that the usual" standard errors of the parameter estimates it produces can be replaced with HAC counterparts. 
+
+- Without this adjustment, the standard errors are often too small, which correspondingly increases the absolute value of the $t$-test statistics testing the statistical significance of individual regression coefficients (reducing the $p$-values).
+
+- One formulation is based on the Newey and West (1987) estimator. 
+
+Formally, let's consider the OLS estimator and the usual covariance matrix 
+\begin{equation*} 
+\widehat{\boldsymbol{\beta}} = \Big(\sum_{t=1}^{T} \boldsymbol{x}_t \boldsymbol{x}_t^{\prime} \Big)^{-1} \sum_{t=1}^{T} \boldsymbol{x}_t y_t, \quad \mathsf{Cov}(\widehat{\beta}) = \sigma^2 \Big(\sum_{t=1}^{T} \boldsymbol{x}_t \boldsymbol{x}_t^{\prime} \Big)^{-1}, 
+\end{equation*}
+where $\mathsf{Var}(u_t) = \sigma^2$. The general HAC estimator can be written as 
+\begin{equation*} 
+\mathsf{Cov}(\widehat{\boldsymbol{\beta}})_{HAC} = \Big(\sum_{t=1}^{T} \boldsymbol{x}_t \boldsymbol{x}_t^{\prime} \Big)^{-1} \widehat{\boldsymbol{C}}_{HAC} \Big(\sum_{t=1}^{T} \boldsymbol{x}_t \boldsymbol{x}_t^{\prime} \Big)^{-1}, 
+\end{equation*} 
+where different choices for the middle term $\widehat{\boldsymbol{C}}_{HAC}$ lead to different estimators. For example, in the case of the Newey and West (1987) estimator 
+\begin{equation*} 
+\widehat{\boldsymbol{C}}_{HAC} = \sum_{t=1}^{T} \widehat{u}^2_t \boldsymbol{x}_t \boldsymbol{x}_t^{\prime} + \sum_{j=1}^l w_j , \sum_{s=j+1}^{T} (\boldsymbol{x}_s \widehat{u}_s \widehat{u}_{s-j} x^{\prime}_{s-j} + \boldsymbol{x}_{s-j} \widehat{u}_{s-j} \widehat{u}_s \boldsymbol{x}^{\prime}_{s}), \end{equation*} 
+where $l$ is the so-called bandwidth parameter and $w_j$ is an appropriate weighting function.
+
+- For example, in the case of the so-called Bartlett kernel function  
+\begin{equation*} w_j = 1- j/l. 
+\end{equation*}
+
+- Newey and West recommended choosing the parameter $l$ as the integer part of the expression $4(T/100)^{2/9}$. 
+
+Furthermore, occasionally $\widehat{\boldsymbol{C}}_{HAC}$ may also be specified (only) allowing for heteroskedasticity (but not autocorrelation, "HC" vs. "HAC") with the alternative (this is the so-called White estimator) 
+\begin{equation*} 
+\widehat{\boldsymbol{C}}_{HC} = \sum{t=1}^{T} \widehat{u}^2_t x_t x_t^{\prime}. 
+\end{equation*}
+
+</div>
+
+
+
+<!-- In this chapter, the dependence of $y_t$ on its own lags remains of interest. That is we are building upon the autoregressive (AR) model, which can also be written using the form of a linear regression model where the lags can be interpreted as predictive variables. From this perspective, it comes to mind how we can study the relationships between two different time series, $y_t$ and $z_t$, such that $z_t$ is used as a predictive variable for $y_t$. It turns out that we can naturally use linear regression (under certain assumptions) and appeal to the use of the (conditional) ordinary least square (OLS) estimator for estimating unknown parameters.  -->
+
+
+
+<!-- At this stage, we will still examine univariate (single-equation) models for $y_t$, where (external) explanatory variables are included in the vector $\boldsymbol{z}_t$. Let us consider first a linear regression model with $K-1$ explanatory variables and a constant term (that is, we are not demeaning $y_t$ in this section and notation herein):  
+\begin{eqnarray*} 
+y_t = \beta_1 + z_{2t} \beta_2 + \cdots + z_{Kt} \beta_K + u_t. 
+(#eq:lineaarinenmallizt) 
+\end{eqnarray*} 
+For simplicity and importantly at this stage, let us assume:
+- that the predictive (explanatory) variables, likewise $y_t$, are stationary (i.e., they do not contain deterministic or stochastic trends). 
+- Additionally, the error term $u_t$ can be assumed to be iid, or white noise, as before. Thus, in principle, -->
+
+<!-- It is quite common in various applications that the simultaneous values of the explanatory variables at time $t$ are not used. In this case, the model above need to be modified in terms of predictors on the right hand side, we would end up with the model  
+\begin{eqnarray*}
+y_t = \beta_1 + z_{2, t-1} \beta_2 + \cdots + z_{K, t-1} \beta_K + u_t = x^{\prime}_t \beta + u_t, (#eq:predictiveregression) 
+\end{eqnarray*} 
+where $x_t = [1 \quad z^{\prime}_{t-1}]^{\prime} = [1 \quad z_{2, t-1} , \cdots , z_{K, t-1}]^{\prime}$ and $\beta = [\beta_1, \beta_2, \cdots , \beta_K]^{\prime}$. Especially in financial econometrics, this type of model is called predictive regression, which is often used, for example, in predicting stock returns.-->
+
+
+&nbsp;
+
+
+## Forecasting with predictive variables
+
+Let us consider forecast construction more detail. When attempting to predict the value of $y_{t+h}$ with external predictive variables, additional complications arise especially when the forecast horizon $h$ lengthens. As an example, consider a simple model (the main arguments generalize to more general models) containing only two lags of one predictive variable $x_t$
+\begin{equation*} 
+y_t= \beta_0 + \beta_1 x_{1, t-1} + \beta_2 x_{1, t-2} + u_t. 
+\end{equation*} 
+As in the ARMA case, one-step forecast is the conditional expectation given the information set at time $t$. 
+<!-- denoted by $\mathcal{F}_t =\{y_t, y_{t-1},\ldots, x_{1t}, x_{1, t-1},\ldots\}$. 
+-->
+That is
+\begin{equation*} 
+\mathsf{E}_t(y_{t+1}) = \beta_0 + \beta_1 x_{1t} + \beta_2 x_{1,t-1}. 
+\end{equation*}
+From this, it is immediately apparent that additional challenges arise if the forecast horizon $h$ lengthens longer than one ($h=1$). In other words, multi-step forecasts ($h>1$) seem to require forecasts for $x_{1t}$. 
+
+- Vector autoregressive models provide one alternative to solve this problem when building a joint (multiple-equation) model for $y_t$ and $x_{1t}$
+
+An alternative to this is to use predictive models that are specific to each forecast horizon. In that case, when using the predictive information available at time $t$, we can specify
+\begin{equation*} 
+y_{t+h}= \beta_0 + \beta_1 x_{1t} + \beta_2 x_{1,t-1} + e_{t+h}, 
+\end{equation*} 
+where $e_t$ is a zero-mean error term and the forecast can then be constructed "directly" as 
+\begin{equation*} 
+\mathsf{E}_t(y_{t+h})= \beta_0 + \beta_1 x_{1t} + \beta_2 x_{1,t-1}. 
+\end{equation*}
+Naturally here the parameters $\boldsymbol{\beta} = (\beta_0, \beta_1, \beta_2)$, and finally their estimates, are then specific to the forecast horizon $h$.  
+
+- The properties of the error term $e_t$ can be complicated due to overlapping forecasting horizon from the forecast origin at time $t$ to $t+h$. 
+
+- What is introduced above for a simple model containing only one predictive variable can be generalized straightforwardly to the case where we have $K$ predictors such as more lags of $y_t$ as predictors.
+
+Overall, this same principle of $h$-period predictive models can be seen as a building block for various extended predictive regressions such as the ones containing **elements of machine and statistical learning**.
+
+
+&nbsp;
+
+
+## Extra: Regularized predictive regressions 
+
+Let us briefly focus on predicting $y_{t+h}$ at time $t$ (that is the forecast origin) given the collection of $K$ predictive variables in $\boldsymbol{x}_t = (x_{1t},\ldots,x_{Mt})$, which may also contain some lagged values of $y_t$ (as discussed above). 
+
+- This is the predictive regression we already briefly considered above, but now predicting with high-dimensional predictors.
+
+**The challenge of big dependent data**. The focus here is on big dependent data, meaning we're dealing with a large collection of potential predictors where the number of variables, $M$, can be substantial. 
+
+- In some cases, $M$ might even be greater than the sample length $T$ ($M > T$) used for estimating the model parameters.
+
+- Here for "big dependent data" we mean that the number of (predictive) time series is large. "Dependent" refers to autocorrelation (serial correlation) in the data. In this section, our dependent variable $y_t$ is still scalar-valued (i.e. only one time series) and hence we consider single-equation models.
+
+**Traditional limitation**. When $M$ is large relative to $T$, traditional estimation techniques, like Ordinary Least Squares (OLS), as introduced above, fail or produce highly unstable and unreliable results. 
+
+- The classic OLS estimator is not well-defined if $M > T$ (instead $M < < T$).
+
+- Even if $M$ is less than $T$ but still large, the resulting model can suffer from overfitting, where it fits the noise in the historical data too closely, leading to poor out-of-sample forecasting performance.
+
+**Need for structure**: To overcome the curse of dimensionality - the problems that arise when the number of variables grows - we need methods that can impose structure or constraints on the predictive relationship. This is essential for selecting the most relevant predictors and stabilizing the parameter estimates in a data-rich environment.
+
+**Regularized estimation and sparsity**. To enable effective predictive regressions in this high-dimensional setting, where the predictor space can be very large, a class of techniques known as regularized estimators is employed. Regularization involves adding a penalty term to the standard loss function (like the sum of squared errors) that we aim to minimize. This penalty discourages the model from assigning large values to the coefficients, effectively shrinking them towards zero. Key examples (briefly without details in this course):
+
+- **Ridge estimator**: This technique adds a penalty proportional to the sum of the squared coefficients. It stabilizes the estimates by shrinking all coefficients but doesn't set any exactly to zero.
+
+- **LASSO** (Least Absolute Shrinkage and Selection Operator): This method uses a penalty based on the sum of the absolute values of the coefficients. Crucially, the LASSO has the ability to perform automatic variable selection by setting the coefficients of irrelevant predictors from $\boldsymbol{x}_t$ exactly to zero. This produces a sparse model, meaning that only a few (the most important) predictors are ultimately used.
+
+- **Elastic Net**: This is a hybrid that combines the penalties of both Ridge and LASSO. It's often used to leverage the variable selection of LASSO while retaining the grouping effect and stability of Ridge, especially when predictors are highly correlated.
+
+**Relevance**: These estimators are foundational in modern forecasting and (statistical) machine learning, particularly when integrating vast amounts of data—such as financial indicators, survey data, or text-based predictors—into an economic forecasting model. They provide a principled way to manage the trade-off between bias (from shrinkage) and variance (from the large number of predictors) to achieve superior out-of-sample forecasting accuracy.
+
+A more detailed treatment of these specific estimators is reserved for the **Advanced Time Series Econometrics course**.
+
+
+<!-- &nbsp; ## R Lab
+All the R codes considered in this section are compiled in the following link: -->
+
+
+&nbsp;

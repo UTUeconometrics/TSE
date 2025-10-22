@@ -1,0 +1,1273 @@
+<div id="part-ch9" class="chapter-title">
+# Volatility modelling: AR-GARCH model
+</div>
+
+## Modelling conditional variance
+
+ARMA models can be characterized as models for the conditional mean of a stationary process. 
+
+- When the invertibility condition holds, ARMA processes have the AR($\infty$) representation from which it can be seen that the conditional expected value of $y_{t}$, conditional on the past of the process $\left\{y_{t-1},y_{t-2},\ldots\right\}$, is $\mathsf{E}_{t-1}(y_t)=-\sum_{j=1}^{\infty}\pi_{j} (y_{t-j}-\mu)$.
+
+The conditional variance of an ARMA process (model) $y_t$ is 
+\begin{eqnarray*}
+\mathsf{Var}_{t-1}(y_t) &=& \mathsf{E}_{t-1}(y_t-\mathsf{E}_{t-1}(y_t))^2 \\
+&=& \mathsf{E}_{t-1}(u^2_t) \\
+&=& \mathsf{E}(u^2_t) \qquad (\mathrm{CEV2}) \\
+&=& \sigma ^{2}.
+\end{eqnarray*}
+This shows that evident systematic variation in conditional variance, that several time series contain, cannot be taken into consideration with an ARMA model. Typical examples of such time series are financial time series and especially different asset return series.
+
+&nbsp;
+
+**Empirical example**. The NASDAQ 100 (ticker symbol ^NDX) is a major stock market index that tracks the performance of 100 of the largest non-financial companies listed on the NASDAQ stock market (U.S. stock market).
+
+- It includes 100 of the largest domestic and international companies listed on NASDAQ, weighted by a modified market capitalization method to limit the influence of the very large firms. The index excludes financial companies and is heavily concentrated in the technology sector and dominated by a few extremely large companies like (as in 2025) NVIDIA Corporation (NVDA), Microsoft Corp. (MSFT), Apple Inc. (AAPL) and Amazon.com Inc. (AMZN).
+
+- The NASDAQ 100 is widely viewed as the benchmark for large-cap growth stocks.
+
+Let us consider excess stock returns of the NASDAQ 100 over the 3-Month Treasury Bill rate. As a simple approximation, we can think that we are interested in the percentage changes (log-differences) of the NASDAQ 100 index adjusted for risk-free rate return (see Transformations in Section 1). Below we depict the daily excess stock returns between 1.1.2003--30.9.2025.
+
+<img src="nasdaq_returns.png" width="55%" style="display: block; margin: auto;" />
+<center>
+<span style="color: #0069d9;">Figure: Excess stock returns of the NASDAQ 100 stock market index.</span>
+</center>
+
+&nbsp;
+
+The return series seems quite stationary in terms of its level. Below we depict the sample autocorrelation and partial autocorrelation functions for the first 40 lags and their approximate 95\% critical bounds. These suggest that there is some autocorrelation but its degree is not very high.
+
+- Typically asset returns are almost non-autocorrelated 
+
+- For this sample period and NASDAQ returns, the resulting Ljung-Box test statistics reject the null hypothesis of no autocorrelation with all the relevant statistical significance levels. 
+
+<img src="nasdaq_returns_ACFPACF.png" width="55%" style="display: block; margin: auto;" />
+<center>
+<span style="color: #0069d9;">Figure: Sample autocorrelations and partial autocorrelations in NASDAQ 100 excess returns.</span>
+</center>
+
+&nbsp;
+
+The asset return series exhibits, however, some even more clear and typical variation, which is reflected by the autocorrelation function of the squared observations: All the reported autocorrelation coefficients of squared observations exhibit clear positive autocorrelation exceeding the 95\%-critical bound. The approximate $p$-value of the McLeod Li test with $H=10$, and also with other selections, is zero with four decimal precision. 
+
+- There are periods during which the variation of the series is either larger or smaller than on average. This "volatility clustering" is certain type of heteroskedasticity.
+
+- When the definition of variance is taken into account, it is natural to investigate this using the autocorrelation function of the squared observations. Notable are also the large difference between large and small absolute values, which suggests a more fat-tailed distribution than the normal distribution.
+
+
+<img src="nasdaq_squaredreturns.png" width="55%" style="display: block; margin: auto;" />
+<center>
+<span style="color: #0069d9;">Figure: Sample autocorrelations for the squared stock return observations.</span>
+</center>
+
+&nbsp;
+
+In what follows, heteroskedasticity similar to that of the stock return series above is thought to be not related with changes in unconditional variance, but rather with changes in the **conditional variance** where conditioning is on the past values of the series. Next, we will first consider some general aspects of models used in modelling conditional variance, and then focus on some particular models that are most common in practice. 
+
+&nbsp;
+
+
+## Model formulation
+
+In this section, we consider an AR-GARCH model determined by the following two equations
+\begin{equation*}
+y_{t} = \nu + \phi_{1}y_{t-1}+\cdots+\phi_{p}y_{t-p}+u_{t},
+\end{equation*}
+\begin{equation*}
+u_{t} = h_{t}^{1/2}\varepsilon_{t},\quad \varepsilon_{t}\sim\mathsf{iid}\left(0,1\right),
+\end{equation*}
+where $h_{t}$ is a function of the variables $u_{t-j}$, $j>0$, and the error term $\varepsilon_{t}$ is assumed to be independent of the variables $y_{t-j}, \, j>0$, and hence also of the variables $u_{t-j}$, $j>0$. In other words, we consider an **AR($p$) model whose error term is conditionally heteroskedastic**.
+
+- The coefficients $\phi_{1},\ldots,\phi_{p}$ are assumed to satisfy the (sufficient) stationarity condition of the AR($p$) process: $1 - \phi_1 z - \cdots - \phi_p z^p = \phi(z)  \neq 0, \, \mathrm{when} \, |z| \le 1$.
+
+Regarding the conditional variance, by its definition, the variance of a random variable is associated with the squares of the random variable. Therefore, it seems natural that the conditional variance $h_t$ would depend on the past squared values of the process. For concreteness sake, consider a general **GARCH($r$,$s$) model**
+\begin{equation*}
+    h_{t}=\omega+\beta_{1}h_{t-1}+\cdots+\beta_{r}h_{t-r}+\alpha_{1}u_{t-1}^{2}+\cdots+\alpha_{s}u_{t-s}^{2},
+\end{equation*}
+whose parameters are assumed to satisfy the required conditions for non-negativeness, identification, and strict stationarity (to be considered below). 
+
+<!-- If the condition for weak stationarity is also satisfied, the errors $u_{t}$ in the AR($p$) model are uncorrelated, but not independent. In what follows, we assume these conditions (unless otherwise mentioned). -->
+
+As before, we denote the conditional expectation as $\mathsf{E}_{t-1}\left(\cdot\right)=\mathsf{E}\left(\cdot\left\vert y_{s},\text{ }s\leq t-1\right.\right)$. Because $u_{t}$ is a function of the variables $y_{t}$, ..., $y_{t-p}$, the conditional variance $h_{t}$ is a function of the variables $y_{t-j}$, $j>0$. Therefore, we can use the same arguments as considered, e.g., in forecast construction (see CEV4) to conclude that in the AR-GARCH model
+\begin{equation*}
+\mathsf{E}_{t-1}\left(  u_{t}\right)  =h_{t}^{1/2} \mathsf{E}_{t-1}\left(\varepsilon_{t}\right)  =h_{t}^{1/2}\mathsf{E}\left(\varepsilon_{t}\right)=0.
+\end{equation*}
+Together with this result, the model equations of the AR-GARCH model can be used to justify the following two results
+\begin{equation*}
+ \mathsf{E}_{t-1}(y_t) = \nu + \phi_{1} y_{t-1}+ \cdots + \phi_{p}y_{t-p} \quad \mathrm{and} \quad   \mathsf{Var}_{t-1}(y_t)=h_t.
+\end{equation*}
+
+- The latter result can be justified by noticing that $y_{t} = \mathsf{E}_{t-1}\left(y_{t}\right) + u_{t}$ and that
+\begin{eqnarray*}
+\mathsf{Var}_{t-1}\left(y_{t}\right) &=& \mathsf{E}_{t-1}(y_t - \mathsf{E}_{t-1}(y_t))^2 \\
+&=& \mathsf{E}_{t-1}\left(u_{t}^{2}\right) \\
+&=& h_t \mathsf{E}(\varepsilon_{t}^{2}) \\
+&=& h_{t},
+\end{eqnarray*}
+where the result CEV2 and the identity $u_{t}^{2}=h_{t}\varepsilon_{t}^{2}$ is used (see the general model definition above). 
+
+These two results demonstrate that the conditional mean and conditional variance of the process $y_{t}$ depend on the past values of the process. Based on the above points, building a volatility model, that is selecting the model equation for $h_t$, roughly consists of the following steps:
+
+- Finding an adequate specification for the conditional mean $\mathsf{E}_{t-1}(y_t)$ (e.g., to select a suitable AR or ARMA model, and including also possible deterministic terms) is necessary to obtain a suitable specification for the conditional variance. 
+
+<!-- In this section, for simplicity, an AR($p$) model whose error term is conditionally heteroskedastic. AR model can be extended to more general alternatives. -->
+
+- Checking for the (conditional) heteroskedasticity of the error term. This can be based on residuals, as they are empirical counterparts of the error terms. That is testing "ARCH effects" using, e.g., the McLeod-Li test.
+
+- Finding a sufficient specification for the conditional variance $h_t$. There are a lot of different alternative model specifications to GARCH($r,s$) suggested in the econometric literature. Replacing it with some of the alternatives yield a straightforward extension of the AR-GARCH model introduced above.
+
+- Estimation of the full model can be carried out by the method of maximum likelihood.
+
+
+&nbsp;
+
+<div class="toggle-button" onclick="toggleCode('Extra13')">Extra: Relation to risk management and Value-at-Risk (VaR)</div>
+<div id="Extra13" style="display:none;">
+
+The core motivation for modeling conditional heteroskedasticity (time-varying volatility $h_t$) in asset returns $y_t$ is its direct and profound impact on risk management, particularly in calculating measures like Value-at-Risk (VaR).
+
+The question that often arises in risk management is: What is the maximum expected loss over a specific time horizon with a given confidence level? This loss is the Value-at-Risk (VaR) threshold $c$. The VaR threshold $c$ is the loss level such that the probability of the actual loss $y_{t+1}$ being less than or equal to $c$ is a fixed, small probability $\pi$ (e.g., 1% or 5%):
+\begin{equation*}
+P_t(y_{t+1} \le c ) = G \Bigg(\frac{c - \mathsf{E}_{t}(y_{t+1})}{ h^{1/2}_{t+1}} \Bigg) = \pi,
+\end{equation*}
+where $\mathsf{E}_{t}(y_{t+1})$ is the conditional mean (return forecast), $h_{t+1}$ is the conditional variance forecast (volatility), and $G(\cdot)$ is the cumulative distribution function (CDF) of the standardized innovation $\frac{y_{t+1} - \mathsf{E}_{t}(y_{t+1})}{ h^{1/2}_{t+1}}$. 
+
+The Value-at-Risk is the most commonly used risk measure. For the VaR model to be a useful and reliable tool in practice, the specification of the conditional variance $h_t$ is critical. Ignoring or otherwise misspecifying the time-varying nature of volatility (for example, treating $h_t$ as a constant) leads to severely flawed risk estimates.
+
+</div>
+
+&nbsp;
+
+
+## GARCH(1,1) and ARCH($s$) models
+
+Instead of the general GARCH($r,s$) model, the **GARCH(1,1) model**
+\begin{equation*}
+h_t = \omega + \beta_1 h_{t-1} + \alpha_1 u^2_{t-1}
+\end{equation*}
+has been found adequate for most (financial) time series data. 
+
+- In this GARCH(1,1) case, the non-negativeness of $h_t$ requires $\omega > 0$ and $\alpha_1, \beta_1 \ge 0$. Moreover, for $\beta_1$ to be identified, $\alpha_1$ must be strictly positive ($\alpha_1 > 0$). 
+
+- In the GARCH($r,s$) model, these non-negativeness conditions are clearly more complicated.
+
+Another special case of GARCH models is obtained when $r=0$. That is the "GARCH-part" is missing and the GARCH($r,s$) model reduces to an **ARCH($s$)** model
+\begin{eqnarray*}
+h_t = \omega +  \sum_{i=1}^{s} \alpha_i u^2_{t-1}.
+\end{eqnarray*}
+
+In line with the idea of capturing **volatility clustering** with ARCH and GARCH models, the periods of high (and low) conditional variance tend to persist. This is easy to see with the **ARCH(1) model** ($s=1$)
+\begin{equation*}
+h_t = \omega + \alpha_1 u^2_{t-i},
+\end{equation*}
+where $\omega, \alpha_1 \ge 0$. A large shock ($u^2_{t-1}$) increases $h_t$, which then subsequently increases $u^2_t$ and $h_{t+1}$. This same logic holds also for more general ARCH and GARCH models. Moreover, in the ARCH(1) model, assuming normality of $\varepsilon_t$, the (unconditional) kurtosis of $u_t$ is
+\begin{equation*}
+\frac{\mathrm{E}(u^4_t)}{\mathrm{E}(u^2_t)^2} = \frac{3 (1 - \alpha^2_1)}{1 - 3 \alpha^2_1}.
+\end{equation*}
+Kurtosis is finite (i.e. the 4th moment exists) if $3 \alpha^2_1 < 1$ and larger than 3 implied by the normal distribution. The ARCH(1) model is hence capable of capturing excess kurtosis often present in financial data.
+
+- Large outliers (in absolute value) appear more often than implied by the \mathsf{nid} innovations in (observed) asset returns. 
+
+- Similar result on excess kurtosis holds also for more general ARCH and GARCH models, but the formulae become more complicated.
+
+&nbsp;
+
+As a summary of large past research, the GARCH(1,1) model has generally been found a successful and parsimonious alternative to the ARCH($s$) model with a typically large $s$ for asset returns. Why? By recursive substitutions, we get
+\begin{eqnarray*}
+h_t &=& \omega + \beta_1 h_{t-1} + \alpha_1 u^2_{t-1} \\
+&=& \omega + \beta_1 \omega + \beta_1^2 h_{t-2} + \alpha_1 \beta_1 u^2_{t-2} + \alpha_1 u^2_{t-1} \\
+& \vdots & \\
+&=& \omega \sum_{j=0}^{k} \beta_1^j + \alpha_1 \sum_{j=0}^{k} \beta_1^j u^2_{t-1-j} + \beta_1^{k+1} h_{t-k-1}.
+\end{eqnarray*}
+This suggests that in the case $\beta_1 < 1$, 
+\begin{equation*}
+h_t = \omega \sum_{j=0}^{\infty} \beta_1^j + \alpha_1 \sum_{j=0}^{\infty} \beta_1^j u^2_{t-1-j},
+\end{equation*}
+which is a particular kind of ARCH($\infty$) form. Therefore, we can conclude that GARCH(1,1) is able to capture volatility clustering in a parsimonious way by specifying only three parameters.
+
+Another perspective on the GARCH models, and specifically to the GARCH(1,1) model, is obtained by adding $u_t^2$ on both sides of the model equation. Therefore, the GARCH(1,1) can be rewritten
+\begin{equation*}
+u^2_t = \omega + (\alpha_1 + \beta_1) u^2_{t-1} + \xi_t - \beta_1 \xi_{t-1},
+\end{equation*}
+where $\xi_t = u^2_t - h_t = h_t(\varepsilon^2_t-1)$ and $\mathrm{E}(\xi_t)=0$. This is an ARMA(1,1) type of presentation for $u_t^2$. 
+
+- As for the ARMA(1,1) process, the condition for weak and strict stationarity is $\alpha_1 + \beta_1 < 1$ (together with restrictions $0 \le \alpha_1, \beta_1 \le 1$ to, e.g., guarantee the non-negativity of $h_t$). 
+
+- Moreover, the unconditional variance (provided stationarity) is
+\begin{equation*}
+\mathrm{E}(u^2_t) = \frac{\omega}{1 - \alpha_1 - \beta_1}.
+\end{equation*}
+
+&nbsp;
+
+<div class="toggle-button" onclick="toggleCode('Extra14')">Extra: Special case of the AR-GARCH with zero conditional mean </div>
+<div id="Extra14" style="display:none;">
+
+The AR-GARCH model presentation above contains also the special case of $\mathsf{E}_{t-1}(y_t) = 0$ often considered in various references (books etc.). This leads to the notation
+\begin{equation*}
+u_t= y_t = h^{1/2}_t \varepsilon_t, \quad \varepsilon_t \thicksim \mathrm{iid}(0,1).
+\end{equation*}
+Therefore, in this case the GARCH(1,1) model reduces to
+\begin{equation*}
+    h_{t}=\omega+\beta_1 h_{t-1}+\alpha_1 y_{t-1}^{2} 
+\end{equation*}
+and in the ARCH($s$) case, we get
+\begin{equation*}
+h_t = \omega +  \sum_{i=1}^{s} \alpha_i y^2_{t-i}.
+\end{equation*}
+
+</div>
+
+
+&nbsp;
+
+
+## Parameter estimation
+
+If it is assumed that the error term is Gaussian
+\begin{equation*}
+\varepsilon_{t}\sim\mathsf{nid}\left(0,1\right),
+\end{equation*}
+the (conditional) likelihood function can be derived following analogous principles as in ARMA models. In other words, assuming $\varepsilon_t \thicksim \mathsf{nid}(0,1)$, we get 
+\begin{equation*}
+u_t = h^{1/2}_t \varepsilon_t, \quad \varepsilon_t \thicksim \mathsf{nid}(0,1),
+\end{equation*}
+where $h_t = h_t(y_{t-1}, y_{t-2},\ldots)$, $\varepsilon_t$ and vector $(y_{t-1}, y_{t-2},\ldots)$ are independent, and $u_t = y_t - \mathsf{E}_{t-1}(y_t)$. Assume also that $y_t$ is stationary. Given the above assumptions and the conditional moments (conditional mean and variance) of the AR-GARCH model, we get the conditional density function of the observation $y_t$ as
+\begin{equation*}
+y_t|\{y_{t-j}, \, j \ge 1 \} \thicksim \mathsf{N}(\nu + \phi_1 y_{t-1} + \cdots + \phi_p y_{t-p}, h_t).
+\end{equation*}
+Therefore, it can be concluded that the conditional distribution of $y_{t}$, conditional on $\ubar{\mathbf{Y}}_{t-1}=(y_1, \ldots y_{t-1}), \, t=1,\ldots,T$, is Gaussian with conditional mean $\nu + \phi_{1}y_{t-1}+\cdots+\phi_{p}y_{t-p}$ and conditional variance $h_{t}$ where the model equation for $h_{t}$ needs to be specified.
+
+Using the observed time series and $l$ initial values $y_{-l},\ldots, y_0, y_1, \ldots, y_T$, as in the parameter estimation of ARMA models, this leads to the conditional joint density function
+\begin{equation*}
+\prod_{t=1}^{T} f_{y_t|\ubar{\mathbf{Y}}_{t-1}} = (2\pi)^{-T/2} \cdot
+\prod_{t=1}^{T} h^{-1/2}_t \cdot \mathrm{exp}\Big(-\frac{1}{2} \sum_{t=1}^{T} \frac{u^2_t}{h_t} \Big).
+\end{equation*}
+Denote the parameter vector of the AR-GARCH model $\boldsymbol{\vartheta}=\left(\boldsymbol{\phi,\delta}\right)$ where $\boldsymbol{\phi} = (\nu, \phi_1,\ldots, \phi_p)$ contains parameters related to the conditional mean and $\boldsymbol{\delta} = (\omega, \alpha_1, \ldots, \alpha_s, \beta_1, \ldots, \beta_r)$ contains the parameters of the model for the conditional variance. The log-likelihood then becomes (omitting constant terms not dependent on the model parameters)
+\begin{equation*}
+l(\boldsymbol{\vartheta}) = \sum_{t=1}^{T} l_t(\boldsymbol{\vartheta}) =  -\frac{1}{2} \sum_{t=1}^{T} \mathrm{log}\, h_t(\boldsymbol{\phi}, \boldsymbol{\delta}) - \frac{1}{2} \sum_{t=1}^{T} \frac{u_t(\boldsymbol{\phi})^2}{h_t(\boldsymbol{\phi},\boldsymbol{\delta})},
+\end{equation*}
+with $u_t(\boldsymbol{\phi}) = y_t - \nu - \phi_1 y_{t-1} - \cdots - \phi_p y_{t-p}$ and $h_t(\boldsymbol{\phi}, \boldsymbol{\delta})$ are functions of the parameters $\boldsymbol{\phi}$ and $\boldsymbol{\delta}$. Maximization of the likelihood function is performed using numerical methods similar to the ARMA models.
+
+- As an example, in the GARCH(1,1) case $r=s=1$ and hence $h_{t} = \omega + \beta_1 h_{t-1} + \alpha_1 u_{t-1}^{2},
+$ for the conditional variance. This means that $\boldsymbol{\delta} = (\omega, \alpha_1, \beta_1)$. 
+
+&nbsp;
+
+If the normality assumption of the error term $\varepsilon_t \thicksim \mathsf{nid}(0,1)$ made above holds, the usual asymptotic properties of the maximum likelihood estimator (consistency and asymptotic normality) hold. If the Gaussianity assumption is found inappropriate, one could either (or both): 
+
+- Use a non-Gaussian distribution, like the $t$-distribution for the error term. This leads to the different form for the log-likelihood function, but the general lines to obtain it are the same as above.
+
+- Modify the asymptotic distribution and interpret the maximum likelihood estimator (MLE) as **quasi-MLE (QMLE)**.
+
+Concerning the QMLE approach, if the likelihood function is maximized at $\boldsymbol{\widehat{\vartheta}}=(\boldsymbol{\widehat{\phi},\widehat{\delta})}$, it can be shown, even without the normality assumption and under general assumptions and regularity conditions, that it holds
+\begin{equation*}
+\widehat{\boldsymbol{\vartheta}} \underset{as}{\sim}\mathsf{N}\left(\boldsymbol{\vartheta},\boldsymbol{V}\left(\boldsymbol{\vartheta}\right)^{-1} \boldsymbol{B} \left(\boldsymbol{\vartheta}\right)  \boldsymbol{V}\left(\boldsymbol{\vartheta}\right)^{-1}\right), 
+\end{equation*}
+where
+\begin{equation*}
+    \boldsymbol{V}\left(\boldsymbol{\vartheta}\right) = \mathsf{E}\left[-\partial^{2}l(\boldsymbol{\vartheta})/\partial\boldsymbol{\vartheta}\partial\boldsymbol{\vartheta}^{\prime}\right]
+\end{equation*}
+and 
+\begin{equation*}
+\boldsymbol{B}\left(\boldsymbol{\vartheta}\right)  =\mathsf{E}\left[\sum_{t=1}^{T}\left(\frac{\partial}{\partial\boldsymbol{\vartheta}}l_{t}(\boldsymbol{\vartheta})\right)  \left(\frac{\partial}{\partial\boldsymbol{\vartheta}}l_{t}(\boldsymbol{\vartheta})\right)^{\prime}\right],
+\end{equation*}
+where $l_{t}(\boldsymbol{\vartheta})$ is as described above. Using the empirical counterparts of the matrices $\boldsymbol{V} \left(\boldsymbol{\vartheta}\right)$ and $\boldsymbol{B}\left(\boldsymbol{\vartheta}\right)$, namely
+\begin{equation*}
+    \widehat{\boldsymbol{V}}(\boldsymbol{\widehat{\vartheta})}=-\partial^{2}l(\boldsymbol{\widehat{\vartheta}})/\partial\boldsymbol{\vartheta}\partial\boldsymbol{\vartheta}^{\prime} \quad \mathrm{and} \quad \widehat{\boldsymbol{B}}(\boldsymbol{\widehat{\vartheta})}=\sum_{t=1}^{T}\left(  \frac{\partial}{\partial\boldsymbol{\vartheta}}l_{t}(\boldsymbol{\widehat{\vartheta}})\right)\left(\frac{\partial}{\partial\boldsymbol{\vartheta}}l_{t}(\boldsymbol{\widehat{\vartheta}})\right)^{\prime}
+\end{equation*}
+the asymptotic distribution of the estimator $\boldsymbol{\widehat{\vartheta}}$ presented above can be used to form approximate standard errors and Wald tests about the parameter $\boldsymbol{\vartheta}$. 
+
+- If the normality assumption (i.e. $\varepsilon_t \thicksim \mathsf{nid}(0,1)$) holds, then $\boldsymbol{V}\left(\boldsymbol{\vartheta}\right) = \boldsymbol{B}\left(\boldsymbol{\vartheta}\right)$, and the expressions above for the (QMLE) asymptotic distribution and the standard errors and Wald tests simplify to the usual MLE case.
+
+- The practical message from above is that it is often reasonable to rely on the QMLE-based asymptotic distribution result and resulting robust standard errors, such as so called Bollerslev-Wooldridge standard errors, for different parameter estimates of the AR-GARCH model. The rationale is that model specification, including the distribution assumption $\varepsilon_t \thicksim \mathsf{nid}(0,1)$, is often not entirely correctly specified. Hence allowing for the additional robustness to the possible misspecification through QMLE estimates is advisable. 
+
+&nbsp;
+
+**Empirical example (continue)**. Consider the estimation result of the AR-GARCH model with Gaussian error term for the excess stock returns of the NASDAQ 100 index. For simplicity, fit a relatively simple AR(1)-GARCH(1,1) model (see above with selections $p=r=s=1$). That is, we specify
+
+- AR(1) model for the conditional mean. 
+
+- GARCH(1,1) model for the conditional variance
+
+That is, we estimate an AR(1) model with GARCH(1,1) errors. The estimation result of the maximum likelihood estimation, based on the normality assumption of $\varepsilon_t$, yields
+\begin{eqnarray*}
+y_{t} &=& \underset{{\left(0.013\right) }}{0.087} - \underset{{\left(0.013\right) }}{0.044} y_{t-1} +
+\widehat{u}_{t} 
+\notag \\
+&& \\
+\widehat{h}_{t} &=&\underset{{\left(0.006\right) }}{0.035} +\underset{{\left(
+0.013\right) }}{0.876}\widehat{h}_{t-1}+\underset{{\left( 0.012 \right) }}{0.105}\widehat{u}_{t-1}^{2},  \notag
+\end{eqnarray*}
+Here we report the robust standard errors under the parameter estimates (see the QMLE asymptotic distribution result). The full estimation result provided by **rugarch package** in R yields the following results:
+
+<center>
+```markdown
+*---------------------------------*
+*          GARCH Model Fit        *
+*---------------------------------*
+
+Conditional Variance Dynamics 	
+-----------------------------------
+GARCH Model	: sGARCH(1,1)
+Mean Model	: ARFIMA(1,0,0)
+Distribution	: norm 
+
+Optimal Parameters
+------------------------------------
+        Estimate  Std. Error  t value Pr(>|t|)
+mu      0.087229    0.012889   6.7679 0.000000
+ar1    -0.043797    0.014149  -3.0954 0.001965
+omega   0.035129    0.004868   7.2160 0.000000
+alpha1  0.104804    0.008170  12.8272 0.000000
+beta1   0.876000    0.008975  97.6078 0.000000
+
+Robust Standard Errors:
+        Estimate  Std. Error  t value Pr(>|t|)
+mu      0.087229    0.012567   6.9412 0.000000
+ar1    -0.043797    0.012630  -3.4677 0.000525
+omega   0.035129    0.006497   5.4066 0.000000
+alpha1  0.104804    0.012428   8.4331 0.000000
+beta1   0.876000    0.012869  68.0716 0.000000
+
+LogLikelihood : -9030.906 
+
+Information Criteria
+------------------------------------
+                   
+Akaike       3.1583
+Bayes        3.1641
+Shibata      3.1583
+Hannan-Quinn 3.1603
+
+Weighted Ljung-Box Test on Standardized Residuals
+------------------------------------
+                        statistic p-value
+Lag[1]                     0.1471  0.7014
+Lag[2*(p+q)+(p+q)-1][2]    0.6119  0.9317
+Lag[4*(p+q)+(p+q)-1][5]    2.0557  0.6952
+d.o.f=1
+H0 : No serial correlation
+
+Weighted Ljung-Box Test on Standardized Squared Residuals
+------------------------------------
+                        statistic p-value
+Lag[1]                      1.998  0.1575
+Lag[2*(p+q)+(p+q)-1][5]     4.486  0.1993
+Lag[4*(p+q)+(p+q)-1][9]     6.661  0.2292
+d.o.f=2
+
+Weighted ARCH LM Tests
+------------------------------------
+            Statistic Shape Scale P-Value
+ARCH Lag[3]   0.09937 0.500 2.000  0.7526
+ARCH Lag[5]   4.68135 1.440 1.667  0.1217
+ARCH Lag[7]   5.49080 2.315 1.543  0.1794
+```
+</center>
+
+The estimation result shows well the point using the QMLE:
+
+- The estimated coefficients ("AR","ARCH" and "GARCH" estimates) are the same for "optimal paramaters" (that is, when we assume that the normality assumption $\varepsilon_t$ holds) and for QMLE (resulting robust estimation results), butthe estimated standard errors are different. Especially for the GARCH part this means, as often in these circumstances, that the robust standard errors are somwhat higher reflecting the additional uncertainty coming from possible model misspecification.
+
+- All in all, all the estimated coefficients are statistically significant at the conventional significance levels. Moreover, the typical pattern of the GARCH(1,1) model is also present where the GARCH parameter (here $\beta_1$) is larger than the ARCH coefficient $\alpha_1$, and their sum is relatively close to 1. Estimated volatility (conditional standard deviation $\widehat{h}^{1/2}_t$) of the estimated model is depicted below.
+
+<img src="nasdaq_estimcondstd.png" width="55%" style="display: block; margin: auto;" />
+<center>
+<span style="color: #0069d9;">Figure: Estimated conditional standard deviation based on the AR(1)-GARCH(1,1) model for the NASDAQ 100 excess returns.</span>
+</center>
+
+&nbsp;
+
+Residual diagnostics show that: 
+
+- There is no remaining autocorrelation in the residuals and squared residuals (based on the Ljung-Box and the McLeod-Li tests and residual autocorrelation coefficients). 
+
+- Without presenting details, (weighted) ARCH LM test tests the null hypothesis that there is no signs of remaining conditional heteroskedasticity in the residuals $\widehat{u}_t$. In the estimation result above, the p-values of the ARCH LM tests show that the parsimonious AR(1)-GARCH(1,1) is an adequate model.
+
+- There is some deviation from the normality assumption in the (standardized) residuals. This suggests that the estimates should be interpreted as QMLEs, as above.
+
+<img src="nasdaq_resid_normality.png" width="55%" style="display: block; margin: auto;" />
+<center>
+<span style="color: #0069d9;">Figure: Histogram and Q-Q plot of (standardized) residuals.</span>
+</center>
+
+
+&nbsp;
+
+
+## Forecasting
+
+Assume observations are available up to time $t$ and the object of interest is to forecast the future values of $y_{t+k}$\ ($k\geq1$). In addition to stationarity, assume that $\mathsf{E}\left(y_{t}^{2}\right)<\infty$. 
+
+**Forecasts for $y_t$**. From the first equation of the AR-GARCH model, that is the model for the conditional variance, it can be seen that the optimal (in the mean square sense) one-step-ahead forecast is 
+\begin{equation*}
+\mathsf{E}_{t}\left(y_{t+1}\right) = \nu + \phi_{1}y_{t}+\cdots+\phi_{p}y_{t+1-p}.
+\end{equation*}
+When $k\geq2$, it can be seen that (cf. forecasting formulae for AR(MA) models)
+\begin{equation*}
+    \mathsf{E}_{t}(u_{t+k})=\mathsf{E}_{t}\left[  \mathsf{E}_{t+k-1}(u_{t+k})\right]=0,
+\end{equation*}
+so that
+\begin{equation*}
+    \mathsf{E}_{t}\left(y_{t+k}\right) = \nu + \phi_{1}\mathsf{E}_{t}(y_{t+k-1})+\cdots+\phi_{p}\mathsf{E}_{t}(y_{t+k-p}), \quad k=1,2,\ldots,
+\end{equation*}
+where $\mathsf{E}_{t}(y_{t+k-j})=y_{t+k-j}$ for $j\geq k$. 
+
+- In conclusion, from these and the forecasting formulae for an AR($p$) process with a homoskedastic error term, it can be concluded that the optimal forecasts can be formed recursively exactly in the same manner as in the homoskedastic case.
+
+- In practice, unknown parameters naturally need to be replaced with their estimates, which are based on the finite sample sizes, and hence numerically here forecasts can be slightly different than obtained with an AR($p$) model with conditionally homoskedastic errors.
+
+&nbsp;
+
+As the above shows, conditional heteroskedasticity does not affect the forecasting formulae, which are the same as in the AR case discussed earlier. However, the presence of conditional heteroskedasticity changes how the prediction intervals are computed (see Extra below).
+
+<div class="toggle-button" onclick="toggleCode('Extra15')">Extra: Prediction intervals under conditional heteroskedasticity</div>
+<div id="Extra15" style="display:none;">
+
+To see this, note that because the forecasts can be derived exactly as in the homoskedastic AR($p$) model, the same also holds for the $k$ step forecast errors. Based on the calculations above,
+\begin{equation*}
+    \mathsf{E}_{t}\left(  u_{t+k-j}\right)  =\left\{
+    \begin{array}{cc}
+         & u_{t+k-j}, \quad \mathrm{when} \quad k\leq j \\
+         & 0, \quad \mathrm{when} \quad k > j,
+    \end{array}
+    \right.
+\end{equation*}
+so that 
+\begin{equation*}
+    y_{t+k}-\mathsf{E}_{t}(y_{t+k})=\sum_{j=0}^{k-1}\psi_{j}u_{t+k-j}=\sum_{j=0}^{k-1}\psi_{j}h_{t+k-j}^{1/2}\varepsilon_{t+k-j},
+\end{equation*}
+where $\psi_{j}$ are again the coefficients of the power series $\psi\left(z\right)=\phi\left(z\right)^{-1}=\sum_{j=0}^{\infty}\psi_{j}z^{j}$ ($\psi_{0}=1$).
+
+Let us focus our attention on the one-step-ahead forecast error, whose conditional expected value becomes
+\begin{equation*}
+    \mathsf{E}_{t}\left[y_{t+1}-\mathsf{E}_{t}(y_{t+1})\right]  =\mathsf{E}_{t}(u_{t+1})=0
+\end{equation*}
+with conditional variance
+\begin{equation*}
+    \mathsf{E}_{t}\left[\left(y_{t+1}-\mathsf{E}_{t}\left(y_{t+1}\right)\right)^{2}\right]=\mathsf{E}_{t}\left(u_{t+1}^{2}\right)=h_{t+1}.
+\end{equation*}
+This shows that the one-step-ahead prediction error is conditionally heteroskedastic, that is, the forecast accuracy depends on what kind of values the process attained at the forecast origin (at time of forecast computation) and just before it. 
+
+- As can be seen from the expression of the forecast error, a similar result holds also for forecast horizons longer than one. Therefore, any analysis of forecast accuracy, such as prediction intervals is sensible to be based on the conditional distribution with conditioning on the history up until the date of forecasting.
+
+If it is assumed that $\varepsilon_{t}\sim\mathsf{nid}\left(  0,1\right)$, then the conditional distribution of the one-step-ahead forecast error $u_{t}$ (conditioned on $\left\{y_{t-1},y_{t-2},\ldots\right\}$) is Gaussian with mean zero and variance $h_{t}$. 
+
+- Using this result, one can form prediction intervals for the one-step-ahead forecast exactly as for ARMA process. 
+
+- For multiple step ahead forecasts, the situation is not that straightforward, because the conditional distributions of multiple step forecast errors are not Gaussian and have no simple expressions. Therefore, forming prediction intervals for multiple step ahead forecasts is more complicated.
+
+</div>
+
+&nbsp;
+
+**Volatility forecasts**. Concerning forecasting the conditional variance, we assume that observations up to and including time $t$ (i.e. the forecast origin at time $t$) are available, and that forecasts for $h_{t+1}$, $h_{t+2}$, \ldots are desired. 
+
+As $h_{t+1}$ is a (deterministic) function of the variables $y_{t},y_{t-1},\ldots$, and thus the first conditional variance we need to forecast is $h_{t+2}$. For simplicity, let us concentrate on the GARCH(1,1) case. Taking conditional expected values (conditional on $\left\{y_{t},y_{t-1},\ldots\right\}$) of both sides of
+\begin{equation*}
+    h_{t+2}=\omega+\beta_1 h_{t+1}+\alpha_1 u_{t+1}^{2}
+\end{equation*}
+yields the optimal (in the mean squared error sense) forecast of $h_{t+2}$ as
+\begin{equation*}
+    \mathsf{E}_{t}\left(h_{t+2}\right)=\omega + \beta_1\mathsf{E}_{t}\left(h_{t+1}\right)+\alpha_1 \mathsf{E}_{t}\left(u_{t+1}^{2}\right),
+\end{equation*}
+where $\mathsf{E}_{t}\left(h_{t+1}\right)=h_{t+1}$ (see CEV4). Moreover, we obtain that (see CEV2 and CEV4)
+\begin{equation*}
+    \mathsf{E}_{t}\left(u_{t+1}^{2}\right) = \mathsf{E}_{t}\left(h_{t+1}\varepsilon_{t+1}^{2}\right)=h_{t+1}\mathsf{E}_{t}\left(\varepsilon_{t+1}^{2}\right)=h_{t+1}\mathsf{E}\left(\varepsilon_{t+1}^{2}\right)=h_{t+1},
+\end{equation*}
+so that
+\begin{equation*}
+    \mathsf{E}_{t}\left(h_{t+2}\right)=\omega+(\alpha_1+\beta_1)h_{t+1}.
+\end{equation*}
+
+When the forecast horizon is $k\geq3$, in a similar fashion we obtain
+\begin{equation*}
+    \mathsf{E}_{t}\left(h_{t+k}\right) = \omega+\beta_1 \mathsf{E}_{t}\left(h_{t+k-1}\right)+\alpha_1 \mathsf{E}_{t}\left(u_{t+k-1}^{2}\right),
+\end{equation*}
+and finally
+\begin{equation*}
+    \mathsf{E}_{t}\left(h_{t+k}\right)=\omega \sum_{j=0}^{k-2}\left(\alpha_1+\beta_1\right)^{j}+\left(\alpha_1+\beta_1\right)^{k-1}h_{t+1}, \quad  k=2,3,\ldots,
+\end{equation*}
+where $h_{t+1}$ is a function of variables $\left\{y_{t},y_{t-1},\ldots\right\}$ known at the time when forecasts are constructed.
+
+&nbsp;
+
+<div class="toggle-button" onclick="toggleCode('Extra16')">Extra: Details for forecasting formulae multiple periods ahead</div>
+<div id="Extra16" style="display:none;">
+Consider the part
+\begin{equation*}
+    \mathsf{E}_{t}\left(h_{t+k}\right) = \omega+\beta_1 \mathsf{E}_{t}\left(h_{t+k-1}\right)+\alpha_1 \mathsf{E}_{t}\left(u_{t+k-1}^{2}\right),
+\end{equation*}
+Here
+\begin{equation*}
+    \mathsf{E}_{t}\left(u_{t+k-1}^{2}\right)=\mathsf{E}_{t}\left(h_{t+k-1}\varepsilon_{t+k-1}^{2}\right) = \mathsf{E}_{t}\left[\mathsf{E}_{t+k-2}\left(h_{t+k-1}\varepsilon_{t+k-1}^{2}\right)\right],
+\end{equation*}
+where the latter equality can be justified based on a generalization of property CEV3, that is, a generalization of the law of iterated expectations.
+
+This generalization says that $\mathsf{E}\left(Y\left\vert X_{2}\right.\right)=\mathsf{E}\left[\mathsf{E}\left(Y\left\vert X_{1}\right.\right)\left\vert X_{2}\right.\right]$, when the components of the (potentially infinite-dimensional) random vector $X_{2}$ are a subset of the components of $X_{1}$ (or more generally, $X_{2}$ is a function of $X_{1}$).
+
+Because
+\begin{equation*}
+    \mathsf{E}_{t+k-2}\left(h_{t+k-1}\varepsilon_{t+k-1}^{2}\right)=h_{t+k-1}\mathsf{E}_{t+k-2}\left(\varepsilon_{t+k-1}^{2}\right)=h_{t+k-1},
+\end{equation*}
+we obtain
+\begin{equation*}
+    \mathsf{E}_{t}\left(u_{t+k-1}^{2}\right)=\mathsf{E}_{t}\left(h_{t+k-1}\right), \quad k=3,4,\ldots\text{ .}
+\end{equation*}
+To summarize, we have shown that
+\begin{equation*}
+    \mathsf{E}_{t}\left(h_{t+k}\right) = \omega+(\alpha_1+\beta_1)\mathsf{E}_{t}\left(h_{t+k-1}\right),\quad k=2,3,\ldots\text{ .}
+\end{equation*}
+Because $\mathsf{E}_{t}\left(h_{t+1}\right)=h_{t+1}$, we inductively obtain the solution
+\begin{equation*}
+    \mathsf{E}_{t}\left(h_{t+k}\right)=\omega \sum_{j=0}^{k-2}\left(\alpha_1+\beta_1\right)^{j}+\left(\alpha_1+\beta_1\right)^{k-1}h_{t+1}, \quad  k=2,3,\ldots,
+\end{equation*}
+where $h_{t+1}$ is a function of variables $\left\{y_{t},y_{t-1},\ldots\right\}$ known at the time of forecasting.
+
+</div>
+
+&nbsp;
+
+In practice, 
+
+- the unknown parameters $\alpha_1$, $\beta_1$, and $\omega$ have to be replaced by corresponding estimates. 
+
+- Unlike in ARMA models, the quantity being predicted is now unobserved, although it can be computed using GARCH model equation for all $t\geq1$ as long as parameter values and required initial values for $h_t$ and $y_t$ are available. A common choice in practice is to use the sample variance of the observed time series as the initial value $h_{0}$. In the stationary case, the effect of the initial values diminishes as $t$ increases.
+
+- Forecasting with a more general GARCH($r,s$) model is carried out in principle in the same way as outlined above, although the resulting forecasting formulae become more cumbersome. Deriving interval predictions is also complicated, one major reason for this being that the distribution of the conditional variance deviates heavily from a Gaussian distribution.
+
+- Overall, **volatility forecasting** is a separate and a large area in financial econometrics that we are not considering in this course more detail.
+
+
+&nbsp;
+
+
+## GARCH-in-mean model 
+
+In the **GARCH-in-mean** (**GARCH-M**) **model**, the conditional variance is allowed to directly affect the conditional mean as well. 
+
+To simplify the notation, let us consider the first-order special case, i.e., the AR(1)-GARCH(1,1)-M model 
+\begin{eqnarray*} 
+\nonumber y_t = \nu + \phi_1 y_{t-1} + \delta g(h_t) + u_t, \quad 
+h_t = \omega + \alpha_1 u^2_{t-1} + \beta_1 h_{t-1}, 
+\end{eqnarray*} 
+where, as before, $u_t = y_t - \nu - \phi_1 y_{t-1} - \delta g(h_t)$, but now the conditional variance $h_t$ also affects the level of $y_t$ through the function $g(h_t)$. Depending on the situation, the "in-mean effect" can be defined 
+
+- $g(h_t) = h_t$, 
+
+- $g(h_t) = \sqrt{h_t}$, or 
+
+- $g(h_t) = \mathrm{log} (h_t)$. 
+
+A positive coefficient $\delta$ means that the value of $y_t$ increases when the conditional variance increases.
+
+- As an extension of the GARCH-M version  presented above, the orders of the AR and GARCH models can naturally be greater than 1. 
+
+- In general, instead of the AR($p$) model, another suitable model for the conditional mean of $y_t$ can be used. 
+
+- Similarly, a model other than GARCH(1,1) can be chosen for the GARCH part.
+
+The GARCH-M model is used, for example, in financial econometrics (empirical finance) to model the fundamental risk-return relation, where risk (here volatility, measured by the conditional variance or its transformation) is allowed to directly affect the expected return of a security.
+
+**Empirical example (continue)**. Let us consider an GARCH-in-mean extension of the AR(1)-GARCH(1,1) model (with Gaussian innovations) obtained above for the NASDAQ 100 excess stock returns. That is we consider the following model for the conditional mean
+\begin{eqnarray*} 
+\nonumber y_t = \nu + \phi_1 y_{t-1} + \delta \sqrt{h_t} + u_t. 
+\end{eqnarray*} 
+That is we include the conditional standard deviation to the conditional mean. 
+
+- This is one possible way to examine the fundamental risk-return relationship in (excess) stock returns (here NASDAQ 100 index). The positive risk-return relation is the cornerstone of financial economics. 
+
+QMLE-based estimation result obtained with the rugarch package on AR(1)-GARCH(1,1)-M model:
+<center>
+```markdown
+Robust Standard Errors:
+        Estimate  Std. Error   t value Pr(>|t|)
+mu      0.000963    0.043060  0.022373 0.982151
+ar1    -0.043796    0.012596 -3.477072 0.000507
+archm   0.085665    0.040331  2.124019 0.033669
+omega   0.035116    0.006429  5.462160 0.000000
+alpha1  0.104836    0.012296  8.526169 0.000000
+beta1   0.875948    0.012702 68.958838 0.000000
+```
+</center>
+
+Therefore, it appears that the estimated coefficient of $\delta$, here "archm", is positive and also statistically significant at the 5 \% significance level based on the robust $t$-value. Even though the statistical significance is not very strong, the positive risk-return relation can be approved. 
+
+- Residual diagnostics of this GARCH-M model is essentially the same as obtained without the in-mean effect, and hence the model seems adequate.
+
+&nbsp;
+
+## R Lab 
+
+<button class="toggle-button toggle-button-r" onclick="toggleCode('r-code11')">R Lab: GARCH and GARCH-M models</button>
+<div id="r-code11" style="display:none;">
+
+``` r
+# GARCH and GARCH-M MODELS
+
+# Load the libraries
+library(quantmod)
+library(rugarch)
+library(forecast)
+
+# Set locale to English for dates
+Sys.setlocale("LC_TIME", "English")
+```
+
+```
+## [1] "English_United States.1252"
+```
+
+``` r
+## User Inputs
+# --------------------------------------------------------------------------
+start_date <- "2003-01-01" # Start after the dot-com bubble burst
+#end_date   <- Sys.Date()   # Use current date for the end period
+end_date   <- "2025-09-30"   # Use current date for the end period
+
+## Data Acquisition and Preparation (NASDAQ 100)
+# --------------------------------------------------------------------------
+# Download NASDAQ 100 (^NDX) and 3-Month T-Bill (^IRX) data
+getSymbols(c("^NDX", "^IRX"), src = "yahoo", from = start_date, to = end_date)
+```
+
+```
+## [1] "NDX" "IRX"
+```
+
+``` r
+# Calculate daily log returns
+nasdaq_returns <- dailyReturn(NDX, type = 'log')
+
+# Prepare daily risk-free rate
+rf_daily <- na.locf(IRX$IRX.Adjusted) / 100 / 252
+
+# Align time series and calculate excess returns
+returns_data <- merge(nasdaq_returns, rf_daily, join = 'inner')
+excess_returns <- returns_data$daily.returns - returns_data$IRX.Adjusted
+colnames(excess_returns) <- "ExcessReturn"
+
+# Percentages Remove any NA values to ensure a clean series
+excess_returns <- na.omit(excess_returns)*100
+
+# Plot the excess returns to see the volatility
+plot(excess_returns, main = "")
+# Add the title manually above the plot area (line = 2 is often default, 
+# use line = 3 or 4 to move it up)
+mtext(text = paste("NASDAQ 100 Daily Excess Returns:", start_date, "to", end_date), 
+      side = 3, # Side 3 is the top
+      line = 3.3, # Move it up to line 3.5
+      cex = 1.0) # Optional: adjust text size
+```
+
+<img src="TSE-ch9_files/figure-html/unnamed-chunk-1-1.png" width="672" />
+
+``` r
+#===========================================================================#
+#===========================================================================#
+# # Function to Export Excess Returns to CSV (Simpler Method)
+# # -------------------------------------------------------------------
+# export_excess_returns_to_csv <- function(ts_data, filename = "NASDAQ_Excess_Returns.csv") {
+  
+#  # 1. Convert the xts object to a data frame, preserving the Date index
+#  # We explicitly name the columns for clarity in the CSV header.
+#  data_df <- data.frame(
+#    Date = index(ts_data),
+#    ExcessReturn = coredata(ts_data)
+#  )
+  
+#  # 2. Write the data frame to a CSV file
+#  # row.names = FALSE prevents R from writing an unnecessary row number column.
+#  # The file is overwritten if it already exists.
+#  tryCatch({
+#    write.csv(
+#      x = data_df,
+#      file = filename,
+#      row.names = FALSE 
+#    )
+#    cat(paste0("✅ Successfully exported '", deparse(substitute(ts_data)), "' to ", filename, "\n"))
+    
+#  }, error = function(e) {
+#    cat(paste0("❌ Error exporting data: ", e$message, "\n"))
+#  })
+#}
+
+# ## Example Usage (Exporting only the 'excess_returns')
+#export_excess_returns_to_csv(
+#  ts_data = excess_returns,
+#  filename = "NASDAQ_Daily_Excess_Returns.csv"
+#)
+# #Output CSV will look like this:
+# #Date,ExcessReturn
+# #2000-01-03,0.001234
+# #2000-01-04,-0.005678
+#
+#===========================================================================#
+#===========================================================================#
+
+
+## Preliminary examination (autocorrelations in returns and squared returns)
+# --------------------------------------------------------------------------
+# Plot ACF and PACF for the returns series
+par(mfrow=c(1,2))
+Acf(excess_returns, main="ACF of excess returns")
+Pacf(excess_returns, main="PACF of excess returns") 
+```
+
+<img src="TSE-ch9_files/figure-html/unnamed-chunk-1-2.png" width="672" />
+
+``` r
+par(mfrow=c(1,1))
+
+
+# --- Extended Ljung-Box test on possible autocorrelation ---
+
+cat("\nExtended Ljung-Box Test on Excess Returns (for mean dependence):\n")
+```
+
+```
+## 
+## Extended Ljung-Box Test on Excess Returns (for mean dependence):
+```
+
+``` r
+lags_to_test <- c(5, 10, 15, 20) # Test relevant lags (e.g., weekly, bi-weekly)
+lb_results_returns <- data.frame(Lag=integer(), "Q-statistic"=double(), "p-value"=double())
+
+for (l in lags_to_test) {
+  # fitdf=0 assumes no model has been fit yet
+  test <- Box.test(excess_returns, type = "Ljung-Box", lag = l, fitdf = 0)
+  lb_results_returns[nrow(lb_results_returns) + 1,] <- 
+    c(l, round(test$statistic, 3), round(test$p.value, 3))
+}
+print(lb_results_returns)
+```
+
+```
+##   Lag Q.statistic p.value
+## 1   5      62.373       0
+## 2  10     101.596       0
+## 3  15     127.425       0
+## 4  20     144.725       0
+```
+
+``` r
+# ----------- Autocorrelation in squared returns ---------------
+cat("\n--- Autocorrelation in squared returns (possible need for ARCH/GARCH models) ---\n")
+```
+
+```
+## 
+## --- Autocorrelation in squared returns (possible need for ARCH/GARCH models) ---
+```
+
+``` r
+Acf(excess_returns^2, main="ACF of squared excess returns")
+```
+
+<img src="TSE-ch9_files/figure-html/unnamed-chunk-1-3.png" width="672" />
+
+``` r
+# McLeod-Li test (preliminary test for ARCH/GARCH effects on returns)
+lags_to_test <- c(5, 10, 15, 20)
+ml_results_squared <- data.frame(Lag = integer(), p_value = numeric())
+for (l in lags_to_test) {
+  test <- TSA::McLeod.Li.test(y = excess_returns, gof.lag = l)
+  ml_results_squared[nrow(ml_results_squared) + 1, ] <- c(l, round(test$p.values[l], 3))
+}
+```
+
+<img src="TSE-ch9_files/figure-html/unnamed-chunk-1-4.png" width="672" /><img src="TSE-ch9_files/figure-html/unnamed-chunk-1-5.png" width="672" /><img src="TSE-ch9_files/figure-html/unnamed-chunk-1-6.png" width="672" /><img src="TSE-ch9_files/figure-html/unnamed-chunk-1-7.png" width="672" />
+
+``` r
+cat("\nExtended McLeod-Li Test (Low p-value suggests GARCH effects):\n")
+```
+
+```
+## 
+## Extended McLeod-Li Test (Low p-value suggests GARCH effects):
+```
+
+``` r
+print(ml_results_squared)
+```
+
+```
+##   Lag p_value
+## 1   5       0
+## 2  10       0
+## 3  15       0
+## 4  20       0
+```
+
+``` r
+#===========================================================================#
+#===========================================================================#
+
+## Standard ARMA(1,0)-GARCH(1,1) Model Fitting
+# -------------------------------------------------------------------
+
+# Define lag lengths for ARMA model, typically, e.g., AR(1) or ARMA(0,0) for returns
+# Based on common financial literature and often confirmed by the ACF/PACF plots:
+arma_order <- c(1, 0) # Use AR(1) in the mean equation as a common starting point
+
+# GARCH model using Gaussian distribution 
+# -------------------------------------------------------------------
+sGARCH_spec_norm <- ugarchspec(
+  variance.model = list(model = "sGARCH", garchOrder = c(1, 1)),
+  mean.model = list(
+    armaOrder = arma_order, 
+    include.mean = TRUE,
+    archm = FALSE
+  ),
+  distribution.model = "norm" # Gaussian (Normal) Distribution
+)
+
+cat("\n[2] Fitting Standard ARMA(1,0)-GARCH(1,1) Model with Gaussian Dist...\n")
+```
+
+```
+## 
+## [2] Fitting Standard ARMA(1,0)-GARCH(1,1) Model with Gaussian Dist...
+```
+
+``` r
+sGARCH_fit_norm <- ugarchfit(spec = sGARCH_spec_norm, data = excess_returns)
+print(sGARCH_fit_norm)
+```
+
+```
+## 
+## *---------------------------------*
+## *          GARCH Model Fit        *
+## *---------------------------------*
+## 
+## Conditional Variance Dynamics 	
+## -----------------------------------
+## GARCH Model	: sGARCH(1,1)
+## Mean Model	: ARFIMA(1,0,0)
+## Distribution	: norm 
+## 
+## Optimal Parameters
+## ------------------------------------
+##         Estimate  Std. Error  t value Pr(>|t|)
+## mu      0.087229    0.012889   6.7679 0.000000
+## ar1    -0.043797    0.014149  -3.0954 0.001965
+## omega   0.035129    0.004868   7.2160 0.000000
+## alpha1  0.104804    0.008170  12.8272 0.000000
+## beta1   0.876000    0.008975  97.6078 0.000000
+## 
+## Robust Standard Errors:
+##         Estimate  Std. Error  t value Pr(>|t|)
+## mu      0.087229    0.012567   6.9412 0.000000
+## ar1    -0.043797    0.012630  -3.4677 0.000525
+## omega   0.035129    0.006497   5.4066 0.000000
+## alpha1  0.104804    0.012428   8.4331 0.000000
+## beta1   0.876000    0.012869  68.0716 0.000000
+## 
+## LogLikelihood : -9030.906 
+## 
+## Information Criteria
+## ------------------------------------
+##                    
+## Akaike       3.1583
+## Bayes        3.1641
+## Shibata      3.1583
+## Hannan-Quinn 3.1603
+## 
+## Weighted Ljung-Box Test on Standardized Residuals
+## ------------------------------------
+##                         statistic p-value
+## Lag[1]                     0.1471  0.7014
+## Lag[2*(p+q)+(p+q)-1][2]    0.6119  0.9317
+## Lag[4*(p+q)+(p+q)-1][5]    2.0557  0.6952
+## d.o.f=1
+## H0 : No serial correlation
+## 
+## Weighted Ljung-Box Test on Standardized Squared Residuals
+## ------------------------------------
+##                         statistic p-value
+## Lag[1]                      1.998  0.1575
+## Lag[2*(p+q)+(p+q)-1][5]     4.486  0.1993
+## Lag[4*(p+q)+(p+q)-1][9]     6.661  0.2292
+## d.o.f=2
+## 
+## Weighted ARCH LM Tests
+## ------------------------------------
+##             Statistic Shape Scale P-Value
+## ARCH Lag[3]   0.09937 0.500 2.000  0.7526
+## ARCH Lag[5]   4.68135 1.440 1.667  0.1217
+## ARCH Lag[7]   5.49080 2.315 1.543  0.1794
+## 
+## Nyblom stability test
+## ------------------------------------
+## Joint Statistic:  1.9784
+## Individual Statistics:              
+## mu     0.13779
+## ar1    0.06112
+## omega  0.13219
+## alpha1 0.15678
+## beta1  0.32216
+## 
+## Asymptotic Critical Values (10% 5% 1%)
+## Joint Statistic:     	 1.28 1.47 1.88
+## Individual Statistic:	 0.35 0.47 0.75
+## 
+## Sign Bias Test
+## ------------------------------------
+##                     t-value      prob sig
+## Sign Bias           2.72948 6.363e-03 ***
+## Negative Sign Bias  0.07266 9.421e-01    
+## Positive Sign Bias  2.11258 3.468e-02  **
+## Joint Effect       30.89450 8.947e-07 ***
+## 
+## 
+## Adjusted Pearson Goodness-of-Fit Test:
+## ------------------------------------
+##   group statistic p-value(g-1)
+## 1    20     194.4    4.382e-31
+## 2    30     218.9    4.838e-31
+## 3    40     243.2    2.493e-31
+## 4    50     251.7    4.746e-29
+## 
+## 
+## Elapsed time : 0.3204951
+```
+
+``` r
+# Extract the standardized residuals (should follow the assumed distribution: 'std')
+std_residuals <- residuals(sGARCH_fit_norm, standardize = TRUE)
+# Convert the xts object to a simple vector for plotting
+std_residuals_vec <- as.numeric(std_residuals) 
+
+# Set up the plotting area for two side-by-side plots
+par(mfrow=c(1, 2))
+par(mar = c(5.1, 4.1, 4.1, 2.1)) # Reset margins
+
+# A. Histogram of Standardized Residuals
+hist(std_residuals_vec, breaks = 50, # Use more bins for smooth visualization
+     freq = FALSE,  main = "", xlab = "")
+# Add the density curve of the assumed Standard Normal distribution (mean 0, SD 1)
+curve(dnorm(x, mean = 0, sd = 1), 
+      col = "blue", lwd = 2, add = TRUE)
+
+# Q-Q Plot of Standardized Residuals
+qqnorm(std_residuals_vec,  main = "", ylab = "Sample Quantiles",
+       xlab = "Theoretical Quantiles")
+# Add the theoretical Normal distribution line (qqline uses dnorm/qnorm by default)
+qqline(std_residuals_vec, col = "red", lwd = 2) 
+```
+
+<img src="TSE-ch9_files/figure-html/unnamed-chunk-1-8.png" width="672" />
+
+``` r
+# Note: Since the default qqline() assumes a Normal distribution, 
+# you can omit the explicit 'distribution' argument for a Normal fit.
+
+# Reset the plotting area
+par(mfrow=c(1, 1))
+
+
+#  For comparison, a Model using Student's t-Distribution 
+# -------------------------------------------------------------------
+#  (standard practice for data with heavy tails, like asset returns)
+sGARCH_spec_std <- ugarchspec(
+  variance.model = list(model = "sGARCH", garchOrder = c(1, 1)),
+  mean.model = list(
+    armaOrder = arma_order, 
+    include.mean = TRUE,
+    archm = FALSE          # Explicitly disable GARCH-M
+  ),
+  distribution.model = "std" # Student's t-distribution (to capture heavy tails)
+)
+
+cat("\n[1] Fitting Standard ARMA(1,0)-GARCH(1,1) Model with Student's t-Dist...\n")
+```
+
+```
+## 
+## [1] Fitting Standard ARMA(1,0)-GARCH(1,1) Model with Student's t-Dist...
+```
+
+``` r
+sGARCH_fit_t <- ugarchfit(spec = sGARCH_spec_std, data = excess_returns)
+print(sGARCH_fit_t)
+```
+
+```
+## 
+## *---------------------------------*
+## *          GARCH Model Fit        *
+## *---------------------------------*
+## 
+## Conditional Variance Dynamics 	
+## -----------------------------------
+## GARCH Model	: sGARCH(1,1)
+## Mean Model	: ARFIMA(1,0,0)
+## Distribution	: std 
+## 
+## Optimal Parameters
+## ------------------------------------
+##         Estimate  Std. Error  t value Pr(>|t|)
+## mu      0.114675    0.012170   9.4229 0.000000
+## ar1    -0.042436    0.013406  -3.1655 0.001548
+## omega   0.024664    0.005087   4.8484 0.000001
+## alpha1  0.108964    0.009871  11.0391 0.000000
+## beta1   0.882973    0.009653  91.4696 0.000000
+## shape   6.416947    0.565199  11.3534 0.000000
+## 
+## Robust Standard Errors:
+##         Estimate  Std. Error  t value Pr(>|t|)
+## mu      0.114675    0.011663   9.8326 0.000000
+## ar1    -0.042436    0.011501  -3.6898 0.000224
+## omega   0.024664    0.005677   4.3449 0.000014
+## alpha1  0.108964    0.011927   9.1357 0.000000
+## beta1   0.882973    0.011557  76.4039 0.000000
+## shape   6.416947    0.593864  10.8054 0.000000
+## 
+## LogLikelihood : -8926.771 
+## 
+## Information Criteria
+## ------------------------------------
+##                    
+## Akaike       3.1223
+## Bayes        3.1292
+## Shibata      3.1223
+## Hannan-Quinn 3.1247
+## 
+## Weighted Ljung-Box Test on Standardized Residuals
+## ------------------------------------
+##                         statistic p-value
+## Lag[1]                     0.1240  0.7247
+## Lag[2*(p+q)+(p+q)-1][2]    0.6214  0.9284
+## Lag[4*(p+q)+(p+q)-1][5]    2.1914  0.6557
+## d.o.f=1
+## H0 : No serial correlation
+## 
+## Weighted Ljung-Box Test on Standardized Squared Residuals
+## ------------------------------------
+##                         statistic p-value
+## Lag[1]                      1.571  0.2101
+## Lag[2*(p+q)+(p+q)-1][5]     3.412  0.3369
+## Lag[4*(p+q)+(p+q)-1][9]     5.270  0.3909
+## d.o.f=2
+## 
+## Weighted ARCH LM Tests
+## ------------------------------------
+##             Statistic Shape Scale P-Value
+## ARCH Lag[3] 0.0001597 0.500 2.000  0.9899
+## ARCH Lag[5] 3.6193672 1.440 1.667  0.2117
+## ARCH Lag[7] 4.4428535 2.315 1.543  0.2872
+## 
+## Nyblom stability test
+## ------------------------------------
+## Joint Statistic:  3.1218
+## Individual Statistics:              
+## mu     0.31896
+## ar1    0.04839
+## omega  0.50897
+## alpha1 0.30350
+## beta1  0.75547
+## shape  0.96791
+## 
+## Asymptotic Critical Values (10% 5% 1%)
+## Joint Statistic:     	 1.49 1.68 2.12
+## Individual Statistic:	 0.35 0.47 0.75
+## 
+## Sign Bias Test
+## ------------------------------------
+##                    t-value      prob sig
+## Sign Bias           2.7538 5.910e-03 ***
+## Negative Sign Bias  0.6102 5.417e-01    
+## Positive Sign Bias  2.4020 1.634e-02  **
+## Joint Effect       31.1907 7.750e-07 ***
+## 
+## 
+## Adjusted Pearson Goodness-of-Fit Test:
+## ------------------------------------
+##   group statistic p-value(g-1)
+## 1    20     96.64    2.166e-12
+## 2    30    117.01    1.571e-12
+## 3    40    130.35    9.011e-12
+## 4    50    123.47    2.329e-08
+## 
+## 
+## Elapsed time : 0.6965308
+```
+
+``` r
+## Visualization of Conditional Volatility (Standard Deviation)
+# -------------------------------------------------------------------
+# Extract the conditional standard deviation (sigma) from the preferred model (t-dist)
+# sigma(sGARCH_fit_std) returns an xts object of the conditional standard deviation.
+sigma_t <- sigma(sGARCH_fit_norm)
+# sigma_t <- sigma(sGARCH_fit_t)
+
+# Use the previous margin settings for a clean plot
+par(mar = c(5.1, 4.1, 4.1, 2.1)) 
+
+# Plot the Conditional Standard Deviation
+plot(sigma_t, 
+  #   main = "Fitted Conditional Standard Deviation (Risk) of NASDAQ 100",
+     main = "",
+     ylab = "Conditional Standard Deviation",
+     xlab = "Year",
+     xaxt = 'n') # Suppress default x-axis labels
+
+# Add custom x-axis labels for the years (reusing the logic from before)
+yearly_indices <- endpoints(sigma_t, on = "years")
+yearly_indices <- yearly_indices[yearly_indices > 0] 
+break_points <- index(sigma_t)[yearly_indices + 1] 
+
+axis.Date(side = 1,                 
+          x = index(sigma_t),
+          at = break_points,        
+          format = "%Y",            
+          tcl = -0.5,               
+          cex.axis = 0.9)
+```
+
+<img src="TSE-ch9_files/figure-html/unnamed-chunk-1-9.png" width="672" />
+
+``` r
+#===========================================================================#
+#===========================================================================#
+
+## ARMA(1,0)-GARCH(1,1)-M Model (Gaussian Innovations)
+# -------------------------------------------------------------------
+
+arma_order <- c(1, 0) # Use AR(1) in the mean equation as a common starting point
+
+sGARCH_M_spec_norm <- ugarchspec(
+  variance.model = list(model = "sGARCH", garchOrder = c(1, 1)),
+  mean.model = list(
+    armaOrder = arma_order, 
+    include.mean = TRUE,
+    archm = TRUE,           # ENABLE GARCH-M
+    archpow = 1             # Use conditional Standard Deviation (sigma_t)
+  ),
+  distribution.model = "norm" # "norm" for Gaussian errors
+)
+
+cat("\nFitting Standard ARMA(1,0)-GARCH(1,1)-M Model with Gaussian Innovations...\n")
+```
+
+```
+## 
+## Fitting Standard ARMA(1,0)-GARCH(1,1)-M Model with Gaussian Innovations...
+```
+
+``` r
+sGARCH_M_fit_norm <- ugarchfit(spec = sGARCH_M_spec_norm, data = excess_returns)
+print(sGARCH_M_fit_norm)
+```
+
+```
+## 
+## *---------------------------------*
+## *          GARCH Model Fit        *
+## *---------------------------------*
+## 
+## Conditional Variance Dynamics 	
+## -----------------------------------
+## GARCH Model	: sGARCH(1,1)
+## Mean Model	: ARFIMA(1,0,0)
+## Distribution	: norm 
+## 
+## Optimal Parameters
+## ------------------------------------
+##         Estimate  Std. Error   t value Pr(>|t|)
+## mu      0.000963    0.043486  0.022154 0.982325
+## ar1    -0.043796    0.014146 -3.096079 0.001961
+## archm   0.085665    0.041160  2.081244 0.037412
+## omega   0.035116    0.004880  7.195305 0.000000
+## alpha1  0.104836    0.008174 12.825583 0.000000
+## beta1   0.875948    0.008990 97.440675 0.000000
+## 
+## Robust Standard Errors:
+##         Estimate  Std. Error   t value Pr(>|t|)
+## mu      0.000963    0.043060  0.022373 0.982151
+## ar1    -0.043796    0.012596 -3.477072 0.000507
+## archm   0.085665    0.040331  2.124019 0.033669
+## omega   0.035116    0.006429  5.462160 0.000000
+## alpha1  0.104836    0.012296  8.526169 0.000000
+## beta1   0.875948    0.012702 68.958838 0.000000
+## 
+## LogLikelihood : -9028.731 
+## 
+## Information Criteria
+## ------------------------------------
+##                    
+## Akaike       3.1579
+## Bayes        3.1649
+## Shibata      3.1579
+## Hannan-Quinn 3.1603
+## 
+## Weighted Ljung-Box Test on Standardized Residuals
+## ------------------------------------
+##                         statistic p-value
+## Lag[1]                     0.2174  0.6410
+## Lag[2*(p+q)+(p+q)-1][2]    0.5860  0.9403
+## Lag[4*(p+q)+(p+q)-1][5]    1.6563  0.8069
+## d.o.f=1
+## H0 : No serial correlation
+## 
+## Weighted Ljung-Box Test on Standardized Squared Residuals
+## ------------------------------------
+##                         statistic p-value
+## Lag[1]                      1.987  0.1587
+## Lag[2*(p+q)+(p+q)-1][5]     4.523  0.1956
+## Lag[4*(p+q)+(p+q)-1][9]     6.715  0.2242
+## d.o.f=2
+## 
+## Weighted ARCH LM Tests
+## ------------------------------------
+##             Statistic Shape Scale P-Value
+## ARCH Lag[3]    0.1205 0.500 2.000  0.7285
+## ARCH Lag[5]    4.7158 1.440 1.667  0.1195
+## ARCH Lag[7]    5.5140 2.315 1.543  0.1775
+## 
+## Nyblom stability test
+## ------------------------------------
+## Joint Statistic:  2.0765
+## Individual Statistics:              
+## mu     0.18141
+## ar1    0.05803
+## archm  0.18420
+## omega  0.12958
+## alpha1 0.15311
+## beta1  0.30998
+## 
+## Asymptotic Critical Values (10% 5% 1%)
+## Joint Statistic:     	 1.49 1.68 2.12
+## Individual Statistic:	 0.35 0.47 0.75
+## 
+## Sign Bias Test
+## ------------------------------------
+##                    t-value      prob sig
+## Sign Bias           2.7404 6.155e-03 ***
+## Negative Sign Bias  0.1819 8.557e-01    
+## Positive Sign Bias  2.0326 4.214e-02  **
+## Joint Effect       29.7180 1.582e-06 ***
+## 
+## 
+## Adjusted Pearson Goodness-of-Fit Test:
+## ------------------------------------
+##   group statistic p-value(g-1)
+## 1    20     206.1    2.061e-33
+## 2    30     237.4    1.416e-34
+## 3    40     263.9    3.472e-35
+## 4    50     264.0    3.115e-31
+## 
+## 
+## Elapsed time : 1.036541
+```
+
+``` r
+# Check the 'archm' coefficient (in-mean parameter)
+```
+</div>
+
+
+
+&nbsp;
