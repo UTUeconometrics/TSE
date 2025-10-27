@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4&nbsp; Linear process – Time Series Econometrics (TSE)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./TSE-ch5.html" rel="next">
+<link href="./TSE-ch3.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+<!-- Use JavaScript to Disable Right-Click -->
+<script>
+document.addEventListener('contextmenu', event => event.preventDefault());
+</script>
+
+<!-- Custom JavaScript for toggling code visibility -->
+<script>
+function toggleCode(id) {
+  var x = document.getElementById(id);
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+</script>
+
+
+<!-- Visibility selections. display: none;? 
+  <style>
+
+/* Initially hide elements */
+.marginnotevideo {
+  display: none;
+}
+
+.marginnote {
+  display: none;
+}
+
+  </style>
+-->
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles-TSE.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./TSE-ch4.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Linear process</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Time Series Econometrics (TSE)</a> 
+        <div class="sidebar-tools-main">
+    <a href="./msTSE2025.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./TSE-ch1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./TSE-ch2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">A primer on time series models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./TSE-ch3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Stationary processes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./TSE-ch4.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Linear process</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./TSE-ch5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">ARMA processes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./TSE-ch6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Parameter estimation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./TSE-ch7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Model selection of ARMA model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./TSE-ch8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Forecasting with ARMA models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./TSE-ch9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Volatility modelling: AR-GARCH model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./TSE-ch10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Multivariate time series models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./TSE-ch11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Basics of vector autoregression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./TSE-ch12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonstationary processes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./TSE-ch13.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Linear regressions with I(1) variables</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#ma1-process" id="toc-ma1-process" class="nav-link active" data-scroll-target="#ma1-process"><span class="header-section-number">4.1</span> MA(1) process</a></li>
+  <li><a href="#causal-linear-process" id="toc-causal-linear-process" class="nav-link" data-scroll-target="#causal-linear-process"><span class="header-section-number">4.2</span> Causal linear process</a></li>
+  <li><a href="#ar1-process" id="toc-ar1-process" class="nav-link" data-scroll-target="#ar1-process"><span class="header-section-number">4.3</span> AR(1) process</a></li>
+  <li><a href="#random-walk" id="toc-random-walk" class="nav-link" data-scroll-target="#random-walk"><span class="header-section-number">4.4</span> Random walk</a></li>
+  <li><a href="#arma11-process" id="toc-arma11-process" class="nav-link" data-scroll-target="#arma11-process"><span class="header-section-number">4.5</span> ARMA(1,1) process</a></li>
+  <li><a href="#wold-decomposition" id="toc-wold-decomposition" class="nav-link" data-scroll-target="#wold-decomposition"><span class="header-section-number">4.6</span> Wold decomposition</a></li>
+  <li><a href="#meanautocorprop" id="toc-meanautocorprop" class="nav-link" data-scroll-target="#meanautocorprop"><span class="header-section-number">4.7</span> Properties of sample mean and autocorrelations</a></li>
+  <li><a href="#r-lab" id="toc-r-lab" class="nav-link" data-scroll-target="#r-lab"><span class="header-section-number">4.8</span> R Lab</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="part-ch4" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Linear process</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="ma1-process" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="ma1-process"><span class="header-section-number">4.1</span> MA(1) process</h2>
+<p>As was mentioned, white noise processes can be used to define more complicated processes. A simple example and special case is the <strong>moving average process of order one</strong>, or <strong>MA(1) process</strong>, <span class="math display">\[\begin{equation*}
+y_{t} = \mu + u_{t} + \theta_1 u_{t-1}, \quad u_{t}\sim\mathsf{iid}\left(0,\sigma^{2}\right).
+\end{equation*}\]</span> The values of the process are hence assumed to be generated as a weighted average of two independent and unobserved random shocks.</p>
+<ul>
+<li><p>In this process (model equation), we also include in the mean of the process <span class="math inline">\(\mathsf{E}(y_t)=\mu\)</span>. Alternatively, we can write the MA(1) process as <span class="math display">\[\begin{equation*}
+y_{t} - \mu \equiv z_t = u_{t}+\theta_1 u_{t-1}, \quad u_{t}\sim\mathsf{iid}\left(0,\sigma^{2}\right),
+\end{equation*}\]</span></p></li>
+<li><p>Notice that possible other deterministic components than a nonzero mean can also be readily included in if necessary.</p></li>
+</ul>
+<p>MA(1) processes are strictly stationary (see above and the property SS4) and also weakly stationary. Simple calculations show that <span class="math display">\[\begin{eqnarray*}
+\mathsf{E}\left(y_{t}\right) = \mathsf{E}(\mu) + \mathsf{E}\left(u_{t}\right)+\theta_1 \mathsf{E}\left(u_{t-1}\right)=\mu,
+\end{eqnarray*}\]</span> <span class="math display">\[\begin{eqnarray*}
+\mathsf{Var}\left(y_{t}\right) &amp;=&amp; \mathsf{E}\Big(y_t- \mathsf{E}(y_t)\Big)^2 \\
+&amp;=&amp; \mathsf{Var}\left(z_{t}\right) \\
+&amp;=&amp; \mathsf{Var}\left(u_{t}\right)+\theta_1^{2}\mathsf{Var}\left(u_{t-1}\right) \\
+&amp;=&amp; \sigma^{2}\left(1+\theta_1^{2}\right),
+\end{eqnarray*}\]</span> and, for <span class="math inline">\(h&gt;0\)</span>, <span class="math display">\[\begin{eqnarray*}
+\mathsf{Cov}\left(y_{t},y_{t+h}\right) &amp;=&amp; \mathsf{Cov}\left(z_{t},z_{t+h}\right) \\
+&amp;=&amp; \mathsf{E}[\left(u_{t}+\theta_1 u_{t-1}\right)\left(u_{t+h}+\theta_1 u_{t+h-1}\right)] \\
+&amp;=&amp; \mathsf{E}\left(u_{t}u_{t+h}\right)+\theta_1 \mathsf{E}\left(u_{t}u_{t+h-1}\right)+\theta_1 \mathsf{E}\left(u_{t-1}u_{t+h}\right)+\theta_1^{2}\mathsf{E}\left(u_{t-1}u_{t+h-1}\right) \\
+&amp;=&amp; \left\{
+    \begin{array}
+    [c]{l}
+        \theta_1 \sigma^{2},\,\, h=1, \\
+        0,\,\, h&gt;1.
+    \end{array}
+\right.
+\end{eqnarray*}\]</span> The latter two calculations make use of the independence of process <span class="math inline">\(u_{t}\)</span>. These results show the weak stationarity of the MA(1) process.</p>
+<ul>
+<li>The same moment results are also obtained if the assumption <span class="math inline">\(u_{t}\sim\mathsf{iid}\left(0,\sigma^{2}\right)\)</span> is replaced with the milder assumption <span class="math inline">\(u_{t}\sim\mathsf{wn}\left(0,\sigma^{2}\right)\)</span>, but in this case one cannot deduce the strict stationarity of <span class="math inline">\(y_{t}\)</span>. The same comment holds also to the more general results to be presented in the next section.</li>
+</ul>
+<p>Based on these calculations, the autocorrelation function of an MA(1) process takes the form <span class="math display">\[\begin{equation*}
+\rho_{h}=\left\{
+\begin{array}
+[c]{l}
+    1,\,\, h=0,\\
+    \theta_1 \Big/\left(1+\theta_1^{2}\right), \,\,h=1,\\
+    0,\,\, h&gt;1.
+\end{array}
+\right.
+\end{equation*}\]</span> Therefore, a typical feature of an MA(1) process is that <strong>the autocorrelation function drops to zero after lag one</strong>.</p>
+<ul>
+<li><p>Thus, observations more than one period apart are uncorrelated and, when assumption <span class="math inline">\(u_{t}\sim \mathsf{iid}\left(0,\sigma^{2}\right)\)</span> holds, even independent.</p></li>
+<li><p>The same conclusion could, of course, be immediately made from the MA(1) model equation above.</p></li>
+</ul>
+<p>&nbsp;</p>
+<p>The following figure presents two simulated realizations of length 150 of an MA(1) process with <span class="math inline">\(u_{t}\sim\mathsf{nid}\left(0,1\right)\)</span>. Sample autocorrelation function based on the observations as well as the theoretical autocorrelation function are also shown.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="MAonesimul.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><span class="fig-caption">Figure: Two simulated realizations of the MA(1) process and their (sample) autocorrelations.</span></p>
+<p>&nbsp;</p>
+<p>In Figure, on the left, the MA(1) coefficient <span class="math inline">\(\theta_1\)</span> is 0.9, on the right <span class="math inline">\(\theta_1= -0.9\)</span>. In addition to simulated time series, the figure plots sample autocorrelations (“sample ACF”) and theoretical autocorrelations (“theoretical ACF”) of these two processes. In these figures <span class="math inline">\(\mathsf{r}_0=1\)</span> are depicted.</p>
+<p>&nbsp;</p>
+<p>The figure above shows that in both simulated series, the observations vary around their mean (zero) according to their theoretical standard deviation (<span class="math inline">\(\approx1.345\)</span>).</p>
+<ul>
+<li><p>In the left panel, the series has positive autocorrelation, which manifests itself as positive observations, typically followed by another positive observation.</p></li>
+<li><p>In the right panel, due to negative autocorrelation, positive and negative observations typically alternate.</p></li>
+</ul>
+<p>The estimated sample autocorrelation functions resemble rather closely their theoretical counterparts. In particular, in both cases, the estimated <span class="math inline">\(\mathsf{r}_{1}\)</span> is well outside the approximate 95% confidence bands implied by the assumption <span class="math inline">\(\rho_{h}=0\)</span> <span class="math inline">\(\left(  \forall h&gt;0\right)\)</span>. The remaining estimated sample autocorrelations fall mostly within these bands.</p>
+<ul>
+<li><p>Due to random variation, some of the remaining 39 estimates may naturally occasionally fall outside these bands.</p></li>
+<li><p>Furthermore, as we will discuss later, in the case of an MA(1) process, the confidence bands used above are actually too narrow.</p></li>
+</ul>
+<p>An obvious generalization of the MA(1) is obtained by adding a linear combination of the variables <span class="math inline">\(u_{t-2},\ldots,u_{t-q}\)</span> <span class="math inline">\(\left(q&lt;\infty\right)\)</span> to the right hand side of the MA(1). This leads to the so called MA(<span class="math inline">\(q\)</span>) process and to be considered more detail in Section 5.</p>
+<p>&nbsp;</p>
+</section>
+<section id="causal-linear-process" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="causal-linear-process"><span class="header-section-number">4.2</span> Causal linear process</h2>
+<p>The MA(1) process introduced in the previous section, and its generalization the MA(<span class="math inline">\(q\)</span>) process (<span class="math inline">\(q\)</span> <span class="math inline">\(&lt;\infty\)</span>) to be introduced later on, are special cases of the <strong>linear process</strong> <span class="math display">\[\begin{equation*}
+y_{t} = \mu + \sum_{j=-\infty}^{\infty}\psi_{j}u_{t-j}, \quad  u_{t}\sim\mathsf{iid}\left(0,\sigma^{2}\right).
+\end{equation*}\]</span> It is clear that the infinite sum on the right hand side of this equation requires further care and can not be well defined without suitable further restrictions on the coefficients <span class="math inline">\(\psi_{j}\)</span>.</p>
+<!-- - We are coming back to this just a moment. -->
+<ul>
+<li>We will assume that <span class="math display">\[\begin{equation*}
+\sum_{j=-\infty}^{\infty}\psi_{j}^{2}&lt;\infty.
+\end{equation*}\]</span> Under this assumption the infinite sum on the right hand side of the linear process is well defined.</li>
+</ul>
+<p>&nbsp;</p>
+<p>The mean and autocovariance function of <span class="math inline">\(y_{t}\)</span> (general linear process) can be calculated in a similar fashion as for the MA(1) process regardless of the infinite sum: <span class="math display">\[\begin{equation*}
+\mathsf{E}\left(y_{t}\right) = \mu + \sum_{j=-\infty}^{\infty}\mathsf{E}\left(\psi_{j}u_{t-j}\right)=\sum_{j=-\infty}^{\infty}\psi_{j}\mathsf{E}\left(u_{t-j}\right)=\mu,
+\end{equation*}\]</span> and denoting (cf.&nbsp;Section 2 on deterministic components) <span class="math inline">\(z_t \equiv y_t - \mu\)</span>, we get <span class="math display">\[\begin{equation*}
+\mathsf{Var}\left(y_{t}\right)= \mathsf{Var}\left(z_{t}\right) =\sum_{j=-\infty}^{\infty}\mathsf{Var}\left(\psi_{j}u_{t-j}\right)=\sum_{j=-\infty}^{\infty}\psi_{j}^{2}\mathsf{Var}\left(u_{t-j}\right)=\sigma^{2}\sum_{j=-\infty}^{\infty}\psi_{j}^{2}.
+\end{equation*}\]</span> Moreover, because <span class="math inline">\(\mathsf{Cov}\left(y_{t},y_{t+h}\right) = \mathsf{Cov}\left(z_{t},z_{t+h}\right)\)</span>, for <span class="math inline">\(h&gt;0\)</span>, <span class="math display">\[\begin{eqnarray}
+\mathsf{Cov}\left(y_{t},y_{t+h}\right)  &amp;=&amp; \mathsf{E}\left(\sum_{j=-\infty}^{\infty}\psi_{j}u_{t-j}\sum_{i=-\infty}^{\infty}\psi_{i}u_{t+h-i}\right) \\
+&amp;=&amp; \sum_{j=-\infty}^{\infty}\sum_{i=-\infty}^{\infty}\mathsf{E}\left(\psi_{j}\psi_{i}u_{t-j}u_{t+h-i}\right) \\
+&amp;=&amp; \sum_{j=-\infty}^{\infty}\sum_{i=-\infty}^{\infty}\psi_{j}\psi_{i}\mathsf{E}\left(  u_{t-j}u_{t+h-i}\right) \\
+&amp;=&amp; \sigma^{2}\sum_{j=-\infty}^{\infty}\psi_{j}\psi_{j+h},
+\end{eqnarray}\]</span> where the calculations also make use of the properties of the process <span class="math inline">\(u_{t}\)</span> (compare the results to the MA(1) process). These calculations show that <span class="math inline">\(y_{t}\)</span> is weakly stationary.</p>
+<!-- - Below and in what follows we simply assume that expectations and infinite summations can change places. This will always hold in the situations considered, although mathematically this requires a more advanced justification that is beyond the scope of this course.  -->
+<ul>
+<li>Notice that the strict stationarity follows from the strict stationarity of <span class="math inline">\(u_{t}\)</span> and the property SS4.</li>
+</ul>
+<p>&nbsp;</p>
+<p><strong>Causal linear (MA(<span class="math inline">\(\infty\)</span>)) process</strong>. Because the linear process defined above contains an infinite number of unknown parameters (the <span class="math inline">\(\psi_{j}\)</span>’s), it cannot be used in practice to obtain a useful statistical model unless we place some further restrictions on <span class="math inline">\(\psi_{j}\)</span>.</p>
+<ul>
+<li>Despite this, the general linear model is a useful theoretical device because many processes used in practice are special cases of it.</li>
+</ul>
+<p>Like in the case of an MA(1) process, it typically holds that <span class="math inline">\(\psi_{j}=0\)</span> for <span class="math inline">\(j&lt;0\)</span>, in which case the general linear process reduces to <span class="math display">\[\begin{equation*}
+y_{t} = \mu + \sum_{j=0}^{\infty}\psi_{j}u_{t-j}, \quad u_{t}\sim\mathsf{iid}\left(0,\sigma^{2}\right).
+\end{equation*}\]</span> Because <span class="math inline">\(y_{t}\)</span> no longer depends on future values of the <span class="math inline">\(u_{t}\)</span> variables, one often speaks of a <strong>causal linear process</strong> or a <strong>causal MA(<span class="math inline">\(\infty\)</span>) process</strong>.</p>
+<ul>
+<li>The values of the process <span class="math inline">\(y_{t}\)</span> are assumed to be generated as a weighted sum of (possibly) infinitely many independent and unobserved random shocks.</li>
+</ul>
+<!-- - A difference to the *noncausal* case \@ref(eq:LinProsessi) is that future shocks $u_{t+j}$ $\left(j>0\right)$ do not affect the present value of the process $y_{t}$. In both cases, assumption \@ref(eq:psi-1-summable) implies that the effect of shocks far away from the present time is negligibly small (because $\psi_{j}\rightarrow0$, as $\left\vert j\right\vert \rightarrow\infty$). -->
+<ul>
+<li>In the <strong>noncausal case</strong> the future shocks <span class="math inline">\(u_{t+j}\)</span> <span class="math inline">\(\left(j&gt;0\right)\)</span> affect the present value of the process <span class="math inline">\(y_{t}\)</span>. In this course, we do not consider noncausal models more detail.</li>
+</ul>
+<p>&nbsp;</p>
+</section>
+<section id="ar1-process" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="ar1-process"><span class="header-section-number">4.3</span> AR(1) process</h2>
+<p>A simple special case of a causal linear process containing only one unknown parameter (and constant term) is achieved by assuming that <span class="math inline">\(\psi_{j}=\phi_1^{j}\)</span>. A process defined like this leads to the autoregressive process of order one, that is an <strong>AR(1) process</strong> <span class="math display">\[\begin{equation*}
+y_{t} = \nu + \phi_1 y_{t-1}+u_{t}, \quad u_{t}\sim \mathsf{iid}\left(0,\sigma^{2}\right).
+\end{equation*}\]</span> Here one interprets the present value of the process to linearly depend on the previous value of the process as well as on an unobseved random shock (or error term) similarly as in the linear process. Furthermore, <span class="math inline">\(\nu\)</span> denotes the constant term of the process, whose connection to the mean <span class="math inline">\(\mathsf{E}(y_t)=\mu\)</span> will be examined below.</p>
+<ul>
+<li>Referring to the linear causal process, for the condition <span class="math inline">\(\sum_{j=-\infty}^{\infty}\psi_{j}^{2}&lt;\infty\)</span> to be satisfied, it needs to assumed that <span class="math inline">\(\left\vert \phi_1\right\vert&lt;1\)</span>.</li>
+</ul>
+<!-- - If $\left\vert \phi_1\right\vert<1$, then $y_{t}= \sum_{j=0}^{\infty}\phi_1^{j}u_{t-j}$ and $\phi y_{t-1}=\sum_{j=0}^{\infty}\phi_1^{j+1}u_{t-1-j}$, which then leads to the AR(1) process. -->
+<p>Taking the AR(1) model equation as a starting point, the necessity of condition <span class="math inline">\(\left\vert \phi_1\right\vert &lt;1\)</span> can be demonstrated by making use of repetitive substitutions.</p>
+<ul>
+<li><p>First, substitute <span class="math inline">\(y_{t-1} = \nu + \phi_1 y_{t-2}+u_{t-1}\)</span> on the right hand side of the AR(1) equation.</p></li>
+<li><p>Then substitute <span class="math inline">\(y_{t-2} = \nu + \phi_1 y_{t-3}+u_{t-2}\)</span> to the resulting expression, and so on.</p></li>
+</ul>
+<p>Continuing in this fashion, we obtain the equation <span class="math display">\[\begin{equation*}
+    y_{t}=\phi_1^{k}y_{t-k} + \nu \sum_{j=0}^{k-1}\phi_1^{j} + \sum_{j=0}^{k-1}\phi_1^{j}u_{t-j}.
+\end{equation*}\]</span> When <span class="math inline">\(\left\vert \phi_1\right\vert&lt;1\)</span>, this leads us to the limiting solution <span class="math display">\[\begin{equation*}
+y_{t} = \nu \sum_{j=0}^{\infty}\phi_1^{j} + \sum_{j=0}^{\infty}\phi_1^{j}u_{t-j}.
+\end{equation*}\]</span> Because the AR(1) process (with <span class="math inline">\(|\phi_1| &lt; 1\)</span>) is clearly a special case of the linear process, it is strictly and weakly stationary when <span class="math inline">\(|\phi_1| &lt; 1\)</span>.</p>
+<p>The first and second moments can be deduced from the general formulae derived in the previous section. The expected value, variance and autocovariance functions take the form <span class="math display">\[\begin{equation*}
+\mathsf{E}\left(y_{t}\right) \equiv \mu = \nu \sum_{j=0}^{\infty}\phi_1^{j} + \mathsf{E}\Big(\sum_{j=0}^{\infty}\phi_1^{j}u_{t-j}\Big) =  \nu \sum_{j=0}^{\infty}\phi_1^{j} = \nu / (1-\phi_1),
+\end{equation*}\]</span> <span class="math display">\[\begin{equation*}
+\mathsf{Var}\left(y_{t}\right)=\sigma^{2}\sum_{j=0}^{\infty}\phi_1^{2j}=\sigma^{2}/\left(1-\phi_1^{2}\right),
+\end{equation*}\]</span> and, for <span class="math inline">\(h&gt;0\)</span>, <span class="math display">\[\begin{eqnarray*}
+   \gamma_h &amp;=&amp; \mathsf{Cov}\left(y_{t},y_{t+h}\right) \\
+   &amp;=&amp; \sigma^{2}\sum_{j=0}^{\infty}\phi_1^{j}\phi_1^{j+h} \\
+   &amp;=&amp; \phi_1 \gamma _{h-1} \\
+   &amp;=&amp; \sigma^{2}\phi_1^{h}/\left(1-\phi_1^{2}\right).
+\end{eqnarray*}\]</span></p>
+<p><strong>The autocorrelation function of the AR(1) process</strong> hence becomes <span class="math display">\[\begin{equation*}
+\rho_{h}=\left\{
+\begin{array}
+[c]{l}
+1, \, h=0, \\
+\phi_1^{h}, \, h&gt;0.
+\end{array}
+\right.
+\end{equation*}\]</span> Unlike in the case of an MA(1) process, the autocorrelation function differs from zero for all lags (unless <span class="math inline">\(\phi_1=0\)</span>). Note, however, that the condition <span class="math inline">\(\gamma_{h}\rightarrow0, \,\, \mathrm{when} \,\, h\rightarrow\infty\)</span>, is satisfied.</p>
+<ul>
+<li>Later, we will study a generalization of the AR(1) process, called an AR(<span class="math inline">\(p\)</span>) process, which is obtained by adding a linear combination of the variables <span class="math inline">\(y_{t-2},\ldots,y_{t-p}, \left(p&lt;\infty\right)\)</span> on the right hand side of the AR(1) process.</li>
+</ul>
+<p>&nbsp;</p>
+<p>In the AR(1) process, the autoregressive parameter <span class="math inline">\(\phi_1\)</span> clearly measures the <strong>persistence</strong> of a random shock to the time series.</p>
+<ul>
+<li><p>If <span class="math inline">\(\phi_1\)</span> is close to unity in absolute value, autocorrelation is high and the series (process) is strongly “persistent”.</p></li>
+<li><p>If <span class="math inline">\(\phi_1\)</span> is close to zero, there is no persistence and the effect of the shock is temporary.</p></li>
+</ul>
+<p>The sign of <span class="math inline">\(\phi_1\)</span> determines whether the time series is positively or negatively autocorrelated.</p>
+<ul>
+<li><p>If <span class="math inline">\(\phi_1\)</span> is positive, then the positive values of <span class="math inline">\(y_t\)</span> are tending to follow positive values, and similarly with negative values.</p></li>
+<li><p>If <span class="math inline">\(\phi_1\)</span> is negative, then positive values tend to follow negative values, and vice versa.</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ARonesimul.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><span class="fig-caption">Figure: Two simulated realizations of the AR(1) process and their autocorrelations.</span></p>
+<p>&nbsp;</p>
+<p>Figure presents two simulated realizations of length 150 of an AR(1) process with <span class="math inline">\(u_{t}\sim\mathsf{nid}\left(0,1\right)\)</span>. On the left, the AR coefficient <span class="math inline">\(\phi_1\)</span> is 0.7, on the right -0.7. For simplicity, the constant term (and hence the mean) is set to 0. In addition to simulated time series, the figure plots sample autocorrelations and theoretical autocorrelations of these two processes.</p>
+<ul>
+<li><p>As they should be stationary series, the time series vary around their mean (zero) according to their theoretical standard deviation (<span class="math inline">\(\approx1.4\)</span>).</p></li>
+<li><p>When <span class="math inline">\(\phi_1 = 0.7\)</span> (left), the observations have relatively strong positive autocorrelation and, as a consequence, several consecutive observations occur above the mean, as well as below the mean. This gives the time series a “smooth” flavour.</p></li>
+<li><p>When <span class="math inline">\(\phi_1 = -0.7\)</span> (right), the sign of autocorrelation between consecutive observations changes depending on the distance between them. These changes from positive to negative of the autocorrelation coefficients give the observed time series a jagged/zigzag pattern. Moreover, clusters of consecutive observations with small absolute values are also observed (the same for large absolute values).</p></li>
+<li><p>In both cases, the estimated sample autocorrelation functions are rather close to their theoretical counterparts. Moreover, several estimated autocorrelation coefficients are outside of the 95% confidence bands based on the assumption of <span class="math inline">\(\rho_{h}=0\)</span> <span class="math inline">\(\left(\forall h&gt;0\right)\)</span>.</p></li>
+</ul>
+<p>&nbsp;</p>
+<div class="toggle-button" onclick="toggleCode('Extra5')">
+Extra: Noncausal AR process
+</div>
+<div id="Extra5" style="display:none;">
+<p>The definition of an AR(1) process is usually based on its model equation as described above. In connection with this, the condition <span class="math inline">\(\left\vert \phi_1\right\vert&lt;1\)</span> is often called the stationarity condition of an AR(1) process. This terminology is somewhat misleading because AR(1) equation has a stationary solution also in the case <span class="math inline">\(\left\vert \phi_1\right\vert &gt;1\)</span>, although this solution cannot be represented in the form of linear process. When <span class="math inline">\(\left\vert \phi_1\right\vert&gt;1\)</span>, AR(1) equation can be rewritten as <span class="math display">\[\begin{equation*}
+    y_{t}=\phi_1^{-1}y_{t+1}-\phi_1^{-1}u_{t+1}
+\end{equation*}\]</span> by increasing the time index <span class="math inline">\(t\)</span> by one step. Using repetitive substitutions forward in time in a fashion similar as above, this leads to <span class="math display">\[\begin{equation*}
+    y_{t}=\phi_1^{-k-1}y_{t+1+k}-\sum_{j=0}^{k}\phi_1^{-j-1}u_{t+1+j}.
+\end{equation*}\]</span> This leads to the limiting solution <span class="math display">\[\begin{equation*}
+    y_{t}=-\sum_{j=1}^{\infty}\phi_1^{-j}u_{t+j}.
+\end{equation*}\]</span> Note that we can arrive to the (more or less) same (except for an unimportant minus sign) solution by starting from the linear process and by assuming <span class="math inline">\(\psi_{j}=\phi_1^{j}\)</span>, when <span class="math inline">\(j&lt;0,\)</span> and <span class="math inline">\(\psi_{j}=0,\)</span> when <span class="math inline">\(j\geq0\)</span> <span class="math inline">\(\left(\left\vert \phi_1\right\vert &gt;1\right)\)</span>. This solution of the AR(1) equation is called noncausal. This kind of noncausal AR processes have received some attention in the recent literature. However, in this course we restrict our attention to causal AR&nbsp;processes (as do most textbooks).</p>
+</div>
+<p>&nbsp;</p>
+</section>
+<section id="random-walk" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="random-walk"><span class="header-section-number">4.4</span> Random walk</h2>
+<p>For the AR(1) model, and for any initial value <span class="math inline">\(y_{0}\)</span>, we obtain a representation (after recursive substitutions) <span class="math display">\[\begin{equation*}
+y_{t}=\phi_1^{t}y_{0} + \nu \sum_{j=0}^{t-1}\phi_1^{j} + \sum_{j=0}^{t-1}\phi_1^{j}u_{t-j}, \quad t=1,2,\ldots\text{ }.
+\end{equation*}\]</span> If we assume the initial value <span class="math inline">\(y_{0}\)</span> to be independent of the variables <span class="math inline">\(u_{t}\)</span>, <span class="math inline">\(t\geq1\)</span>, one can use the assumption <span class="math inline">\(u_{t}\sim\mathsf{iid}\left(0,\sigma^{2}\right)\)</span> to deduce <span class="math display">\[\begin{equation*}
+\mathsf{E}\left(y_{t}\right)=\phi_1^{t}\mathsf{E}\left(y_{0}\right) + \nu \sum_{j=0}^{t-1}\phi_1^{j}
+\end{equation*}\]</span> and <span class="math display">\[\begin{eqnarray*}
+\mathsf{Var}\left(y_{t}\right) &amp;=&amp; \mathsf{E} \Big(y_t- \mathsf{E}(y_t) \Big)^2 \\
+&amp;=&amp; \mathsf{Var}\left(\phi_1^{t}y_{0}\right)+\mathsf{Var}\left(\sum_{j=0}^{t-1}\phi_1^{j}u_{t-j}\right) \\
+&amp;=&amp; \phi_1^{2t}\mathsf{Var}\left(y_{0}\right)+\sigma^{2}\sum_{j=0}^{t-1}\phi_1^{2j}.
+\end{eqnarray*}\]</span> When <span class="math inline">\(\left\vert \phi_1\right\vert =1\)</span>, the expected value of <span class="math inline">\(y_{t}\)</span>, or at least its variance, clearly depends on <span class="math inline">\(t\)</span> regardless of how <span class="math inline">\(y_{0}\)</span> (or its distribution) is chosen.</p>
+<ul>
+<li>In this case, the AR(1) process therefore has no stationary solution.</li>
+</ul>
+<!-- - Note that in the case $\left\vert \phi_1\right\vert<1$ the causal stationary solution studied above can be obtained by choosing the initial value as $y_{0}=\sum_{j=0}^{\infty}\phi_1^{j}u_{-j}$. -->
+<p>When <span class="math inline">\(\phi=1\)</span> and <span class="math inline">\(t\geq1\)</span>, the AR(1) process reduces to <span class="math display">\[\begin{equation*}
+y_{t} = \nu + y_{t-1}+u_{t},\,\, u_{t}\sim \mathsf{iid}\left(0,\sigma^{2}\right).
+\end{equation*}\]</span> This is called a <strong>random walk</strong>. This name is due to the “wandering” nature of the realizations of the process.</p>
+<ul>
+<li><p>The left panel of figure below illustrates this. For simplicity, we assume here <span class="math inline">\(\nu=0\)</span> (that is the random walk without drift) and <span class="math inline">\(u_t \thicksim \mathsf{nid}(0,1)\)</span>.</p></li>
+<li><p>The right panel illustrates the obvious fact that the differences <span class="math inline">\(y_{t}-y_{t-1}=u_{t}\)</span> of a random walk <span class="math inline">\(y_{t}=y_{0}+\sum_{j=0}^{t-1}u_{t-j}\)</span> are stationary.</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="RWsimul.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><span class="fig-caption">Figure: A simulated realizations of the random walk process (assuming <span class="math inline">\(u_t \thicksim \mathsf{nid}(0,1)\)</span>) (left) and its first-difference (right).</span></p>
+<p>&nbsp;</p>
+<p>The random walk and its generalizations play a central role in the analysis of <strong>nonstationary time series</strong>. We will come back to this in Sections 12–13.</p>
+<p>&nbsp;</p>
+</section>
+<section id="arma11-process" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="arma11-process"><span class="header-section-number">4.5</span> ARMA(1,1) process</h2>
+<p>A concept easing the algebraic manipulations of time series processes is the so-called <strong>backshift operator</strong> or <strong>lag operator</strong>. For any process (or simply a sequence of numbers) <span class="math inline">\(x_{t}\)</span>, define the operation with the equation <span class="math inline">\(Bx_{t}=x_{t-1}\)</span>. More generally, <span class="math inline">\(B^{2}x_{t}=B\left(Bx_{t}\right)=Bx_{t-1}=x_{t-2}\)</span>, and inductively define <span class="math display">\[\begin{equation*}
+B^{k}x_{t}=B\left(B^{k-1}x_{t}\right)=x_{t-k}, \,\, B^{0}x_{t}=x_{t}.
+\end{equation*}\]</span></p>
+<ul>
+<li><p>Here <span class="math inline">\(k\)</span> can also be negative, and when <span class="math inline">\(k&lt;0\)</span>, the operator becomes a “forward shift” operator, for example <span class="math inline">\(B^{-1}x_{t}=x_{t+1}\)</span>, <span class="math inline">\(B^{-2}x_{t}=x_{t+2}\)</span> etc.</p></li>
+<li><p>At times backshift or lag operator is denoted by <span class="math inline">\(L^k\)</span> instead of <span class="math inline">\(B^k\)</span>.</p></li>
+</ul>
+<p>Using the lag operator, one can also define polynomials.</p>
+<ul>
+<li>For example, <span class="math inline">\(\theta\left(B\right)=1+\theta_1 B\)</span> and, e.g., <span class="math inline">\(\psi\left(B\right)=\sum_{j=-\infty}^{\infty}\psi_{j}B^{j}\)</span>.</li>
+</ul>
+<p>One can algebraically operate with the lag operator exactly as if <span class="math inline">\(B\)</span> were a real or a complex number.</p>
+<ul>
+<li><p>For instance, the MA(1) process can be written as <span class="math display">\[\begin{equation*}
+y_{t}= \mu + u_{t}+\theta_1 u_{t-1} = \theta\left(B\right)u_{t}.
+\end{equation*}\]</span></p></li>
+<li><p>When differencing (some) process <span class="math inline">\(y_{t}\)</span> twice, we obtain <span class="math display">\[\begin{eqnarray*}
+\left(1-B\right)^{2}y_{t} &amp;=&amp; \left(1-B\right)\left[\left(1-B\right)  y_{t}\right] \\
+&amp;=&amp;\left(  1-B\right)  \left(  y_{t}-y_{t-1}\right) \\
+&amp;=&amp; y_{t}-y_{t-1}-y_{t-1}+y_{t-2} \\
+&amp;=&amp; \left(1-2B+B^{2}\right)y_{t}.
+\end{eqnarray*}\]</span></p></li>
+</ul>
+<p>Using the lag operator, the general linear process can be defined by the equation <span class="math display">\[\begin{equation*}
+y_{t} - \mu = \psi\left(B\right)u_{t}, \quad u_{t}\sim\mathsf{iid}\left(0,\sigma^{2}\right),
+\end{equation*}\]</span> where <span class="math inline">\(\psi\left(B\right)=\sum_{j=-\infty}^{\infty}\psi_{j}B^{j}\)</span>. The operator <span class="math inline">\(\psi\left(B\right)\)</span> is sometimes thought as a <strong>linear filter</strong>, which transforms the white noise sequence <span class="math inline">\(\left\{  u_{t}\right\}\)</span> to the process <span class="math inline">\(\left\{y_{t}\right\}\)</span>.</p>
+<!-- - In this context, and especially in the causal case $\psi_{j}=0$, $j<0$, the white noise $u_{t}$ is often called the **innovation** sequence of the process $y_{t}$. -->
+<p>&nbsp;</p>
+<p>In what follows, we will often consider the special case of the (causal) linear process in which the filter <span class="math inline">\(\psi\left(B\right)\)</span> is rational, that is, <span class="math display">\[\begin{equation*}
+\psi\left(B\right)=\sum_{j=0}^{\infty}\psi_{j}B^{j}=\theta\left(B\right)\phi\left(B\right)^{-1},
+\end{equation*}\]</span> where <span class="math inline">\(\phi\left(B\right)\)</span> and <span class="math inline">\(\theta\left(B\right)\)</span> are polynomials of finite order. In the simplest case, these polynomials are of order one so that <span class="math display">\[\begin{equation*}
+\phi\left(B\right)=1-\phi_1 B \quad \mathrm{and} \quad \theta\left(B\right)=1+\theta_1 B.
+\end{equation*}\]</span></p>
+<ul>
+<li>It is clear that to obtain stationarity, some restrictions have to be placed on the coefficients of the polynomial <span class="math inline">\(\phi\left(B\right)\)</span>.</li>
+</ul>
+<p>&nbsp;</p>
+<p>Based on our discussion on the AR(1) process above, it is clear that in the first-order case a sufficient stationary condition is that <span class="math inline">\(\left\vert \phi_1\right\vert &lt;1\)</span>. Then the condition <span class="math inline">\(\sum_{j=-\infty}^{\infty}\psi_{j}^{2}&lt;\infty\)</span> attached to the linear process is satisfied and the process <span class="math display">\[\begin{equation*}
+y_{t}-\mu =\left[\theta\left(B\right)\phi\left(B\right)^{-1}\right] u_{t}
+\end{equation*}\]</span> is well defined. Multiplying both sides of this equation with the polynomial <span class="math inline">\(\phi\left(B\right)\)</span>, we obtain the representation <span class="math display">\[\begin{equation*}
+\phi\left(B\right) (y_{t}-\mu) = \theta\left(B\right)u_{t}
+\end{equation*}\]</span> or <span class="math display">\[\begin{equation*}
+y_{t} = \nu + \phi_1 y_{t-1}+u_{t}+\theta_1 u_{t-1}, \quad u_{t}\sim\mathsf{iid}\left(0,\sigma^{2}\right),
+\end{equation*}\]</span> where <span class="math inline">\(\nu = \phi\left(B \right) \mu \equiv \phi\left(1\right) \mu = (1- \phi_1)\mu\)</span> (see the properties of the backshift operator). A process defined like this is called the <strong>autoregressive moving average process of order one</strong>, or the <strong>ARMA(1,1) process</strong>.</p>
+<ul>
+<li><p>This combines the AR(1) and MA(1) processes introduced earlier, and these processes can still be obtained as special cases.</p></li>
+<li><p>Later we will study a generalization of this process called the ARMA(<span class="math inline">\(p,q\)</span>) process, which can be obtained by generalizing ARMA(1,1) in a similar fashion as discussed around AR(1) and MA(1) processes.</p></li>
+<li><p>The coefficients <span class="math inline">\(\psi_j\)</span> of the filter <span class="math inline">\(\psi\left(B\right)=\sum_{j=0}^{\infty}\psi_{j}B^{j}\)</span> can be solved fairly straightforwardly from equation <span class="math inline">\(\psi\left(B\right)=\theta\left(B\right)\phi\left(B\right)^{-1}\)</span>.</p></li>
+</ul>
+<p>The above shows that the autocorrelation function of an ARMA(1,1) process can then be derived by applying the general formulas obtained for the general linear process. Details of these calculations are left as exercises.</p>
+<!-- When the sufficient condition for stationarity $\left\vert \phi\right\vert<1$ holds, one can derive a linear representation by solving $y_{t}$ from the ARMA(1,1) equation using repetitive substitutions similarly as in the case of an AR(1) process.   - Alternatively, one can formally multiply both sides of equation $\phi\left(B\right)y_{t}=\theta\left(B\right)u_{t}$ with $\phi\left(B\right)^{-1}$, which leads to $y_{t}=\left[\theta\left(B\right)\phi\left(B\right)^{-1}\right]u_{t}$. -->
+<p>&nbsp;</p>
+</section>
+<section id="wold-decomposition" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="wold-decomposition"><span class="header-section-number">4.6</span> Wold decomposition</h2>
+<p>The following famous result (named after Herman Wold) shows that every weakly stationary non-deterministic process can be expressed as a sum of a deterministic process and a causal MA<span class="math inline">\(\left(\infty\right)\)</span> process (the proof of this result is beyond the scope of this course and omitted). In other words, every weakly stationary non-deterministic process <span class="math inline">\(y_{t}\)</span> (<span class="math inline">\(t=0,\pm1,\pm2,\ldots\)</span>) has a representation <span class="math display">\[\begin{equation*}
+y_{t} = \sum_{j=0}^{\infty}\psi_{j}u_{t-j}+\upsilon_{t},
+\end{equation*}\]</span> where</p>
+<ul>
+<li><p><span class="math inline">\(\mathrm{(i)}\)</span> <span class="math inline">\(\psi_{0}=1\)</span>, <span class="math inline">\(\sum_{j=0}^{\infty}\psi_{j}^{2}&lt;\infty\)</span>,</p></li>
+<li><p><span class="math inline">\(\mathrm{(ii)}\)</span> <span class="math inline">\(u_{t}\sim\mathsf{wn}\left(0,\sigma^{2}\right)\)</span>, <!-- and $u_{t}$ is a mean square limit of linear combinations of the random variables $y_{t},\ldots,y_{t-n}$ as $n\rightarrow\infty$, --></p></li>
+<li><p><span class="math inline">\(\mathrm{(iii)}\)</span> <span class="math inline">\(\upsilon_{t}\)</span> is deterministic, and</p></li>
+<li><p><span class="math inline">\(\mathrm{(iv)}\)</span> <span class="math inline">\(\mathsf{Cov}\left(  u_{t},\upsilon_{s}\right)=0\)</span> for all <span class="math inline">\(t\)</span> and <span class="math inline">\(s\)</span>. <span class="math inline">\(\square\)</span></p></li>
+</ul>
+<p>Part (iii) means that the process <span class="math inline">\(\upsilon_{t}\)</span> can be predicted linearly using the variables <span class="math inline">\(y_{t-1}, y_{t-2},\ldots\)</span>, with no error. This and part (ii) together imply that <span class="math inline">\(u_{t}\)</span> can be interpreted as a forecast error when forecasting <span class="math inline">\(y_{t}\)</span> linearly using the lags of <span class="math inline">\(y_t\)</span>.</p>
+<ul>
+<li>In the case <span class="math inline">\(\upsilon_{t}=0\)</span> the process <span class="math inline">\(y_{t}\)</span> is called <em>purely non-deterministic</em>.</li>
+</ul>
+<p>When, as in practice, only one realization of the process <span class="math inline">\(y_{t}\)</span> is observed, the process <span class="math inline">\(\upsilon_{t}\)</span> can therefore be treated as a non-random function of time (it can be perfectly predicted using the realized values of <span class="math inline">\(y_{t-1},y_{t-2},\ldots\)</span>, so only remaining variation should be non-random). Modelling <span class="math inline">\(\upsilon_{t}\)</span> can thus be thought as modelling a trend as discussed in Sections 1–2.</p>
+<ul>
+<li>A simple example of a process <span class="math inline">\(\upsilon_{t}\)</span> is that it is constant. Such a realization of <span class="math inline">\(\upsilon_{t}\)</span> can in practice be interpreted as the expected value of process <span class="math inline">\(y_{t}\)</span>, <span class="math inline">\(\mathsf{E}(y_t) = \mu\)</span>, or at least be included in it.</li>
+</ul>
+<p>The task of modelling a weakly stationary process reduces to the task of modelling the linear filter <span class="math inline">\(\psi\left(B\right)=\sum_{j=0}^{\infty}\psi_{j}B^{j}\)</span>.</p>
+<ul>
+<li>Furthermore, in the case of the ARMA(<span class="math inline">\(p,q\)</span>) processes to be investigated shortly, this means assuming that the filter <span class="math inline">\(\psi\left(B\right)\)</span> is rational, or in other words that <span class="math inline">\(\psi\left(B\right)=\theta\left(B\right)\phi\left(B\right)^{-1}\)</span>, where <span class="math inline">\(\phi\left(B\right)\)</span> is a polynomial of order <span class="math inline">\(p\)</span> and <span class="math inline">\(\theta\left(B\right)\)</span> is a polynomial of order <span class="math inline">\(q\)</span>.</li>
+</ul>
+<!-- Because rational functions can approximate well any "well-behaving" functions, this discussion provides reasonably good motivation and justification for the use of ARMA($p,q$) models to model weakly stationary time series. -->
+<p>As a remark, we note that the significance of the Wold decomposition should be evaluated keeping in mind that it concerns weakly stationary processes and linear forecasting. Although every weakly stationary process can be represented by the Wold decomposition, this does not mean that the decomposition is the best way to describe the process. There exist (strictly) stationary processes for which linear prediction is not optimal (in the sense of minimising mean-square forecast error).</p>
+<!-- For such processes, the linear prediction error $u_{t}$ appearing in the Wold decomposition is not independent (that is, not $\mathsf{iid}\left(0,\sigma^{2}\right)$) but dependent, although it is uncorrelated (that is, $\mathsf{wn}\left(0,\sigma^{2}\right)$), and may therefore be forecastable. In these cases, the optimal forecasts are nonlinear, and the corresponding optimal prediction errors are indeed independent. If such a process is modelled using linear processes, the preceding discussion implies that not all aspects of the random variation are being modelled. -->
+<p>&nbsp;</p>
+<div class="toggle-button" onclick="toggleCode('Extra6')">
+Extra: Deterministic and non-deterministic processes/parts
+</div>
+<div id="Extra6" style="display:none;">
+<p>Consider the weakly stationary process <span class="math display">\[\begin{equation*}
+y_{t}=A\cos\left(\lambda t\right)+B\sin\left(\lambda t\right), \qquad t=0,\pm1,\pm2,\ldots,
+\end{equation*}\]</span> where <span class="math inline">\(\lambda\in\lbrack0,\pi)\)</span> is a constant and the random variables <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> satisfy the conditions <span class="math inline">\(\mathsf{E}\left(A\right)=\mathsf{E}\left(B\right)=0\)</span>, <span class="math inline">\(\mathsf{Var}\left(A\right)=\mathsf{Var}\left(B\right)=\sigma^{2}\)</span> and <span class="math inline">\(\mathsf{Cov}\left(A,B\right)=0\)</span>. Because <span class="math display">\[\begin{equation*}
+y_{t}+y_{t-2}=A\left[\cos\left(\lambda t\right)+\cos\left(\lambda\left(  t-2\right)\right)\right]+B\left[\sin\left(\lambda t\right)+\sin\left(  \lambda\left(t-2\right)\right)\right],
+\end{equation*}\]</span> we can use the trigonometric identities <span class="math display">\[\begin{equation*}
+\sin\left(x_{1}\right)+\sin\left(x_{2}\right)=\sin\left(\left(x_{1}+x_{2}\right)2\right)\cos\left(\left(x_{1}-x_{2}\right)2\right)
+\end{equation*}\]</span> and <span class="math display">\[\begin{equation*}
+\cos\left(x_{1}\right)+\cos\left(x_{2}\right)=2\cos\left(\left(x_{1}+x_{2}\right)2\right)\cos\left(\left(x_{1}-x_{2}\right)2\right)
+\end{equation*}\]</span> to derive the result <span class="math inline">\(y_{t}+y_{t-2}=2\cos\left(\lambda\right)y_{t-1}\)</span> or, in other words, <span class="math display">\[\begin{equation*}
+y_{t}=2\cos\left(\lambda\right)y_{t-1}-y_{t-2}, \quad t=0,\pm1,\pm2,\ldots.
+\end{equation*}\]</span> The process <span class="math inline">\(y_{t}\)</span> is somewhat peculiar in that when <span class="math inline">\(y_{t-1}\)</span> and <span class="math inline">\(y_{t-2}\)</span> (and the value of the constant <span class="math inline">\(\lambda\)</span>) are known, the value for the current period <span class="math inline">\(y_{t}\)</span> can be predicted using a simple linear formula with perfect precision without any forecast error. A process with such a property is called a <em>deterministic</em> process. More generally, the forecast of <span class="math inline">\(y_{t}\)</span> is allowed to be any linear function of the past values of the process <span class="math inline">\(y_{t-1},y_{t-2},\ldots\)</span> so that the forecast is a linear combination of the variables <span class="math inline">\(y_{t-1},\ldots,y_{t-n}\)</span> or a mean square limit of such linear combinations as <span class="math inline">\(n\rightarrow\infty\)</span>. If a process is not deterministic, then it is called <em>non-deterministic</em>.</p>
+</div>
+<p>&nbsp;</p>
+</section>
+<section id="meanautocorprop" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="meanautocorprop"><span class="header-section-number">4.7</span> Properties of sample mean and autocorrelations</h2>
+<p>Because the sample mean and the sample autocorrelation function are central tools in the analysis of time series, we next briefly discuss some of their statistical properties.</p>
+<p>We can show that (see below) that the <strong>sample mean</strong> <span class="math display">\[\begin{equation*}
+\bar{y}=\frac{1}{T}\left(y_{1}+\cdots+y_{T}\right)
+\end{equation*}\]</span> is</p>
+<ul>
+<li><p><strong>unbiased</strong> and <strong>consistent estimator</strong> of the population mean <span class="math inline">\(\mu=\mathsf{E}\left(y_{t}\right)\)</span>, and</p></li>
+<li><p><strong>asymptotically normally distributed</strong></p></li>
+</ul>
+<p>&nbsp;</p>
+<div class="toggle-button" onclick="toggleCode('Extra7')">
+Extra: Proof of unbiasedness and consistency of the sample mean
+</div>
+<div id="Extra7" style="display:none;">
+<p>In the following discussion, we assume both weak and strict stationarity of the process.</p>
+<p>For the sample mean <span class="math inline">\(\bar{y}=T^{-1}\left(y_{1}+\cdots+y_{T}\right)\)</span>, it holds that <span class="math display">\[\begin{equation*}
+\mathsf{E}\left(\bar{y}\right)=\frac{1}{T}\left(\mathsf{E}\left(y_{1}\right)+\cdots+\mathsf{E}\left(y_{T}\right)\right)=\mu
+\end{equation*}\]</span> so that it is an <em>unbiased estimator</em> of the population mean <span class="math inline">\(\mu=\mathsf{E}\left(y_{t}\right)\)</span> (recall that in general, an estimator <span class="math inline">\(\widehat{\theta}\)</span> of a population parameter <span class="math inline">\(\theta\)</span> is called unbiased if <span class="math inline">\(\mathsf{E}(\widehat{\theta})=\theta\)</span>).</p>
+<p>For the variance of <span class="math inline">\(\bar{y}\)</span>, we can construct <span class="math display">\[\begin{eqnarray*}
+\mathsf{Var}\left(\bar{y}\right) &amp;=&amp; \frac{1}{T^{2}}\sum_{t=1}^{T}\sum_{s=1}^{T}\mathsf{Cov}\left(y_{t},y_{s}\right) \\
+&amp;=&amp; \frac{1}{T^{2}}\sum_{t-s=-T}^{T}\left(T-\left\vert t-s\right\vert\right)\gamma_{t-s}\\
+&amp;=&amp; \frac{1}{T}\sum_{h=-T}^{T}\left(1-\frac{\left\vert h\right\vert}{T}\right)\gamma_{h}.
+\end{eqnarray*}\]</span> The second equality above can be justified by noting that the preceding double sum is the sum of the elements of the matrix <span class="math inline">\(\left[\gamma_{t-s}\right]_{t,s=1,..,T}\)</span>. Now assume that</p>
+<p><span class="math display">\[\begin{equation*}
+\sum_{h=-\infty}^{\infty}\left\vert\gamma_{h}\right\vert&lt;\infty,
+\end{equation*}\]</span> a requirement more stringent than condition <span class="math inline">\(\gamma_{h}\rightarrow0, \,\, \mathrm{when} \,\, h\rightarrow\infty\)</span>. This condition is satisfied by many processes used in practice (for instance, by the AR(1) and MA(1) processes). Making use of the triangle inequality, we now obtain the result <span class="math display">\[\begin{equation*}
+\mathsf{Var}\left(\bar{y}\right)=\mathsf{E}\left(\bar{y}-\mu\right)^{2}\leq\frac{1}{T}\sum_{h=-T}^{T}\left(1-\frac{\left\vert h\right\vert}{T}\right)\left\vert\gamma_{h}\right\vert\rightarrow0, \quad \mathrm{as} \quad T\rightarrow\infty.
+\end{equation*}\]</span> In other words, the sample mean is a consistent estimator for the expected value.</p>
+<p>If we strengthen the assumptions made above and additionally assume that the process <span class="math inline">\(y_{t}\)</span> is Gaussian, the sample mean is also normally distributed with the mean and variance as indicated above. Furthermore, the following asymptotic result can be established (we omit the details) <span class="math display">\[\begin{equation*}
+\sqrt{T}\left(  \bar{y}-\mu\right)  \overset{d}{\rightarrow}\mathsf{N}\left(0,\sum\nolimits_{h=-\infty}^{\infty}\gamma_{h}\right)
+\quad \mathrm{or} \quad
+\bar{y}\underset{as}{\sim}\mathsf{N}\left(  \mu,\frac{1}{T}\sum\nolimits_{h=-\infty}^{\infty}\gamma_{h}\right).
+\end{equation*}\]</span> This result can be derived without assuming <span class="math inline">\(y_t\)</span> to be Gaussian.</p>
+<p>The purpose here is to show the law of large numbers and the central limit theorem to apply to stationary processes with “reasonable assumptions”. To use this result to construct tests and confidence intervals for <span class="math inline">\(\mu\)</span>, we also need to estimate the infinite sum <span class="math inline">\(\sum\nolimits_{h=-\infty}^{\infty}\gamma_{h}\)</span>. A suitable estimator is (compare the expression of <span class="math inline">\(\mathsf{Var}\left(\bar{y}\right)\)</span> above) <span class="math inline">\(\sum_{h=-K}^{K}\left(1-\left\vert h\right\vert /T\right)\mathsf{c}_{h}\)</span>, where <span class="math inline">\(\mathsf{c}_{h}\)</span> is the sample autocovariance coefficient defined earlier, and <span class="math inline">\(K\)</span> is a “suitably” chosen number smaller than <span class="math inline">\(T\)</span> (for example, <span class="math inline">\(K\approx\sqrt{T}\)</span>).For large values of <span class="math inline">\(h\)</span>, the estimator <span class="math inline">\(\textsf{c}_{h}\)</span> becomes unprecise, and for this reason <span class="math inline">\(K\)</span> should not be too large compared to <span class="math inline">\(T\)</span>.</p>
+</div>
+<p>&nbsp;</p>
+<p>The statistical properties of the sample autocorrelation coefficients <span class="math inline">\(\mathsf{r}_{h}=\mathsf{c}_{h}/\mathsf{c}_{0}\)</span> are more complicated to derive than those of the sample mean, so we will not attempt to provide any detailed justifications. Under “reasonably general assumptions”, consistency and asymptotic normality of them can be established.</p>
+<!-- - Except for some special cases, the variances and covariances that appear in the resulting asymptotic distributions are rather cumbersome and difficult to make use of in practice.  -->
+<p><strong>Important special case</strong>: For the important special case of <span class="math inline">\(y_{t}\sim\mathsf{iid}\left(\mu,\sigma^{2}\right)\)</span>, it holds that <span class="math display">\[\begin{equation*}
+\left(\mathsf{r}_{1},\ldots,\mathsf{r}_{H}\right)\underset{as}{\sim}\mathsf{N}\left(\boldsymbol{0},T^{-1}\boldsymbol{I}_{H}\right),
+\end{equation*}\]</span> with a <span class="math inline">\(H\)</span>-dimensional zero mean vector and <span class="math inline">\(\boldsymbol{I}_{H}\)</span> <span class="math inline">\(\left(H\times H\right)\)</span> denotes an identity matrix. This result can be used to test whether it is realistic to consider an observed time series as an uncorrelated time series process. Under the hypothesis to be tested (uncorrelatedness), the estimators <span class="math inline">\(\mathsf{r}_{1},\ldots.,\mathsf{r}_{H}\)</span> are approximately independent with distribution <span class="math inline">\(\mathsf{N}\left(0,T^{-1}\right)\)</span>. Based on this, we get <span class="math display">\[\begin{equation*}
+\mathsf{P}(\left\vert \mathsf{r}_{h}\right\vert \geq1.96/\sqrt{T})\approx 0.05,
+\end{equation*}\]</span> a result that can be used to evaluate the significance of individual sample autocorrelation coefficients.</p>
+<p>To obtain a joint test for several autocorrelation coefficients, that is to test the null hypothesis of no autocorrelation <span class="math inline">\(H_0= \rho_1 = \cdots = \rho_H = 0\)</span>, one can use the test statistic <span class="math display">\[\begin{equation*}
+Q=T\sum_{h=1}^{H}\mathsf{r}_{h}^{2}\underset{as}{\sim}\chi_{H}^{2},
+\end{equation*}\]</span> whose large values would lead to rejection. Note that the asymptotic <span class="math inline">\(\chi_{H}^{2}\)</span>–distribution follows from the distribution result above for <span class="math inline">\(\left(\mathsf{r}_{1},\ldots,\mathsf{r}_{H}\right)\)</span> and the definition of the chi-squared distribution. In practice, an alternative and slightly different test statistic <span class="math display">\[\begin{equation*}
+Q_{{\tiny LB}}=T\left(T+2\right)\sum_{h=1}^{H}\mathsf{r}_{h}^{2}/\left(T-h\right)\underset{as}{\sim}\chi_{H}^{2},
+\end{equation*}\]</span> called the <strong>Ljung-Box test statistic</strong> is preferred because in small samples its distribution has been found to be closer to the <span class="math inline">\(\chi_{H}^{2}\)</span>–distribution than that of the test statistic <span class="math inline">\(Q\)</span>. It should be clear that both tests need <span class="math inline">\(H\)</span> not to be too large compared to <span class="math inline">\(T\)</span> to work well.</p>
+<p>The autocorrelation function can be used to reveal linear dependences between the observations, but not nonlinear ones (with the exception of Gaussian processes). <!-- For example, the process in Example 2.2(ii) is uncorrelated, but not independent (if $\mathsf{E}\left(  y_{t}^{4}\right)<\infty$ is assumed, this can be seen concretely by computing the first autocovariance coefficient of the squared process $y_{t}^{2}$, which is nonzero except in the case $\alpha=0$). --> To investigate the presence of potential nonlinear dependence over time, one (somewhat limited) approach is to test for autocorrelation in the squared observations.</p>
+<ul>
+<li><p>Assuming <span class="math inline">\(y_{t}\sim\mathsf{iid}\left(\mu,\sigma^{2}\right)\)</span> and <span class="math inline">\(\mathsf{E}\left(  y_{t}^{4}\right)&lt;\infty\)</span>, what was said above about the sample autocorrelations also holds for sample autocorrelations computed from the squared observations <span class="math inline">\(y_{t}^{2}\)</span>. In particular, the asymptotic result(s) remain valid when the autocorrelations are computed from squared observations, and also the Ljung-Box test has its indicated asymptotic distribution. In this context, however, the test is usually called the <strong>McLeod-Li test</strong>.</p></li>
+<li><p>Investigating the autocorrelations between squared observations is of great interest, especially in the case of financial time series, which themselves often are uncorrelated. We will return to this point later.</p></li>
+</ul>
+<p>As an empirical illustration, let us consider the quarterly U.S. real GDP growth rate. It turns out that we obtain the following results from the Ljung-Box test for different lag lengths <span class="math inline">\(H\)</span>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>| Lag | Q_{LB}  | p.value |</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>|-----|---------|---------|</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>| 4   | 16.487  | 0.002   |</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>| 8   | 19.494  | 0.012   |</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>| 12  | 27.942  | 0.006   |</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>| 16  | 32.897  | 0.008   |</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>| 20  | 34.679  | 0.022   |</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>These results clearly point out statistically significant autocorrelation (at the 5 % significance level) in the real GDP growth rate, which was apparent already based on the estimated autocorrelation coefficients. Furthermore, for the McLeod-Li tests, the resulting p-values are high (around 0.5 or higher) for all the lag length selections.</p>
+<p>&nbsp;</p>
+</section>
+<section id="r-lab" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="r-lab"><span class="header-section-number">4.8</span> R Lab</h2>
+<p>&nbsp;</p>
+<button class="toggle-button toggle-button-r" onclick="toggleCode('r-code5')">
+R code: Simulate MA(1) process and autocorrelations
+</button>
+<div id="r-code5" style="display:none;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tseries)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">1</span>))</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate AR(1) series</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>y1 <span class="ot">&lt;-</span> <span class="fu">arima.sim</span>(<span class="fu">list</span>(<span class="at">order=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">ar=</span><span class="fu">c</span>(<span class="fl">0.7</span>)), <span class="at">n=</span><span class="dv">150</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>y2 <span class="ot">&lt;-</span> <span class="fu">arima.sim</span>(<span class="fu">list</span>(<span class="at">order=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">ar=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.7</span>)), <span class="at">n=</span><span class="dv">150</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 1–2: time series</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y1, <span class="at">type=</span><span class="st">"l"</span>, <span class="at">main=</span><span class="st">"AR(1): phi₁ = 0.7"</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y2, <span class="at">type=</span><span class="st">"l"</span>, <span class="at">main=</span><span class="st">"AR(1): phi₁ = -0.7"</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 3–4: sample ACFs (suppress default plotting)</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>acor1 <span class="ot">&lt;-</span> <span class="fu">acf</span>(y1, <span class="at">lag=</span><span class="dv">40</span>, <span class="at">plot=</span><span class="cn">FALSE</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(acor1, <span class="at">main=</span><span class="st">"Sample ACF (phi₁ = 0.7)"</span>, <span class="at">xlab=</span><span class="st">"Lag"</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>acor2 <span class="ot">&lt;-</span> <span class="fu">acf</span>(y2, <span class="at">lag=</span><span class="dv">40</span>, <span class="at">plot=</span><span class="cn">FALSE</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(acor2, <span class="at">main=</span><span class="st">"Sample ACF (phi₁ = -0.7)"</span>, <span class="at">xlab=</span><span class="st">"Lag"</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 5–6: theoretical ACFs</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>acf1u <span class="ot">&lt;-</span> <span class="fu">ARMAacf</span>(<span class="at">ar=</span><span class="fl">0.9</span>, <span class="at">lag.max=</span><span class="dv">40</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(acf1u, <span class="at">type=</span><span class="st">"h"</span>, <span class="at">xlab=</span><span class="st">"Lag"</span>, <span class="at">main=</span><span class="st">"Theoretical ACF (phi₁ = 0.9)"</span>)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>acf2u <span class="ot">&lt;-</span> <span class="fu">ARMAacf</span>(<span class="at">ar=</span><span class="sc">-</span><span class="fl">0.9</span>, <span class="at">lag.max=</span><span class="dv">40</span>)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(acf2u, <span class="at">type=</span><span class="st">"h"</span>, <span class="at">xlab=</span><span class="st">"Lag"</span>, <span class="at">main=</span><span class="st">"Theoretical ACF (phi₁ = -0.9)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TSE-ch4_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<button class="toggle-button toggle-button-r" onclick="toggleCode('r-code7')">
+R code: Simulate a random walk process
+</button>
+<div id="r-code7" style="display:none;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tseries)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># AR(1) process / random walk (when selecting phi_1)</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>T <span class="ot">=</span> <span class="dv">150</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>phi_1<span class="ot">=</span><span class="dv">1</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>epsilon<span class="ot">=</span><span class="fu">rnorm</span>(T)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>y<span class="ot">=</span>epsilon    <span class="co"># initialize the vector y</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>y[<span class="dv">1</span>]<span class="ot">=</span>epsilon[<span class="dv">1</span>]  <span class="co"># implicitly assuming initial value y[0]=0</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>T) y[i] <span class="ot">=</span> phi_1<span class="sc">*</span>y[i<span class="dv">-1</span>]<span class="sc">+</span>epsilon[i]</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y,<span class="at">type=</span><span class="st">"l"</span>, <span class="at">main=</span><span class="st">""</span>,<span class="at">xlab=</span><span class="st">"Time"</span>, <span class="at">ylab=</span><span class="st">"y_t"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TSE-ch4_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">diff</span>(y),<span class="at">type=</span><span class="st">"l"</span>, <span class="at">main=</span><span class="st">""</span>,<span class="at">xlab=</span><span class="st">"Time"</span>, <span class="at">ylab=</span><span class="st">"y_t - y_{t-1}"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TSE-ch4_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>&nbsp;</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./TSE-ch3.html" class="pagination-link" aria-label="Stationary processes">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Stationary processes</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./TSE-ch5.html" class="pagination-link" aria-label="ARMA processes">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">ARMA processes</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
