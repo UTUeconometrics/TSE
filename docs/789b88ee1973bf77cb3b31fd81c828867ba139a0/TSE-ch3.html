@@ -135,6 +135,9 @@ function toggleCode(id) {
 
   </style>
 -->
+</head><body class="nav-sidebar docked">$$
+\newcommand{\ubar}[1]{\mkern3mu\underline{\mkern-3mu#1\mkern-3mu}\mkern3mu}
+$$
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -167,9 +170,9 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="styles-TSE.css">
-</head>
 
-<body class="nav-sidebar docked">
+
+
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -361,13 +364,13 @@ window.Quarto = {
 <ul>
 <li><p>Occasionally, the cases <span class="math inline">\(t=0,1,2,\ldots\)</span> or <span class="math inline">\(t=1,2,\ldots\)</span> are also considered.</p></li>
 <li><p>Because the set of values the time index takes is usually known, it does not need to be emphasized, and often we can simply denote the stochastic process by <span class="math inline">\(y_{t}\)</span>, or <span class="math inline">\(\left\{y_{t}\right\}\)</span> if one wants to emphasize the distinction to a single component of the process.</p></li>
-<li><p>The terms “<strong>process</strong>” and “<strong>model</strong>” are often used interchangeably in time series analysis. In this material, “process” emphasizes to the underlying theoretical mechanism (that is, the stochastic process) we aim to capture with an empirical and estimated “model” for the time series.</p></li>
+<li><p>The terms “<strong>process</strong>” and “<strong>model</strong>” are often used interchangeably in time series analysis. In this material, however, “process” refers specifically to the underlying theoretical mechanism—namely, the stochastic process—that we aim to represent when specifying an empirical time series model for the observed data.</p></li>
 </ul>
-<p>From a practical point of view, it is important to note that <strong>we have only a single realization available</strong>, the observations <span class="math inline">\(\left(y_{1},\ldots,y_{T}\right)\)</span>, of the process <span class="math inline">\(\left\{y_{t}\right\}\)</span>.</p>
+<p>From a practical point of view, it is <strong>important to understand that we have only a single realization available</strong>, the observations <span class="math inline">\(\left(y_{1},\ldots,y_{T}\right)\)</span>, of the process <span class="math inline">\(\left\{y_{t}\right\}\)</span>.</p>
 <ul>
-<li>In other words, we have only one realization from the process and that is only partial, that is observations are available only for the time periods <span class="math inline">\(t=1,\ldots,T\)</span>.</li>
+<li>In other words, <strong>we have only one realization from the process and that is only partial</strong>, that is observations are available only for the time periods <span class="math inline">\(t=1,\ldots,T\)</span>.</li>
 </ul>
-<p>These above-mentioned points imply that in order to investigate the properties of <span class="math inline">\(y_t\)</span> by making use of the observed data <span class="math inline">\(y_{1},\ldots,y_{T}\)</span> only, one must make some restrictive assumptions about <span class="math inline">\(y_t\)</span> for this to be possible.</p>
+<p>These above-mentioned remarks imply that in order to investigate the properties of <span class="math inline">\(y_t\)</span> by making use of the observed data <span class="math inline">\(y_{1},\ldots,y_{T}\)</span> only, one must make some restrictive assumptions about <span class="math inline">\(y_t\)</span> for this to be possible.</p>
 <p>&nbsp;</p>
 </section>
 <section id="weak-stationarity" class="level2" data-number="4.3">
@@ -389,10 +392,11 @@ window.Quarto = {
 <li><p>The <span class="math inline">\(\mu\)</span> is called the <strong>expected value</strong> or the <strong>mean</strong>.</p></li>
 </ul>
 <p>&nbsp;</p>
-<p>To summarize, a characteristic feature of weakly stationary process is that the first and second moments are finite and independent of time. Unless otherwise mentioned, in what follows (in this and coming few sections), <strong>we assume that weak stationarity holds</strong>.</p>
+<p>To summarize, a characteristic feature of weakly stationary process is that the first and second moments are finite and independent of time. Unless otherwise mentioned, in what follows in this and coming few sections, <strong>we assume that weak stationarity holds</strong>.</p>
 <p>&nbsp;</p>
 <p>A useful <strong>practical aspect</strong> of weak stationarity is that the plausibility of this assumption can be easily investigated by looking at a graph of the observed time series: If the observations vary with constant variance around a fixed level, then weak stationarity appears a plausible assumption.</p>
-<p>Let us consider an example related to U.S. real GDP growth during the period 1985–2007, commonly referred to as the <strong>Great Moderation</strong> time period.</p>
+<p>&nbsp;</p>
+<p>Let us consider an example related to the U.S. real GDP growth during the period 1985:Q1-–2007:Q2, commonly referred to as the <strong>Great Moderation</strong> time period.</p>
 <ul>
 <li><p>More on The Great Moderation, see https://www.federalreservehistory.org/essays/great-moderation</p></li>
 <li><p>Real Gross Domestic Product (GDP) is the total value of a country’s goods and services produced in a specific period, adjusted for inflation.</p></li>
@@ -429,7 +433,7 @@ window.Quarto = {
 </section>
 <section id="autocorrelation-function" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="autocorrelation-function"><span class="header-section-number">4.4</span> Autocorrelation function</h2>
-<p>In practice, a more convenient concept than autocovariance function is the <strong>autocorrelation function</strong> <span class="math display">\[\begin{equation*}
+<p>In practice, a more convenient concept than the autocovariance function is the <strong>autocorrelation function</strong> <span class="math display">\[\begin{equation*}
 \rho_{h}=\mathsf{Cor}\left(y_{t},y_{t+h}\right)= \mathsf{Cor}\left(y_t, y_{t-h}\right)=\gamma_{h}/\gamma_{0}.
 \end{equation*}\]</span> The <strong>autocorrelation coefficients</strong> <span class="math inline">\(\rho_{h}\)</span> obviously then have the properties <span class="math display">\[\begin{equation*}
 \rho_{0}=1, \,\, \left\vert \rho_{h}\right\vert \leq1, \, \mathrm{and} \,\,  \rho_{h}=\rho_{-h}.
@@ -557,8 +561,8 @@ Extra: Some further results
 u_{t}\sim\mathsf{iid}\left(\mu,\sigma^{2}\right) \quad \mathrm{or} \quad u_{t}\sim\mathsf{IID}\left(\mu,\sigma^{2}\right)
 \end{equation*}\]</span> where <span class="math inline">\(\mathsf{iid}\)</span> <span class="math inline">\(\leftrightarrow\)</span> refers to “independently and identically distributed”), <span class="math inline">\(\mu=\mathsf{E}\left(u_{t}\right)\)</span> and <span class="math inline">\(\sigma^{2}=\mathsf{Var}\left(u_{t}\right)\)</span> (in what follows, most often <span class="math inline">\(\mu=0\)</span>).</p>
 <p>If it is additionally assumed that <span class="math inline">\(u_{t}\sim\mathsf{N}\left(\mu,\sigma^{2}\right)\)</span>, one denotes <span class="math display">\[\begin{equation*}
-u_{t}\sim\mathsf{nid}\left(\mu,\sigma^{2}\right) \quad \mathrm{or} \quad u_{t}\sim\mathsf{NID}\left(\mu,\sigma^{2}\right)$
-\end{equation*}\]</span> where <span class="math inline">\(\mathsf{nid}\)</span> <span class="math inline">\(\leftrightarrow\)</span> <strong>normally and independently distributed</strong>.</p>
+u_{t}\sim\mathsf{nid}\left(\mu,\sigma^{2}\right) \quad \mathrm{or} \quad u_{t}\sim\mathsf{NID}\left(\mu,\sigma^{2}\right)
+\end{equation*}\]</span> where <span class="math inline">\(\mathsf{nid}\)</span> refers to <strong>normally and independently distributed</strong>.</p>
 <ul>
 <li>In the following, the above standard notation for the <span class="math inline">\(\mathsf{iid}\)</span>, <span class="math inline">\(\mathsf{nid}\)</span> and <span class="math inline">\(\mathsf{wn}\)</span> processes are used in these lecture notes from now on.</li>
 </ul>
@@ -576,7 +580,7 @@ y_{t}=A\cos\left(\lambda t\right)+B\sin\left(\lambda t\right),
 <p>The second example: Define the process <span class="math inline">\(y_{t}=u_{t}\sqrt{\omega+\alpha u_{t-1}^{2}}\)</span>, where <span class="math inline">\(\omega&gt;0\)</span>, <span class="math inline">\(\alpha\geq0\)</span> and <span class="math inline">\(u_{t}\)</span> is (weak) white noise process and satisfies <span class="math inline">\(\mathsf{E}\left(u_{t}\right)=0\)</span> and <span class="math inline">\(\mathsf{E}\left(u_{t}^{2}\right)&lt;\infty\)</span>. It is easy to see that <span class="math inline">\(y_{t}\)</span> is weak white noise (justification as an exercise). Because <span class="math inline">\(y_{t-1}=u_{t-1}\sqrt{\omega+\alpha u_{t-2}^{2}}\)</span>, it is clear that <span class="math inline">\(y_{t}\)</span> is not strong white noise (unless <span class="math inline">\(\alpha=0\)</span>). <span class="math inline">\(\square\)</span></p>
 </div>
 <p>&nbsp;</p>
-<p>As an illustration of nid process, below we depict a simulated realization from the <span class="math inline">\(\mathrm{nid}(0,1)\)</span> process. The length of the time series is 300 observations (<span class="math inline">\(T=300\)</span>). In other words, we can state that <span class="math inline">\(z_t \sim \mathsf{nid}(0,1), \, t=1,\ldots,300\)</span>. The simulated time series exhibits completely random variation.</p>
+<p>As an illustration of nid process, below we depict a simulated realization from the <span class="math inline">\(\mathrm{nid}(0,1)\)</span> process. The length of the time series is 300 observations (<span class="math inline">\(T=300\)</span>). In other words, we can state that <span class="math inline">\(z_t \sim \mathsf{nid}(0,1), \, t=1,\ldots,300\)</span>. The simulated time series exhibits completely random variation. As we can see, there are occasionally higher and lower values due to sampling variation.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">

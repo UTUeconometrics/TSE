@@ -101,6 +101,9 @@ function toggleCode(id) {
 
   </style>
 -->
+</head><body class="nav-sidebar docked">$$
+\newcommand{\ubar}[1]{\mkern3mu\underline{\mkern-3mu#1\mkern-3mu}\mkern3mu}
+$$
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -133,9 +136,9 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="styles-TSE.css">
-</head>
 
-<body class="nav-sidebar docked">
+
+
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -317,19 +320,19 @@ y_t= \beta_0 + x_{1, t-1} \beta_1 + \cdots + x_{M, t-1} \beta_M + u_t \equiv \bo
 \end{equation*}\]</span></p>
 <p>In contrast to the model specification above, at times we are also considering other linear regressions:</p>
 <ul>
-<li><p>Simultaneous values of predictive variables, instead of their lags, can be used as predictors in certain circumstances and applications. As an example and for simplicity <span class="math inline">\(K=1\)</span>, the model can be <span class="math display">\[\begin{equation*}
+<li><p>Simultaneous values of predictive variables, instead of their lags, can be used as predictors in certain circumstances and applications. As an example and for simplicity <span class="math inline">\(M=1\)</span>, the model can be <span class="math display">\[\begin{equation*}
 y_t= \beta_0 + x_{1t} \beta_1 + u_t.
 \end{equation*}\]</span></p></li>
 <li><p>Including also the lags of <span class="math inline">\(y_t\)</span> on the right hand side of the model equation. These are then autoregressive models with additional predictive variables, often denoted by ARX or ADL (Autoregressive Distributed Lag) models. One example of such a model is <span class="math display">\[\begin{equation*}
 y_t= \beta_0 + \phi_1 y_{t-1} + \beta_1 x_{1, t-1} + u_t,
 \end{equation*}\]</span> which can be straightforwardly extended by allowing more lags of <span class="math inline">\(y_t\)</span> and <span class="math inline">\(x_{1t}\)</span>.</p></li>
-<li><p>Including an autocorrelated error term is also possible. That is, especially in the somewhat already distant literature <span class="math inline">\(u_t = \phi u_{t-1} + \varepsilon_t, \, \varepsilon_t \thicksim \mathsf{iid}(0,\sigma^2)\)</span> (see, e.g., Verbeek, Chapters 4.6-4.7). Notice that adding the lags of <span class="math inline">\(y_t\)</span>, we can try to address the possible autocorrelation in the error term.</p></li>
+<li><p>Including an autocorrelated error term is also possible. That is, especially in the somewhat already distant econometric literature, we can set <span class="math inline">\(u_t = \phi u_{t-1} + \varepsilon_t, \, \varepsilon_t \thicksim \mathsf{iid}(0,\sigma^2)\)</span> (see, e.g., Verbeek, Chapters 4.6-4.7). Notice that adding the lags of <span class="math inline">\(y_t\)</span> to the model, we can try to address the possible autocorrelation in the error term.</p></li>
 </ul>
 <p>Subsequent (sub)sections are organized as follows:</p>
 <ul>
 <li><p>The case where all the (dependent and predictive/explanatory) variables are stationary variables.</p></li>
-<li><p>When there are also nonstationary variables present.</p></li>
-<li><p>At end of this section, we also briefly introduce the case where <span class="math inline">\(K\)</span> is high-dimensional. That is the number of predictive variables can be very large. Otherwise in this section, we restrict ourselves to the idea that have only one or only a few predictive variables (i.e.&nbsp;<span class="math inline">\(K\)</span> is relatively small).</p></li>
+<li><p>At end of this section, we also briefly introduce the case where <span class="math inline">\(M\)</span> is high-dimensional. That is the number of predictive variables can be very large. Otherwise in this section, we restrict ourselves to the idea that have only one or only a few predictive variables (i.e.&nbsp;<span class="math inline">\(M\)</span> is relatively small).</p></li>
+<li><p>When there are also nonstationary variables present (Section 13).</p></li>
 </ul>
 <p>&nbsp;</p>
 </section>
@@ -383,20 +386,6 @@ y_t = \boldsymbol{x}^{\prime}_t \boldsymbol{\beta} + u_t, \quad u_t = a_t + \the
 \widehat{\boldsymbol{C}}_{HC} = \sum{t=1}^{T} \widehat{u}^2_t x_t x_t^{\prime}.
 \end{equation*}\]</span></p>
 </div>
-<!-- In this chapter, the dependence of $y_t$ on its own lags remains of interest. That is we are building upon the autoregressive (AR) model, which can also be written using the form of a linear regression model where the lags can be interpreted as predictive variables. From this perspective, it comes to mind how we can study the relationships between two different time series, $y_t$ and $z_t$, such that $z_t$ is used as a predictive variable for $y_t$. It turns out that we can naturally use linear regression (under certain assumptions) and appeal to the use of the (conditional) ordinary least square (OLS) estimator for estimating unknown parameters.  -->
-<!-- At this stage, we will still examine univariate (single-equation) models for $y_t$, where (external) explanatory variables are included in the vector $\boldsymbol{z}_t$. Let us consider first a linear regression model with $K-1$ explanatory variables and a constant term (that is, we are not demeaning $y_t$ in this section and notation herein):  
-\begin{eqnarray*} 
-y_t = \beta_1 + z_{2t} \beta_2 + \cdots + z_{Kt} \beta_K + u_t. 
-(#eq:lineaarinenmallizt) 
-\end{eqnarray*} 
-For simplicity and importantly at this stage, let us assume:
-- that the predictive (explanatory) variables, likewise $y_t$, are stationary (i.e., they do not contain deterministic or stochastic trends). 
-- Additionally, the error term $u_t$ can be assumed to be iid, or white noise, as before. Thus, in principle, -->
-<!-- It is quite common in various applications that the simultaneous values of the explanatory variables at time $t$ are not used. In this case, the model above need to be modified in terms of predictors on the right hand side, we would end up with the model  
-\begin{eqnarray*}
-y_t = \beta_1 + z_{2, t-1} \beta_2 + \cdots + z_{K, t-1} \beta_K + u_t = x^{\prime}_t \beta + u_t, (#eq:predictiveregression) 
-\end{eqnarray*} 
-where $x_t = [1 \quad z^{\prime}_{t-1}]^{\prime} = [1 \quad z_{2, t-1} , \cdots , z_{K, t-1}]^{\prime}$ and $\beta = [\beta_1, \beta_2, \cdots , \beta_K]^{\prime}$. Especially in financial econometrics, this type of model is called predictive regression, which is often used, for example, in predicting stock returns.-->
 <p>&nbsp;</p>
 </section>
 <section id="forecasting-with-predictive-variables" class="level2" data-number="11.3">
@@ -417,7 +406,7 @@ y_{t+h}= \beta_0 + \beta_1 x_{1t} + \beta_2 x_{1,t-1} + e_{t+h},
 \end{equation*}\]</span> Naturally here the parameters <span class="math inline">\(\boldsymbol{\beta} = (\beta_0, \beta_1, \beta_2)\)</span>, and finally their estimates, are then specific to the forecast horizon <span class="math inline">\(h\)</span>.</p>
 <ul>
 <li><p>The properties of the error term <span class="math inline">\(e_t\)</span> can be complicated due to overlapping forecasting horizon from the forecast origin at time <span class="math inline">\(t\)</span> to <span class="math inline">\(t+h\)</span>.</p></li>
-<li><p>What is introduced above for a simple model containing only one predictive variable can be generalized straightforwardly to the case where we have <span class="math inline">\(K\)</span> predictors such as more lags of <span class="math inline">\(y_t\)</span> as predictors.</p></li>
+<li><p>What is introduced above for a simple model containing only one predictive variable can be generalized straightforwardly to the case where we have <span class="math inline">\(M\)</span> predictors such as more lags of <span class="math inline">\(y_t\)</span> as predictors.</p></li>
 </ul>
 <p>Overall, this same principle of <span class="math inline">\(h\)</span>-period predictive models can be seen as a building block for various extended predictive regressions such as the ones containing <strong>elements of machine and statistical learning</strong>.</p>
 <p>&nbsp;</p>
@@ -446,7 +435,7 @@ y_{t+h}= \beta_0 + \beta_1 x_{1t} + \beta_2 x_{1,t-1} + e_{t+h},
 <li><p><strong>Elastic Net</strong>: This is a hybrid that combines the penalties of both Ridge and LASSO. It’s often used to leverage the variable selection of LASSO while retaining the grouping effect and stability of Ridge, especially when predictors are highly correlated.</p></li>
 </ul>
 <p><strong>Relevance</strong>: These estimators are foundational in modern forecasting and (statistical) machine learning, particularly when integrating vast amounts of data—such as financial indicators, survey data, or text-based predictors—into an economic forecasting model. They provide a principled way to manage the trade-off between bias (from shrinkage) and variance (from the large number of predictors) to achieve superior out-of-sample forecasting accuracy.</p>
-<p>A more detailed treatment of these specific estimators is reserved for the <strong>Advanced Time Series Econometrics course</strong>.</p>
+<p>A more detailed treatment of this topic and these estimators is reserved for the <strong>Advanced Time Series Econometrics course</strong>.</p>
 <!-- &nbsp; ## R Lab
 All the R codes considered in this section are compiled in the following link: -->
 <p>&nbsp;</p>

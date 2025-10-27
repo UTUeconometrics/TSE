@@ -134,6 +134,9 @@ function toggleCode(id) {
 
   </style>
 -->
+</head><body class="nav-sidebar docked">$$
+\newcommand{\ubar}[1]{\mkern3mu\underline{\mkern-3mu#1\mkern-3mu}\mkern3mu}
+$$
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -166,9 +169,9 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="styles-TSE.css">
-</head>
 
-<body class="nav-sidebar docked">
+
+
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -328,7 +331,7 @@ window.Quarto = {
 </header>
 
 
-<p>Instead of stationary variables, as considered in the earlier Section 10, let us now assume that there are two variables, <span class="math inline">\(y_t\)</span> and <span class="math inline">\(x_t\)</span>, and either of them or both are nonstationary and specifically <span class="math inline">\(I(1)\)</span> variables.</p>
+<p>Instead of stationary variables, as considered earlier in Section 10, let us now assume that there are two variables, <span class="math inline">\(y_t\)</span> and <span class="math inline">\(x_t\)</span>, and either of them or both are nonstationary and specifically <span class="math inline">\(I(1)\)</span> variables.</p>
 <ul>
 <li><span class="math inline">\(y_t\)</span> is again the dependent variable and <span class="math inline">\(x_t\)</span> is the predictive/explanatory variable</li>
 </ul>
@@ -348,7 +351,7 @@ window.Quarto = {
 <li><p>Cf. the discussion on overdifferencing in Section 12.</p></li>
 </ul>
 <p>&nbsp;</p>
-<p>Let us examine cointegration more detail. If <span class="math inline">\(y_t\)</span> and <span class="math inline">\(x_t\)</span> are <span class="math inline">\(I(1)\)</span> and cointegrated, then <span class="math display">\[\begin{equation*}
+<p>Let us examine cointegration more detail. <strong>If <span class="math inline">\(y_t\)</span> and <span class="math inline">\(x_t\)</span> are <span class="math inline">\(I(1)\)</span> and cointegrated</strong>, then <span class="math display">\[\begin{equation*}
 z_t= y_t - \delta x_t = [y_t \quad x_t] [1 \quad -\delta]^{\prime} \thicksim I(0).
 \end{equation*}\]</span> The vector <span class="math inline">\([1 \quad -\delta]^{\prime}\)</span> is called the <strong>cointegration vector</strong>.</p>
 <ul>
@@ -394,7 +397,7 @@ y_t = \alpha + \delta x_t + u_t.
 <p>&nbsp;</p>
 <p>If <span class="math inline">\(y_t\)</span> and <span class="math inline">\(x_t\)</span> are indeed cointegrated, OLS yields a consistent estimator for the cointegration coefficient <span class="math inline">\(\delta\)</span>. However, the OLS estimator of <span class="math inline">\(\delta\)</span> has a non-normal asymptotic distribution, and the inferences based on the standard <span class="math inline">\(t\)</span>-test statistic can be misleading.</p>
 <p>&nbsp;</p>
-<p><strong>Example: Consumption and income</strong>. Let us consider an empirical question derived from Hall’s (1978) Permanent Income Hypothesis (PIH) in the context of cointegration.</p>
+<p><strong>Example: Consumption and income</strong>. Let us consider an important empirical question derived from Hall’s (1978) Permanent Income Hypothesis (PIH) in the context of cointegration.</p>
 <ul>
 <li>R. E. Hall (1978). Stochastic implications of the life cycle-permanent income hypothesis: Theory and evidence. Journal of Political Economy, 86(6), 971–987.</li>
 </ul>
@@ -406,7 +409,7 @@ y_t = \alpha + \delta x_t + u_t.
 <p>So, let us test the prediction of the PIH that real per capita consumption (log(<span class="math inline">\(c_t\)</span>) and real per capita disposable income (log(<span class="math inline">\(y_t\)</span>) share a single cointegrating relationship.</p>
 <ul>
 <li><p>Hypothesis: The two variables (<span class="math inline">\(\log(c_t)\)</span> and <span class="math inline">\(\log(y_t)\)</span>) are <span class="math inline">\(I(1)\)</span> and cointegrated.</p></li>
-<li><p>Long-run equation: <span class="math inline">\(\log(c_t) = \beta_0 + \beta_1 \log(y_t) + u_t\)</span></p></li>
+<li><p>Long-run equation: <span class="math inline">\(\log(c_t) = \alpha + \delta \log(y_t) + u_t\)</span></p></li>
 <li><p>PIH implication: The cointegrating vector should be <span class="math inline">\((1,-\beta_1)\)</span>, where <span class="math inline">\(\beta_1\)</span> is theoretically close to 1 (or exactly 1 in the simplest PIH model) because, in the long run, consumption should grow proportionally with permanent income. The error term <span class="math inline">\(u_t\)</span> and the resulting residuals <span class="math inline">\(\widehat{u}_t\)</span> must be <span class="math inline">\(I(0)\)</span> (stationary).</p></li>
 </ul>
 <div class="cell" data-layout-align="center">
@@ -422,7 +425,7 @@ y_t = \alpha + \delta x_t + u_t.
 <span style="color: #0069d9;">Figure: Monthly U.S. data (sample period 1959:1–2025:8) on (log) consumption and income.</span>
 </center>
 <p>&nbsp;</p>
-<p>Check first the unit root hypothesis for the two time series:</p>
+<p>Check first the unit root hypothesis for the two time series. In these ADF tests, a constant and linear trend component is included in the test regression and the number lagged differences <span class="math inline">\(p\)</span> is 4:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>log(c_t)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Test Statistic: -2.005634 </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>P-value: 0.595</span>
@@ -454,7 +457,7 @@ y_t = \alpha + \delta x_t + u_t.
 </div>
 </div>
 <center>
-<span style="color: #0069d9;">Figure: PIH residual time series (from the estimated cointegrated model..</span>
+<span style="color: #0069d9;">Figure: PIH residual time series (from the estimated cointegrated model).</span>
 </center>
 <p>&nbsp;</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="an">Test Statistic:</span><span class="co"> -4.561388 </span></span>
@@ -466,7 +469,7 @@ y_t = \alpha + \delta x_t + u_t.
 <h2 data-number="14.3" class="anchored" data-anchor-id="linear-regressions-containing-i1-variables"><span class="header-section-number">14.3</span> Linear regressions containing I(1) variables</h2>
 <p>Recall the linear regression <span class="math display">\[\begin{equation*}
 y_t= \boldsymbol{x}^{\prime}_t \boldsymbol{\beta} + u_t,
-\end{equation*}\]</span> and the two assumptions <span class="math inline">\(\mathrm{(i)}\)</span>–<span class="math inline">\(\mathrm{(ii)}\)</span> set in the previous section:</p>
+\end{equation*}\]</span> and the two assumptions <span class="math inline">\(\mathrm{(i)}\)</span>–<span class="math inline">\(\mathrm{(ii)}\)</span> set in Section 10:</p>
 <ul>
 <li><p><span class="math inline">\(\mathrm{(i)}\)</span> The error term <span class="math inline">\(u_t\)</span> is serially uncorrelated and uncorrelated with the regressors included in <span class="math inline">\(\boldsymbol{x}_t\)</span>.</p></li>
 <li><p><span class="math inline">\(\mathrm{(ii)}\)</span> All the regressors in <span class="math inline">\(\boldsymbol{x}_t\)</span> are either deterministic or stationary random variables.</p></li>
@@ -540,7 +543,7 @@ y_t = \beta_0 + \beta_1 x_t + u_t,
 \end{equation*}\]</span> but assuming wrongly that the variables <span class="math inline">\(y_t\)</span> and <span class="math inline">\(x_t\)</span> are stationary. Instead, they are generated by two independent random walks (i.e., <span class="math inline">\(y_t\)</span> and <span class="math inline">\(x_t\)</span> are <span class="math inline">\(I(1)\)</span> variables) <span class="math display">\[\begin{eqnarray*}
 y_t &amp;=&amp; y_{t-1} + u_{1t}, \quad u_{1t} \thicksim \mathsf{iid}(0, \sigma^2_1) \\
 x_t &amp;=&amp; x_{t-1} + u_{2t}, \quad u_{2t} \thicksim \mathsf{iid}(0, \sigma^2_2).
-\end{eqnarray*}\]</span> This typically leads to the estimation result of the above linear regression characterized by a fairly high <span class="math inline">\(R^2\)</span> (the coefficient of determination), highly autocorrelated residuals <span class="math inline">\(\widehat{u}_t\)</span> and a (highly) statistically significant estimate of <span class="math inline">\(\beta_2\)</span>. This result is clearly spurious given that the variables are completely independent!</p>
+\end{eqnarray*}\]</span> This typically leads to the estimation result of the above linear regression characterized by a fairly high <span class="math inline">\(R^2\)</span> (the coefficient of determination), highly autocorrelated residuals <span class="math inline">\(\widehat{u}_t\)</span> and a (highly) statistically significant estimate of <span class="math inline">\(\beta_1\)</span>. This result is clearly spurious given that the variables are completely independent!</p>
 <ul>
 <li><p>Estimation results like this should not be taken seriously.</p></li>
 <li><p>The reason is that with <span class="math inline">\(y_t\)</span> and <span class="math inline">\(x_t\)</span> being <span class="math inline">\(I(1)\)</span> variables, the error term <span class="math inline">\(u_t\)</span> will also be <span class="math inline">\(I(1)\)</span>, not stationary (<span class="math inline">\(I(0)\)</span>).</p></li>

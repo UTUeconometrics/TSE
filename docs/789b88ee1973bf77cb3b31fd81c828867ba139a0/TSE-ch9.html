@@ -135,6 +135,9 @@ function toggleCode(id) {
 
   </style>
 -->
+</head><body class="nav-sidebar docked">$$
+\newcommand{\ubar}[1]{\mkern3mu\underline{\mkern-3mu#1\mkern-3mu}\mkern3mu}
+$$
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -167,9 +170,9 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="styles-TSE.css">
-</head>
 
-<body class="nav-sidebar docked">
+
+
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -336,7 +339,7 @@ window.Quarto = {
 <h2 data-number="10.1" class="anchored" data-anchor-id="modelling-conditional-variance"><span class="header-section-number">10.1</span> Modelling conditional variance</h2>
 <p>ARMA models can be characterized as models for the conditional mean of a stationary process.</p>
 <ul>
-<li>When the invertibility condition holds, ARMA processes have the AR(<span class="math inline">\(\infty\)</span>) representation from which it can be seen that the conditional expected value of <span class="math inline">\(y_{t}\)</span>, conditional on the past of the process <span class="math inline">\(\left\{y_{t-1},y_{t-2},\ldots\right\}\)</span>, is <span class="math inline">\(\mathsf{E}_{t-1}(y_t)=-\sum_{j=1}^{\infty}\pi_{j} (y_{t-j}-\mu)\)</span>.</li>
+<li>When the invertibility condition holds, ARMA processes have the AR(<span class="math inline">\(\infty\)</span>) representation from which it can be seen that the conditional expected value of <span class="math inline">\(y_{t}\)</span>, conditional on the past of the process <span class="math inline">\(\left\{y_{t-1},y_{t-2},\ldots\right\}\)</span>, is <span class="math inline">\(\mathsf{E}_{t-1}(y_t) = \mu -\sum_{j=1}^{\infty}\pi_{j} (y_{t-j}-\mu)\)</span>.</li>
 </ul>
 <p>The conditional variance of an ARMA process (model) <span class="math inline">\(y_t\)</span> is <span class="math display">\[\begin{eqnarray*}
 \mathsf{Var}_{t-1}(y_t) &amp;=&amp; \mathsf{E}_{t-1}(y_t-\mathsf{E}_{t-1}(y_t))^2 \\
@@ -379,12 +382,12 @@ window.Quarto = {
 </div>
 </div>
 <center>
-<span style="color: #0069d9;">Figure: Sample autocorrelations and partial autocorrelations in NASDAQ 100 excess returns.</span>
+<span style="color: #0069d9;">Figure: Sample autocorrelations and partial autocorrelations of the NASDAQ 100 excess returns.</span>
 </center>
 <p>&nbsp;</p>
-<p>The asset return series exhibits, however, some even more clear and typical variation, which is reflected by the autocorrelation function of the squared observations: All the reported autocorrelation coefficients of squared observations exhibit clear positive autocorrelation exceeding the 95%-critical bound. The approximate <span class="math inline">\(p\)</span>-value of the McLeod Li test with <span class="math inline">\(H=10\)</span>, and also with other selections, is zero with four decimal precision.</p>
+<p>The asset return series exhibits, however, some even more clear and typical variation, which is reflected by the autocorrelation function of the squared observations: All the reported autocorrelation coefficients of squared observations exhibit clear positive autocorrelation exceeding the 95%-critical bound. The approximate <span class="math inline">\(p\)</span>-value of the McLeod Li test with <span class="math inline">\(H=10\)</span>, and also with other lag length selections, are zero with four decimal precision.</p>
 <ul>
-<li><p>There are periods during which the variation of the series is either larger or smaller than on average. This “volatility clustering” is certain type of heteroskedasticity.</p></li>
+<li><p>There are periods (see above) during which the variation of the series is either larger or smaller than on average. This “volatility clustering” is certain type of heteroskedasticity.</p></li>
 <li><p>When the definition of variance is taken into account, it is natural to investigate this using the autocorrelation function of the squared observations. Notable are also the large difference between large and small absolute values, which suggests a more fat-tailed distribution than the normal distribution.</p></li>
 </ul>
 <div class="cell" data-layout-align="center">
@@ -400,7 +403,7 @@ window.Quarto = {
 <span style="color: #0069d9;">Figure: Sample autocorrelations for the squared stock return observations.</span>
 </center>
 <p>&nbsp;</p>
-<p>In what follows, heteroskedasticity similar to that of the stock return series above is thought to be not related with changes in unconditional variance, but rather with changes in the <strong>conditional variance</strong> where conditioning is on the past values of the series. Next, we will first consider some general aspects of models used in modelling conditional variance, and then focus on some particular models that are most common in practice.</p>
+<p>In what follows, heteroskedasticity similar to that of the stock return series above is thought to be not related with changes in unconditional variance, but rather with changes in the <strong>conditional variance</strong> when conditioning on the past values of the series. Next, we will first consider some general aspects of models used in modelling conditional variance, and then focus on some particular models that are most common in practice.</p>
 <p>&nbsp;</p>
 </section>
 <section id="model-formulation" class="level2" data-number="10.2">
@@ -430,7 +433,7 @@ u_{t} = h_{t}^{1/2}\varepsilon_{t},\quad \varepsilon_{t}\sim\mathsf{iid}\left(0,
 &amp;=&amp; h_{t},
 \end{eqnarray*}\]</span> where the result CEV2 and the identity <span class="math inline">\(u_{t}^{2}=h_{t}\varepsilon_{t}^{2}\)</span> is used (see the general model definition above).</li>
 </ul>
-<p>These two results demonstrate that the conditional mean and conditional variance of the process <span class="math inline">\(y_{t}\)</span> depend on the past values of the process. Based on the above points, building a volatility model, that is selecting the model equation for <span class="math inline">\(h_t\)</span>, roughly consists of the following steps:</p>
+<p>These two results demonstrate that the conditional mean and conditional variance of the process <span class="math inline">\(y_{t}\)</span> depend on the past values of the process. Based on the above points, <strong>building a volatility model</strong>, that is selecting the model equation for <span class="math inline">\(h_t\)</span>, roughly consists of the following steps:</p>
 <ul>
 <li>Finding an adequate specification for the conditional mean <span class="math inline">\(\mathsf{E}_{t-1}(y_t)\)</span> (e.g., to select a suitable AR or ARMA model, and including also possible deterministic terms) is necessary to obtain a suitable specification for the conditional variance.</li>
 </ul>
@@ -438,7 +441,7 @@ u_{t} = h_{t}^{1/2}\varepsilon_{t},\quad \varepsilon_{t}\sim\mathsf{iid}\left(0,
 <ul>
 <li><p>Checking for the (conditional) heteroskedasticity of the error term. This can be based on residuals, as they are empirical counterparts of the error terms. That is testing “ARCH effects” using, e.g., the McLeod-Li test.</p></li>
 <li><p>Finding a sufficient specification for the conditional variance <span class="math inline">\(h_t\)</span>. There are a lot of different alternative model specifications to GARCH(<span class="math inline">\(r,s\)</span>) suggested in the econometric literature. Replacing it with some of the alternatives yield a straightforward extension of the AR-GARCH model introduced above.</p></li>
-<li><p>Estimation of the full model can be carried out by the method of maximum likelihood.</p></li>
+<li><p>Estimation of the full model can be carried out by the method of maximum likelihood (see details below).</p></li>
 </ul>
 <p>&nbsp;</p>
 <div class="toggle-button" onclick="toggleCode('Extra13')">
@@ -482,7 +485,7 @@ h_t &amp;=&amp; \omega + \beta_1 h_{t-1} + \alpha_1 u^2_{t-1} \\
 &amp;=&amp; \omega \sum_{j=0}^{k} \beta_1^j + \alpha_1 \sum_{j=0}^{k} \beta_1^j u^2_{t-1-j} + \beta_1^{k+1} h_{t-k-1}.
 \end{eqnarray*}\]</span> This suggests that in the case <span class="math inline">\(\beta_1 &lt; 1\)</span>, <span class="math display">\[\begin{equation*}
 h_t = \omega \sum_{j=0}^{\infty} \beta_1^j + \alpha_1 \sum_{j=0}^{\infty} \beta_1^j u^2_{t-1-j},
-\end{equation*}\]</span> which is a particular kind of ARCH(<span class="math inline">\(\infty\)</span>) form. Therefore, we can conclude that GARCH(1,1) is able to capture volatility clustering in a parsimonious way by specifying only three parameters.</p>
+\end{equation*}\]</span> which is a particular kind of ARCH(<span class="math inline">\(\infty\)</span>) form. Therefore, we can conclude that GARCH(1,1) is able to capture volatility clustering in a parsimonious way via only three parameters.</p>
 <p>Another perspective on the GARCH models, and specifically to the GARCH(1,1) model, is obtained by adding <span class="math inline">\(u_t^2\)</span> on both sides of the model equation. Therefore, the GARCH(1,1) can be rewritten <span class="math display">\[\begin{equation*}
 u^2_t = \omega + (\alpha_1 + \beta_1) u^2_{t-1} + \xi_t - \beta_1 \xi_{t-1},
 \end{equation*}\]</span> where <span class="math inline">\(\xi_t = u^2_t - h_t = h_t(\varepsilon^2_t-1)\)</span> and <span class="math inline">\(\mathrm{E}(\xi_t)=0\)</span>. This is an ARMA(1,1) type of presentation for <span class="math inline">\(u_t^2\)</span>.</p>
@@ -552,12 +555,12 @@ l(\boldsymbol{\vartheta}) = \sum_{t=1}^{T} l_t(\boldsymbol{\vartheta}) =  -\frac
 </ul>
 <p>That is, we estimate an AR(1) model with GARCH(1,1) errors. The estimation result of the maximum likelihood estimation, based on the normality assumption of <span class="math inline">\(\varepsilon_t\)</span>, yields <span class="math display">\[\begin{eqnarray*}
 y_{t} &amp;=&amp; \underset{{\left(0.013\right) }}{0.087} - \underset{{\left(0.013\right) }}{0.044} y_{t-1} +
-\widehat{u}_{t}
+\widehat{u}_{t},
 \notag \\
 &amp;&amp; \\
 \widehat{h}_{t} &amp;=&amp;\underset{{\left(0.006\right) }}{0.035} +\underset{{\left(
 0.013\right) }}{0.876}\widehat{h}_{t-1}+\underset{{\left( 0.012 \right) }}{0.105}\widehat{u}_{t-1}^{2},  \notag
-\end{eqnarray*}\]</span> Here we report the robust standard errors under the parameter estimates (see the QMLE asymptotic distribution result). The full estimation result provided by <strong>rugarch package</strong> in R yields the following results:</p>
+\end{eqnarray*}\]</span> where we report the robust standard errors under the parameter estimates (see the QMLE asymptotic distribution result). The full estimation result provided by <strong>rugarch package</strong> in R yields the following results:</p>
 <center>
 <div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>*---------------------------------*</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ss">*          </span>GARCH Model Fit        *</span>
@@ -622,7 +625,7 @@ y_{t} &amp;=&amp; \underset{{\left(0.013\right) }}{0.087} - \underset{{\left(0.0
 </center>
 <p>The estimation result shows well the point using the QMLE:</p>
 <ul>
-<li><p>The estimated coefficients (“AR”,“ARCH” and “GARCH” estimates) are the same for “optimal paramaters” (that is, when we assume that the normality assumption <span class="math inline">\(\varepsilon_t\)</span> holds) and for QMLE (resulting robust estimation results), butthe estimated standard errors are different. Especially for the GARCH part this means, as often in these circumstances, that the robust standard errors are somwhat higher reflecting the additional uncertainty coming from possible model misspecification.</p></li>
+<li><p>The estimated coefficients (“AR”,“ARCH” and “GARCH” estimates) are the same for “optimal paramaters” (that is, when we assume that the normality assumption <span class="math inline">\(\varepsilon_t\)</span> holds) and for QMLE (resulting robust estimation results), but the estimated standard errors are different. Especially for the GARCH part this means, as often in these circumstances, that the robust standard errors are somwhat higher reflecting the additional uncertainty coming from possible model misspecification.</p></li>
 <li><p>All in all, all the estimated coefficients are statistically significant at the conventional significance levels. Moreover, the typical pattern of the GARCH(1,1) model is also present where the GARCH parameter (here <span class="math inline">\(\beta_1\)</span>) is larger than the ARCH coefficient <span class="math inline">\(\alpha_1\)</span>, and their sum is relatively close to 1. Estimated volatility (conditional standard deviation <span class="math inline">\(\widehat{h}^{1/2}_t\)</span>) of the estimated model is depicted below.</p></li>
 </ul>
 <div class="cell" data-layout-align="center">
@@ -641,7 +644,7 @@ y_{t} &amp;=&amp; \underset{{\left(0.013\right) }}{0.087} - \underset{{\left(0.0
 <p>Residual diagnostics show that:</p>
 <ul>
 <li><p>There is no remaining autocorrelation in the residuals and squared residuals (based on the Ljung-Box and the McLeod-Li tests and residual autocorrelation coefficients).</p></li>
-<li><p>Without presenting details, (weighted) ARCH LM test tests the null hypothesis that there is no signs of remaining conditional heteroskedasticity in the residuals <span class="math inline">\(\widehat{u}_t\)</span>. In the estimation result above, the p-values of the ARCH LM tests show that the parsimonious AR(1)-GARCH(1,1) is an adequate model.</p></li>
+<li><p>Without presenting details, (weighted) ARCH LM test tests the null hypothesis that there is no remaining conditional heteroskedasticity in the residuals <span class="math inline">\(\widehat{u}_t\)</span>. In the estimation result above, the p-values of the ARCH LM tests show that the parsimonious AR(1)-GARCH(1,1) is an adequate model.</p></li>
 <li><p>There is some deviation from the normality assumption in the (standardized) residuals. This suggests that the estimates should be interpreted as QMLEs, as above.</p></li>
 </ul>
 <div class="cell" data-layout-align="center">
@@ -669,8 +672,8 @@ y_{t} &amp;=&amp; \underset{{\left(0.013\right) }}{0.087} - \underset{{\left(0.0
     \mathsf{E}_{t}\left(y_{t+k}\right) = \nu + \phi_{1}\mathsf{E}_{t}(y_{t+k-1})+\cdots+\phi_{p}\mathsf{E}_{t}(y_{t+k-p}), \quad k=1,2,\ldots,
 \end{equation*}\]</span> where <span class="math inline">\(\mathsf{E}_{t}(y_{t+k-j})=y_{t+k-j}\)</span> for <span class="math inline">\(j\geq k\)</span>.</p>
 <ul>
-<li><p>In conclusion, from these and the forecasting formulae for an AR(<span class="math inline">\(p\)</span>) process with a homoskedastic error term, it can be concluded that the optimal forecasts can be formed recursively exactly in the same manner as in the homoskedastic case.</p></li>
-<li><p>In practice, unknown parameters naturally need to be replaced with their estimates, which are based on the finite sample sizes, and hence numerically here forecasts can be slightly different than obtained with an AR(<span class="math inline">\(p\)</span>) model with conditionally homoskedastic errors.</p></li>
+<li><p>In conclusion, from these and the forecasting formulae for an AR(<span class="math inline">\(p\)</span>) process with a homoskedastic error term, it can be concluded that the optimal forecasts can be formed recursively exactly in the same manner as in the (conditionally) homoskedastic case.</p></li>
+<li><p>In practice, when computing forecasts, unknown parameters naturally need to be replaced with their estimates, which are based on the finite sample sizes, and hence numerically here forecasts can be slightly different than obtained with an AR(<span class="math inline">\(p\)</span>) model with conditionally homoskedastic errors.</p></li>
 </ul>
 <p>&nbsp;</p>
 <p>As the above shows, conditional heteroskedasticity does not affect the forecasting formulae, which are the same as in the AR case discussed earlier. However, the presence of conditional heteroskedasticity changes how the prediction intervals are computed (see Extra below).</p>
@@ -1121,7 +1124,7 @@ Adjusted Pearson Goodness-of-Fit Test:
 4    50     251.7    4.746e-29
 
 
-Elapsed time : 0.1264811 </code></pre>
+Elapsed time : 0.1351819 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the standardized residuals (should follow the assumed distribution: 'std')</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>std_residuals <span class="ot">&lt;-</span> <span class="fu">residuals</span>(sGARCH_fit_norm, <span class="at">standardize =</span> <span class="cn">TRUE</span>)</span>
@@ -1276,7 +1279,7 @@ Adjusted Pearson Goodness-of-Fit Test:
 4    50    123.47    2.329e-08
 
 
-Elapsed time : 0.3130829 </code></pre>
+Elapsed time : 0.325551 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Visualization of Conditional Volatility (Standard Deviation)</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------------------------</span></span>
@@ -1438,7 +1441,7 @@ Adjusted Pearson Goodness-of-Fit Test:
 4    50     264.0    3.115e-31
 
 
-Elapsed time : 0.404264 </code></pre>
+Elapsed time : 0.4123259 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the 'archm' coefficient (in-mean parameter)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>

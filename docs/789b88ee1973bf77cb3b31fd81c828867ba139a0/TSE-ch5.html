@@ -101,6 +101,9 @@ function toggleCode(id) {
 
   </style>
 -->
+</head><body class="nav-sidebar docked">$$
+\newcommand{\ubar}[1]{\mkern3mu\underline{\mkern-3mu#1\mkern-3mu}\mkern3mu}
+$$
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -133,9 +136,9 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="styles-TSE.css">
-</head>
 
-<body class="nav-sidebar docked">
+
+
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -300,9 +303,9 @@ window.Quarto = {
     y_{t} = \nu + \phi_{1}y_{t-1}+\cdots+\phi_{p}y_{t-p}+u_{t}, \quad u_{t}\sim\mathsf{iid}\left(0,\sigma^{2}\right),
 \end{equation*}\]</span> which can be rewritten <span class="math display">\[\begin{equation*}
     \phi\left(B\right) (y_{t}- \mu) = u_{t},
-\end{equation*}\]</span> with the lag-polynomial <span class="math inline">\(\phi\left(B\right)=1-\phi_{1}B-\cdots-\phi_{p}B^{p}\)</span>. The current value of the process hence depends linearly on <span class="math inline">\(p\)</span> past values of the process and the constant term, as well as on an unobserved random shock (or error term or <em>innovation</em>).</p>
+\end{equation*}\]</span> with the lag-polynomial <span class="math inline">\(\phi\left(B\right)=1-\phi_{1}B-\cdots-\phi_{p}B^{p}\)</span>. The current value of the process hence depends linearly on <span class="math inline">\(p\)</span> past values of the process and the constant term, as well as on an unobserved random shock (or error term or “innovation”, depending on the perspective and situation).</p>
 <ul>
-<li>Notice that <span class="math inline">\(\phi\left(B\right) \mu \equiv \phi\left(1\right) \mu \equiv \nu\)</span>.</li>
+<li>Notice again that <span class="math inline">\(\phi\left(B\right) \mu \equiv \phi\left(1\right) \mu \equiv \nu\)</span>.</li>
 </ul>
 <p>&nbsp;</p>
 <p><strong>A sufficient condition for the stationarity of an AR(<span class="math inline">\(p\)</span>) process</strong>. A sufficient condition for the stationarity of the AR(<span class="math inline">\(p\)</span>) process is that the roots of the polynomial <span class="math inline">\(\phi\left(z\right)\)</span> <span class="math inline">\(\left(z\in \mathbb{C}\right)\)</span> lie outside the unit circle/disk in the complex plane, or equivalently that <span class="math display">\[\begin{equation*}
@@ -313,7 +316,7 @@ window.Quarto = {
 </ul>
 <!-- As discussed in the notes earlier in connection with the AR(1) process, this stationarity condition is not necessary. However, in what follows, we will focus on causal processes only, and in this case this stationarity condition is also a necessary condition. -->
 <ul>
-<li><p>Notice that the resulting root (roots) can also be complex numbers. Related to the above stationarity condition, the absolute value or norm of a complex number <span class="math inline">\(z=x+iy\)</span> <span class="math inline">\(\left(i=\sqrt{-1}\right)\)</span> is defined as <span class="math inline">\(\left\vert z\right\vert=\sqrt{x^{2}+y^{2}}\)</span>. The latter form of the stationarity condition can be further expressed as <span class="math inline">\(\phi\left(z\right)  =0\Rightarrow\left\vert z\right\vert&gt;1\)</span>.</p></li>
+<li><p>Notice that the resulting root (roots), when <span class="math inline">\(p&gt;1\)</span>, can also be complex numbers. Related to the above stationarity condition, the absolute value or norm of a complex number <span class="math inline">\(z=x+iy\)</span> <span class="math inline">\(\left(i=\sqrt{-1}\right)\)</span> is defined as <span class="math inline">\(\left\vert z\right\vert=\sqrt{x^{2}+y^{2}}\)</span>. The latter form of the stationarity condition can be further expressed as <span class="math inline">\(\phi\left(z\right)  =0\Rightarrow\left\vert z\right\vert&gt;1\)</span>.</p></li>
 <li><p>Still about possible complex roots: Because the coefficients of the polynomial <span class="math inline">\(\phi\left(z\right)\)</span> are real numbers, the potential complex roots always appear as conjugate roots, that is, if <span class="math inline">\(\zeta=x+iy\)</span> is a root, then also <span class="math inline">\(\bar{\zeta}=x-iy\)</span> is a root.</p></li>
 </ul>
 <p>&nbsp;</p>
@@ -371,7 +374,7 @@ y_t \thicksim \mathrm{AR}(p) \Rightarrow \alpha_p = \phi_p \quad
 \end{equation*}\]</span> In other words, <strong>the partial autocorrelation function of an AR(<span class="math inline">\(p\)</span>) process drops to zero after lag <span class="math inline">\(p\)</span></strong> (assuming <span class="math inline">\(\phi_p \neq 0\)</span>).</p>
 <ul>
 <li><p>The sample counterpart of the (population) partial autocorrelation function is obtained by using sample autocovariances <span class="math inline">\(c_h\)</span>.</p></li>
-<li><p>The (sample) partial autocorrelation function can generally be based on the Yule-Walker equations (see details below in the Extra section).</p></li>
+<li><p>The (sample) partial autocorrelation function is typically estimated using recursive algorithms or regression techniques, which are closely related to the Yule-Walker framework (see details in the Extra section below).</p></li>
 </ul>
 <p>An important detail for model selection is that if an observed time series has been generated by an AR(<span class="math inline">\(p\)</span>) process, its estimated autocorrelation function should decay to zero as the lag length increases <strong>with no apparent breaks</strong>, whereas the estimated partial autocorrelation function should have <strong>a visible break after lag <span class="math inline">\(p\)</span></strong>.</p>
 <p>To identify the location of the break point in the estimated partial autocorrelation function, one can make use of the following result:</p>
@@ -384,7 +387,7 @@ y_t \thicksim \mathrm{AR}(p) \Rightarrow \alpha_p = \phi_p \quad
 </ul>
 <p>&nbsp;</p>
 <div class="toggle-button" onclick="toggleCode('Extra9')">
-Extra: Yule-Walker equations to obtain autocorrelation and partial autocorrelation coefficients
+Extra: Yule-Walker equations and autocorrelation and partial autocorrelation coefficients
 </div>
 <div id="Extra9" style="display:none;">
 <p>Choosing <span class="math inline">\(h=1,\ldots,p\)</span>&nbsp;in the AR(<span class="math inline">\(p\)</span>) autocorrelation function leads to the equations (<span class="math inline">\(\rho_{0}=1\)</span> and <span class="math inline">\(\rho_{h}=\rho_{-h}\)</span>) <span class="math display">\[\begin{align*}
@@ -440,7 +443,7 @@ Extra: Yule-Walker equations to obtain autocorrelation and partial autocorrelati
     y_{t} = \mu + u_{t}+\theta_{1}u_{t-1}+\cdots+\theta_{q}u_{t-q}, \quad u_{t}\sim\mathsf{iid}\left(0,\sigma^{2}\right),
 \end{equation*}\]</span> or alternatively using the lag operator as <span class="math display">\[\begin{equation*}
     (y_{t}-\mu)=\theta\left(B\right)u_{t},\,\, u_{t}\sim\mathsf{iid}\left(0,\sigma^{2}\right)
-\end{equation*}\]</span> with the lag-polynomial <span class="math inline">\(\theta\left(B\right)=1+\theta_{1}B+\cdots+\theta_{q}B^{q}\)</span>. Therefore, the current value of the process is assumed to depend linearly on the present and last <span class="math inline">\(q\)</span> unobservable random shocks (error terms or innovations). Because an MA(<span class="math inline">\(q\)</span>) process is a special case of the (causal) linear process, it is always both weakly and strictly stationary. Moreover, we get</p>
+\end{equation*}\]</span> with the lag-polynomial <span class="math inline">\(\theta\left(B\right)=1+\theta_{1}B+\cdots+\theta_{q}B^{q}\)</span>. Therefore, the current value of the process is assumed to depend linearly on the present and last <span class="math inline">\(q\)</span> unobservable random shocks. Because an MA(<span class="math inline">\(q\)</span>) process is a special case of the (causal) linear process, it is always both weakly and strictly stationary. Moreover, we get</p>
 <ul>
 <li><p><span class="math inline">\(\mathsf{E}\left( y_{t}\right) = \mu\)</span>,</p></li>
 <li><p><span class="math inline">\(\mathsf{Var}\left( y_{t}\right) =\gamma _{0}=\left( 1+\theta _{1}^{2}+\cdots +\theta _{q}^{2}\right) \sigma^{2}\)</span>.</p></li>
@@ -452,12 +455,12 @@ Extra: Yule-Walker equations to obtain autocorrelation and partial autocorrelati
         \sigma^{2}\sum_{j=0}^{q-h}\theta_{j}\theta_{j+h}, &amp; \text{for } \, 0\leq h\leq q,\\
         0, &amp; \text{for } \, h&gt;q,
     \end{cases}
-\end{equation*}\]</span> where <span class="math inline">\(\theta_0=1\)</span>. The autocorrelation function is then obtained via the formula <span class="math inline">\(\rho_{h}=\gamma_{h}\gamma_{0}\)</span>.</p>
+\end{equation*}\]</span> where <span class="math inline">\(\theta_0=1\)</span>. The autocorrelation function is then obtained via the formula <span class="math inline">\(\rho_{h}=\gamma_{h} / \gamma_{0}\)</span>.</p>
 <ul>
 <li><p>Therefore, the autocorrelation function of an MA(<span class="math inline">\(q\)</span>) process drops to zero after lag <span class="math inline">\(q\)</span> (assuming that <span class="math inline">\(\theta_{q}\neq0\)</span>).</p></li>
 <li><p>If one observes a similar feature in a sample autocorrelation function, one can consider an MA(<span class="math inline">\(q\)</span>) process as a good candidate to model the time series.</p></li>
 </ul>
-<p>When considering the suitability of an MA(<span class="math inline">\(q\)</span>) process, one can make use of the following result: In the case of an MA(<span class="math inline">\(q\)</span>) process, the estimators <span class="math inline">\(\mathsf{r}_{h}\)</span>, <span class="math inline">\(h&gt;q\)</span>, are approximately normally distributed with mean zero and variance <span class="math inline">\(\left(1+2\rho_{1}^{2}+\cdots+2\rho_{q}^{2}\right)T\)</span>. Therefore, if one wants to test whether an individual autocorrelation coefficient is statistically different from zero at the 5% significance level, the estimates <span class="math inline">\(\mathsf{r}_{h}\)</span>, <span class="math inline">\(h&gt;q\)</span>, should be compared with the critical bounds <span class="math display">\[\begin{equation*}
+<p>When considering the suitability of an MA(<span class="math inline">\(q\)</span>) process, one can make use of the following result: In the case of an MA(<span class="math inline">\(q\)</span>) process, the estimators <span class="math inline">\(\mathsf{r}_{h}\)</span>, <span class="math inline">\(h&gt;q\)</span>, are approximately normally distributed with mean zero and variance <span class="math inline">\(\left(1+2\rho_{1}^{2}+\cdots+2\rho_{q}^{2}\right)/T\)</span>. Therefore, if one wants to test whether an individual autocorrelation coefficient is statistically different from zero at the 5% significance level, the estimates <span class="math inline">\(\mathsf{r}_{h}\)</span>, <span class="math inline">\(h&gt;q\)</span>, should be compared with the critical bounds <span class="math display">\[\begin{equation*}
 \pm1.96\sqrt{\mathsf{\widehat{w}}_{q}/T}, \quad \mathsf{\widehat{w}}_{q}=\left(1+2\mathsf{r}_{1}^{2}+\cdots+2\mathsf{r}_{q}^{2}\right).
 \end{equation*}\]</span> In this case, <span class="math inline">\(\mathsf{P}(\left\vert \mathsf{r}_{h}\right\vert \geq1.96\sqrt{\mathsf{\widehat{w}}_{q}/T})\approx0.05\)</span>. Note also that the bounds above are wider than in the case <span class="math inline">\(y_{t}\sim\mathsf{iid}\left(0,\sigma^{2}\right)\)</span> when <span class="math inline">\(\mathsf{\widehat{w}}_{q}\)</span> is replaced by <span class="math inline">\(1\)</span>.</p>
 <p>&nbsp;</p>
@@ -467,24 +470,20 @@ Extra: Yule-Walker equations to obtain autocorrelation and partial autocorrelati
   \gamma_{0}=\sigma^{2}\left(1+\theta_1^{2}\right)=\sigma^{2}\theta_1^{2}\left(1+1/\theta_1^{2}\right) \,\, \mathrm{and} \,\, \gamma_{1}=\sigma^{2}\theta_1=\theta_1^{2}\sigma^{2}\left(1/\theta_1\right)\text{.}
 \end{equation*}\]</span> Define <span class="math inline">\(\theta_1^{\ast}=1/\theta_1\)</span> and <span class="math inline">\(\sigma_{\ast}^{2}=\theta_1^{2}\sigma^{2}\)</span>, so that <span class="math inline">\(u_{t}^{\ast}=\theta_1u_{t}\sim\mathsf{iid}\left(0,\sigma_{\ast}^{2}\right)\)</span>. Now, it can be seen that the two MA(1) processes <span class="math inline">\(y_{t}=u_{t}+\theta_1 u_{t-1}\)</span> and <span class="math inline">\(y_{t}^{\ast}=u_{t}^{\ast}+\theta_1^{\ast}u_{t-1}^{\ast}\)</span> have exactly the same autocovariance function, so that they cannot be distinguished from each other based on autocovariances.</p></li>
 <li><p>If in addition <span class="math inline">\(u_{t}\sim\mathsf{nid}\left(  0,\sigma^{2}\right)\)</span>, the entire probability structures of these two processes are indistinguishable.</p></li>
-<li><p>A consequence is that estimating the parameters based on an observed time series, unless one “tells” the method which of the parameter combinations <span class="math inline">\(\left(\theta_1,\sigma^{2}\right)\)</span> and <span class="math inline">\(\left(  \theta_1^{\ast},\sigma_{\ast}^{2}\right)\)</span> (that fit the data equally well) should be chosen.</p></li>
+<li><p>A consequence is that estimating the parameters based on an observed time series, unless one “tells” the method, which of the parameter combinations <span class="math inline">\(\left(\theta_1,\sigma^{2}\right)\)</span> and <span class="math inline">\(\left(  \theta_1^{\ast},\sigma_{\ast}^{2}\right)\)</span> (that fit the data equally well) should be chosen.</p></li>
 </ul>
 <!-- - In the Gaussian case (or in any analysis based on autocovariances only), the logic is that this condition is not restrictive because the parameter combinations $\left(  \theta_1,\sigma^{2}\right)$ and $\left(\theta_1^{\ast},\sigma_{\ast}^{2}\right)$ can not in practice anyway be distinguished from each other. Similar remarks hold also in the general MA($q$) case. -->
 <!-- - If$\left\vert \theta_{1}\right\vert=1$, this problem does not occur. However, this case is typically ruled out in order to avoid other complications such as extremely complicated estimation theory that completely differs from the conventional ($\left\vert \theta_{1}\right\vert <1$) case. -->
-<p>The typical solution to the above problem is to set the condition <span class="math inline">\(\left\vert \theta_1\right\vert &lt;1\)</span>. When one assumes <span class="math inline">\(\left\vert \theta_1\right\vert&lt;1\)</span>&nbsp;in an MA(1) process, one can use the equation <span class="math inline">\(u_{t}=y_{t}-\mu - \theta_1 u_{t-1}\)</span> and repetitive substitutions to first obtain <span class="math inline">\(u_{t}=y_{t}-\mu -\theta_1 (y_{t-1}-\mu) +\theta_1^{2}u_{t-2}\)</span>, and eventually <span class="math display">\[\begin{equation*}
+<p>The typical solution to the above problem is to set the condition <span class="math inline">\(\left\vert \theta_1\right\vert &lt;1\)</span>. When one assumes <span class="math inline">\(\left\vert \theta_1\right\vert&lt;1\)</span>&nbsp;in an MA(1) process, one can use the equation <span class="math inline">\(u_{t}=y_{t}-\mu - \theta_1 u_{t-1}\)</span> and repetitive substitutions to first obtain <span class="math inline">\(u_{t} = (y_{t}-\mu) -\theta_1 (y_{t-1}-\mu) +\theta_1^{2}u_{t-2}\)</span>, and eventually <span class="math display">\[\begin{equation*}
     (y_{t}-\mu)=-\sum_{j=1}^{k}\left(-\theta_1\right)^{j}(y_{t-j}-\mu)-\left(-\theta_1\right)^{k+1}u_{t-k-1}+u_{t}.
 \end{equation*}\]</span> Similarly as when considering the stationarity of an AR(1)&nbsp;process, it can be concluded, given that the condition <span class="math inline">\(\left\vert \theta_1\right\vert &lt;1\)</span>, <span class="math display">\[\begin{equation*}
     y_{t} -\mu =-\sum_{j=1}^{\infty}\left(-\theta_1\right)^{j} (y_{t-j}-\mu) + u_{t}.
 \end{equation*}\]</span> That is, when <span class="math inline">\(\left\vert \theta_1 \right\vert&lt;1\)</span>&nbsp;holds, an MA(1) process can be “inverted” to an AR<span class="math inline">\(\left(\infty\right)\)</span> process, which explains why in the case <span class="math inline">\(\left\vert \theta_1\right\vert&lt;1\)</span> an MA(1) process is called <strong>invertible</strong>.</p>
-<p>An alternative way to express the invertibility condition of an MA(1) process is to require that the root of the polynomial <span class="math inline">\(\theta\left(z\right)\)</span> (that is, the solution to the equation <span class="math inline">\(\theta\left(  z\right)  =0\)</span>) is greater than one in absolute value, or in other words, that <span class="math display">\[\begin{equation*}
-\theta\left(z\right)  \neq0 \,\, \mathrm{for} \,\, \left\vert z\right\vert \leq1.
-\end{equation*}\]</span> Similarly as in the case of the stationarity condition of an AR(<span class="math inline">\(p\)</span>) process, this condition ensures invertibility (that is, the existence of an AR<span class="math inline">\(\left(\infty\right)\)</span> representation also for MA(<span class="math inline">\(q\)</span>) processes).</p>
 <p>&nbsp;</p>
 <p><strong>Invertibility condition of an MA(<span class="math inline">\(q\)</span>) process </strong>. An MA(<span class="math inline">\(q\)</span>) process is invertible, if the roots of the polynomial <span class="math inline">\(\theta\left(z\right)\)</span> <span class="math inline">\(\left(z\in\mathbb{C}\right)\)</span> lie outside the unit circle/disk on the complex plane or, equivalently, if <span class="math display">\[\begin{equation*}
 \theta\left(z\right) \neq0 \,\,\, \mathrm{for} \,\,\, \left\vert z\right\vert\leq1.
 \end{equation*}\]</span></p>
-<p>&nbsp;</p>
-<p>When the invertibility condition holds, one can formally solve <span class="math inline">\(u_{t}\)</span> from equation <span class="math inline">\((y_{t}-\mu)=\theta\left(B\right)u_{t}\)</span> by dividing both sides by the polynomial <span class="math inline">\(\theta\left(B\right)^{-1}\)</span>. The solution is <span class="math display">\[\begin{equation*}
+<p>Similarly as in the case of the stationarity condition of an AR(<span class="math inline">\(p\)</span>) process, invertibility ensures that there exists an AR<span class="math inline">\(\left(\infty\right)\)</span> representation also for MA(<span class="math inline">\(q\)</span>) processes. In other words, when the invertibility condition holds, one can formally solve <span class="math inline">\(u_{t}\)</span> from equation <span class="math inline">\((y_{t}-\mu)=\theta\left(B\right)u_{t}\)</span> by dividing both sides by the polynomial <span class="math inline">\(\theta\left(B\right)^{-1}\)</span>. The solution is <span class="math display">\[\begin{equation*}
     \pi\left(B\right)(y_{t}-\mu) = u_{t} \,\,\, \mathrm{or} \,\,\, \sum_{j=0}^{\infty}\pi_{j}(y_{t-j}-\mu)=u_{t},
 \end{equation*}\]</span> where <span class="math inline">\(\pi\left(B\right)=\sum_{j=0}^{\infty}\pi_{j}B^{j}=\theta\left(B\right)^{-1}\)</span> and the coefficients <span class="math inline">\(\pi_{j}\)</span> can be solved as a function of the parameters <span class="math inline">\(\theta_{1},\ldots,\theta_{q}\)</span> from the equation <span class="math display">\[\begin{equation*}
     \left(1+\theta_{1}B+\cdots+\theta_{q}B^{q}\right) \left(\pi_{0}+\pi_{1}B+\pi_{2}B^{2}+\cdots\right)=1
@@ -518,14 +517,13 @@ Extra: Yule-Walker equations to obtain autocorrelation and partial autocorrelati
 </ul>
 <!-- - As before, a nonzero mean can be accommodated by considering the process $y_{t}-\mu$ where $\mu=\mathsf{E}\left(y_{t}\right)$. -->
 <p>&nbsp;</p>
-<p><strong>Stationarity and invertibility</strong>. Based on what was said for linear processes, it is clear than an ARMA(<span class="math inline">\(p\)</span>,<span class="math inline">\(q\)</span>) process has a well-defined (causal) MA(<span class="math inline">\(\infty\)</span>) representation if the polynomial <span class="math inline">\(\phi\left(z\right)\)</span> satisfies the sufficient stationarity condition of an AR(<span class="math inline">\(p\)</span>) process (what was said in the case of an AR(<span class="math inline">\(p\)</span>) process holds, but now with MA(<span class="math inline">\(q\)</span>) error terms).</p>
+<p><strong>Stationarity and invertibility</strong>. Based on what was said for linear processes, it is clear that an ARMA(<span class="math inline">\(p\)</span>,<span class="math inline">\(q\)</span>) process has a well-defined (causal) MA(<span class="math inline">\(\infty\)</span>) representation if the polynomial <span class="math inline">\(\phi\left(z\right)\)</span> satisfies the sufficient stationarity condition of an AR(<span class="math inline">\(p\)</span>) process (what was said in the case of an AR(<span class="math inline">\(p\)</span>) process holds, but now with MA(<span class="math inline">\(q\)</span>) error terms).</p>
 <p>&nbsp;</p>
 <ul>
 <li>A sufficient condition for the stationarity of the ARMA(<span class="math inline">\(p\)</span>,<span class="math inline">\(q\)</span>) process is that the roots of the polynomial <span class="math inline">\(\phi\left(z\right)\)</span> <span class="math inline">\(\left(z\in\mathbb{C}\right)\)</span> lie outside the unit circle/disk on the complex plane, or equivalently that <span class="math display">\[\begin{equation*}
 \phi\left(  z\right)  \neq0 \,\,\, \mathrm{for} \,\,\, \left\vert z\right\vert \leq1.
 \end{equation*}\]</span></li>
 </ul>
-<!-- Based on the discussion in the previous subsection, it is clear that it is relevant to consider the issue of invertibility also in connection with ARMA($p$,$q$) processes, and the invertibility condition of an MA($q$) process will also suffice to ensure the invertibility of an ARMA($p$,$q$) process. -->
 <p>&nbsp;</p>
 <ul>
 <li>An ARMA(<span class="math inline">\(p\)</span>,<span class="math inline">\(q\)</span>) process is invertible, if the roots of the polynomial <span class="math inline">\(\theta\left(z\right)\)</span> <span class="math inline">\(\left(z\in\mathbb{C}\right)\)</span> lie outside the unit circle/disk on the complex plane, or equivalently if <span class="math display">\[\begin{equation*}
