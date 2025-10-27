@@ -349,7 +349,7 @@ window.Quarto = {
 <p>A concrete and often used way to specify the joint distribution of <span class="math inline">\(\boldsymbol{y}\)</span> in time series analysis is to:</p>
 <ul>
 <li><p>Specify a model equation that characterises the dependence structure of consecutive observations, and</p></li>
-<li><p>combine this with a <em>suitable</em> distributional assumption.</p></li>
+<li><p>combine this with a “suitable” distributional assumption.</p></li>
 </ul>
 <p>Before we proceed to such concrete model equations, it is useful to first briefly study some basic concepts of probability theory that form the foundation of time series analysis.</p>
 <p>&nbsp;</p>
@@ -361,7 +361,7 @@ window.Quarto = {
 <ul>
 <li><p>Occasionally, the cases <span class="math inline">\(t=0,1,2,\ldots\)</span> or <span class="math inline">\(t=1,2,\ldots\)</span> are also considered.</p></li>
 <li><p>Because the set of values the time index takes is usually known, it does not need to be emphasized, and often we can simply denote the stochastic process by <span class="math inline">\(y_{t}\)</span>, or <span class="math inline">\(\left\{y_{t}\right\}\)</span> if one wants to emphasize the distinction to a single component of the process.</p></li>
-<li><p>The terms “<strong>process</strong>” and “<strong>model</strong>” are often used interchangeably in time series analysis. In this material, however, “process” refers specifically to the underlying theoretical mechanism—namely, the stochastic process—that we aim to represent when specifying an empirical time series model for the observed data.</p></li>
+<li><p>The terms “<strong>process</strong>” and “<strong>model</strong>” are often used interchangeably in time series analysis. In this material, however, “process” refers specifically to the underlying theoretical mechanism—namely, the stochastic process—that we aim to represent (learn) when specifying an empirical time series “model” for the observed data.</p></li>
 </ul>
 <p>From a practical point of view, it is <strong>important to understand that we have only a single realization available</strong>, the observations <span class="math inline">\(\left(y_{1},\ldots,y_{T}\right)\)</span>, of the process <span class="math inline">\(\left\{y_{t}\right\}\)</span>.</p>
 <ul>
@@ -393,17 +393,13 @@ window.Quarto = {
 <p>&nbsp;</p>
 <p>A useful <strong>practical aspect</strong> of weak stationarity is that the plausibility of this assumption can be easily investigated by looking at a graph of the observed time series: If the observations vary with constant variance around a fixed level, then weak stationarity appears a plausible assumption.</p>
 <p>&nbsp;</p>
-<p>Let us consider an example related to the U.S. real GDP growth during the period 1985:Q1-–2007:Q2, commonly referred to as the <strong>Great Moderation</strong> time period.</p>
+<p><strong>Empirical example</strong>. Let us consider an example related to the U.S. real GDP growth during the period 1985:Q1-–2007:Q2, commonly referred to as the <strong>Great Moderation</strong> time period.</p>
 <ul>
 <li><p>More on The Great Moderation, see https://www.federalreservehistory.org/essays/great-moderation</p></li>
 <li><p>Real Gross Domestic Product (GDP) is the total value of a country’s goods and services produced in a specific period, adjusted for inflation.</p></li>
+<li><p>This is the dataset GDPC1-qdata.xlsx (source: FRED)</p></li>
 </ul>
-<p>This figure (see below) illustrates that the time series fluctuates around a relatively stable mean and exhibits approximately constant variance over time. As discussed, this behavior is typical for a weakly stationary process.</p>
-<p>It is important to note that <strong>weak stationarity does not imply the absence of variability</strong>. Even in a weakly stationary process, individual observations can vary substantially due to random shocks. What matters is that the statistical properties — the mean, variance, and autocovariance structure — remain constant over time. So, occasional high or low values in the series are entirely consistent with weak stationarity, as long as they are the result of random variation and not due to major structural changes in the process.</p>
-<ul>
-<li><p>We will soon see more examples of weakly stationary time series through simulations.</p></li>
-<li><p>In Section 1, the time series depicting the U.S. inflation rate can also be interpreted as realizations from weakly stationary processes.</p></li>
-</ul>
+<p>Figure below illustrates that the time series fluctuates around a relatively stable mean and exhibits approximately constant variance over time. As discussed, this behavior is typical for a weakly stationary process.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -414,6 +410,11 @@ window.Quarto = {
 </div>
 </div>
 <p><span class="fig-caption">Figure: (Annualized) U.S. quarterly real GDP growth rate (1985:Q1-2007:Q2) (ggplot2 figure).</span></p>
+<p>It is important to note that <strong>weak stationarity does not imply the absence of variability</strong>. Even in a weakly stationary process, individual observations can vary substantially due to random shocks. What matters is that the statistical properties — the mean, variance, and autocovariance structure — remain constant over time. So, occasional high or low values in the series are entirely consistent with weak stationarity, as long as they are the result of random variation and not due to major structural changes in the process.</p>
+<ul>
+<li><p>We will soon see more examples of weakly stationary time series through simulations.</p></li>
+<li><p>In Section 1, the time series depicting the U.S. inflation rate can also be interpreted as realizations from weakly stationary processes.</p></li>
+</ul>
 <p>&nbsp;</p>
 <p>Because <span class="math inline">\(\gamma_{0}=\mathsf{Var}\left(y_{t}\right)\)</span>, it holds that <span class="math inline">\(\gamma_{0}\geq0\)</span>. Furthermore, the familiar properties of the covariance function imply that</p>
 <ul>
@@ -421,7 +422,7 @@ window.Quarto = {
 <li><p>In this univariate (single time series) case, we have (under weak stationary)<br>
 <span class="math display">\[\begin{equation*}
 \mathsf{Cov}\left(y_{t},y_{t+h}\right)=\mathsf{Cov}\left(  y_{t-h},y_{t}\right) = \mathsf{Cov}\left(y_t, y_{t-h}\right),
-\end{equation*}\]</span> which also implies that <span class="math inline">\(\gamma_{h}=\gamma_{-h}\)</span>. This expression shows where the term <em>lag</em> (<em>lag length</em>) <span class="math inline">\(h\)</span> is coming from.</p></li>
+\end{equation*}\]</span> which also implies that <span class="math inline">\(\gamma_{h}=\gamma_{-h}\)</span>. This expression shows where the term “lag” (“lag length”) <span class="math inline">\(h\)</span> is coming from.</p></li>
 </ul>
 <p>Putting the above properties together, the autocovariance function has the properties <span class="math display">\[\begin{equation*}
 \gamma_{0}\geq0, \,\, \left\vert \gamma_{h}\right\vert \leq\gamma_{0} \quad \mathrm{and} \quad \gamma_{h}=\gamma_{-h}.
@@ -508,7 +509,7 @@ window.Quarto = {
 </section>
 <section id="strictstationarity" class="level2" data-number="3.7">
 <h2 data-number="3.7" class="anchored" data-anchor-id="strictstationarity"><span class="header-section-number">3.7</span> Strictly stationary process</h2>
-<p>Let us now define the above-mentioned more stringent form of stationarity. A process <span class="math inline">\(\left\{y_{t};t=0,\pm1,\pm2,\ldots\right\}\)</span> is called <strong>strictly stationary</strong> (sometimes <strong>strongly stationary</strong>) if the collections of random variables <span class="math inline">\(y_{t_{1}},\ldots,y_{t_{m}}\)</span> and <span class="math inline">\(y_{t_{1}+h},\ldots,y_{t_{m}+h}\)</span> have the same <span class="math inline">\(m-\)</span>dimensional joint distribution for all integers <span class="math inline">\(t_{1},\ldots,t_{m}\)</span>, <span class="math inline">\(h\)</span> and <span class="math inline">\(m\)</span> <span class="math inline">\(\left(  m&gt;0\right)\)</span>.</p>
+<p>Let us now define the above-mentioned more stringent form of stationarity. A process <span class="math inline">\(\left\{y_{t};t=0,\pm1,\pm2,\ldots\right\}\)</span> is called <strong>strictly stationary</strong> (sometimes strongly stationary) if the collections of random variables <span class="math inline">\(y_{t_{1}},\ldots,y_{t_{m}}\)</span> and <span class="math inline">\(y_{t_{1}+h},\ldots,y_{t_{m}+h}\)</span> have the same <span class="math inline">\(m-\)</span>dimensional joint distribution for all integers <span class="math inline">\(t_{1},\ldots,t_{m}\)</span>, <span class="math inline">\(h\)</span> and <span class="math inline">\(m\)</span> <span class="math inline">\(\left(  m&gt;0\right)\)</span>.</p>
 <ul>
 <li>That is, <strong>the entire probability structure of the process <span class="math inline">\(y_{t}\)</span> is time-invariant</strong>, not just the first and second-order moments.</li>
 </ul>
@@ -533,7 +534,6 @@ Extra: Gaussian processes
 <ul>
 <li><strong>SS4</strong>: If <span class="math inline">\(x_{t}\)</span> is a strictly stationary process, then so is also the process <span class="math inline">\(y_{t}=g\left(x_{t+m},\ldots,x_{t-n}\right), m,n\geq0\)</span>, for any “well-behaving” (e.g.&nbsp;continuous or, more generally, measurable) function <span class="math inline">\(g\)</span>. Moreover, <span class="math inline">\(m\)</span>, <span class="math inline">\(n\)</span>, or both can be replaced with <span class="math inline">\(\infty\)</span>.</li>
 </ul>
-<!-- When $m$ and $n$ are both finite, property SS4 is a "reasonably direct" consequence of the definition of strict stationarity (skip details). As we shall see later on, the cases where one of $m$ or $n$ (typically $n$) is infinite can be quite useful.  -->
 <p>&nbsp;</p>
 <p><strong>“Stationarity” in this material</strong>. Unless otherwise stated, stationarity will be interpreted as strict stationarity from now on.</p>
 <ul>
@@ -547,6 +547,7 @@ Extra: Gaussian processes
 <ul>
 <li>The strict stationarity of this process is easy to check.</li>
 </ul>
+<p>&nbsp;</p>
 <div class="toggle-button" onclick="toggleCode('Extra2')">
 Extra: Some further results
 </div>
@@ -554,9 +555,10 @@ Extra: Some further results
 <p>The cumulative distribution function of the random vector <span class="math inline">\(\left(u_{t_{1}},\ldots,u_{t_{m}}\right)\)</span> evaluated at <span class="math inline">\(\left(x_{1},\ldots,x_{m}\right)\)</span> is <span class="math inline">\(F\left(x_{1}\right)  \cdots F\left(x_{m}\right)\)</span>. Clearly, this is also the cumulative distribution function of the random vector <span class="math inline">\((u_{t_{1}+h},\ldots,u_{t_{m}+h})\)</span> evaluated at <span class="math inline">\(\left(x_{1},\ldots,x_{m}\right)\)</span>.</p>
 <p>If <span class="math inline">\(\mathsf{E}\left(u_{t}^{2}\right)&lt;\infty\)</span>, then <span class="math inline">\(u_{t}\)</span> is also weakly stationary, and in this case it has the same moment properties as the (weak) white noise process above.</p>
 </div>
+<p>&nbsp;</p>
 <p>This IID process is also called white noise, or sometimes <strong>strong white noise</strong>. We will use the shorthand notation <span class="math display">\[\begin{equation*}
 u_{t}\sim\mathsf{iid}\left(\mu,\sigma^{2}\right) \quad \mathrm{or} \quad u_{t}\sim\mathsf{IID}\left(\mu,\sigma^{2}\right)
-\end{equation*}\]</span> where <span class="math inline">\(\mathsf{iid}\)</span> <span class="math inline">\(\leftrightarrow\)</span> refers to “independently and identically distributed”), <span class="math inline">\(\mu=\mathsf{E}\left(u_{t}\right)\)</span> and <span class="math inline">\(\sigma^{2}=\mathsf{Var}\left(u_{t}\right)\)</span> (in what follows, most often <span class="math inline">\(\mu=0\)</span>).</p>
+\end{equation*}\]</span> where <span class="math inline">\(\mathsf{iid}\)</span> refers to “independently and identically distributed”, <span class="math inline">\(\mu=\mathsf{E}\left(u_{t}\right)\)</span> and <span class="math inline">\(\sigma^{2}=\mathsf{Var}\left(u_{t}\right)\)</span> (in what follows, most often <span class="math inline">\(\mu=0\)</span>).</p>
 <p>If it is additionally assumed that <span class="math inline">\(u_{t}\sim\mathsf{N}\left(\mu,\sigma^{2}\right)\)</span>, one denotes <span class="math display">\[\begin{equation*}
 u_{t}\sim\mathsf{nid}\left(\mu,\sigma^{2}\right) \quad \mathrm{or} \quad u_{t}\sim\mathsf{NID}\left(\mu,\sigma^{2}\right)
 \end{equation*}\]</span> where <span class="math inline">\(\mathsf{nid}\)</span> refers to <strong>normally and independently distributed</strong>.</p>
@@ -577,7 +579,7 @@ y_{t}=A\cos\left(\lambda t\right)+B\sin\left(\lambda t\right),
 <p>The second example: Define the process <span class="math inline">\(y_{t}=u_{t}\sqrt{\omega+\alpha u_{t-1}^{2}}\)</span>, where <span class="math inline">\(\omega&gt;0\)</span>, <span class="math inline">\(\alpha\geq0\)</span> and <span class="math inline">\(u_{t}\)</span> is (weak) white noise process and satisfies <span class="math inline">\(\mathsf{E}\left(u_{t}\right)=0\)</span> and <span class="math inline">\(\mathsf{E}\left(u_{t}^{2}\right)&lt;\infty\)</span>. It is easy to see that <span class="math inline">\(y_{t}\)</span> is weak white noise (justification as an exercise). Because <span class="math inline">\(y_{t-1}=u_{t-1}\sqrt{\omega+\alpha u_{t-2}^{2}}\)</span>, it is clear that <span class="math inline">\(y_{t}\)</span> is not strong white noise (unless <span class="math inline">\(\alpha=0\)</span>). <span class="math inline">\(\square\)</span></p>
 </div>
 <p>&nbsp;</p>
-<p>As an illustration of nid process, below we depict a simulated realization from the <span class="math inline">\(\mathrm{nid}(0,1)\)</span> process. The length of the time series is 300 observations (<span class="math inline">\(T=300\)</span>). In other words, we can state that <span class="math inline">\(z_t \sim \mathsf{nid}(0,1), \, t=1,\ldots,300\)</span>. The simulated time series exhibits completely random variation. As we can see, there are occasionally higher and lower values due to sampling variation.</p>
+<p>As an illustration of NID process, below we depict a simulated realization from the <span class="math inline">\(\mathrm{nid}(0,1)\)</span> process. The length of the time series is 300 observations (<span class="math inline">\(T=300\)</span>). In other words, we can state that <span class="math inline">\(z_t \sim \mathsf{nid}(0,1), \, t=1,\ldots,300\)</span>. The simulated time series exhibits completely random variation. As we can see, there are occasionally higher and lower values due to sampling variation.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -587,7 +589,7 @@ y_{t}=A\cos\left(\lambda t\right)+B\sin\left(\lambda t\right),
 </div>
 </div>
 </div>
-<p><span class="fig-caption">Figure: A simulated realization of nid(0,1) process (<span class="math inline">\(T=300\)</span>).</span></p>
+<p><span class="fig-caption">Figure: A simulated realization of <span class="math inline">\(\mathsf{nid}(0,1)\)</span> process (<span class="math inline">\(T=300\)</span>).</span></p>
 <p>&nbsp;</p>
 </section>
 <section id="r-lab" class="level2" data-number="3.9">
@@ -629,7 +631,7 @@ R Lab, Section 2
 <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co">#  VISUALIZATION AND MANUAL IDENTIFICATION</span></span>
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------------------------</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(gdp_growth) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"(Annualized) U.S. quarterly real GDP growth rate (1985:Q1-2007:Q2)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(gdp_growth) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"(Annualized) quarterly U.S. real GDP growth rate (1985:Q1-2007:Q2)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">

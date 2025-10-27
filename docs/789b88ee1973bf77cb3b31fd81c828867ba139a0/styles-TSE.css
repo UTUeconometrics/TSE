@@ -13,6 +13,8 @@ body {
   font-size: 0.85em;
 }
 
+
+
 /* === Toggle buttons === */
 .toggle-button {
   border: 1px solid #333;
@@ -34,6 +36,7 @@ body {
   padding-left: 35px;
   border: 1px solid #333;
 }
+
 .toggle-button-r::before {
   content: "R";
   color: white;
@@ -48,6 +51,21 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Toggle content */
+.toggle-content {
+  display: none;
+  margin-top: 10px;
+  padding: 10px;
+  border-left: 3px solid #4682B4;
+  background-color: #f9f9f9;
+}
+
+.toggle-content hr {
+  margin-top: 15px;
+  border: none;
+  border-top: 1px solid #ccc;
 }
 
 .toggle-button-example {

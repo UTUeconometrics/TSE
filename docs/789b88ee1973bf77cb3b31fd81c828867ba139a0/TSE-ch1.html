@@ -331,14 +331,14 @@ window.Quarto = {
 
 <section id="timeseriesdata" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="timeseriesdata"><span class="header-section-number">1.1</span> Time series data</h2>
-<p>A <strong>time series</strong> is a collection of data in which the observations correspond to consecutive time periods. A common notation for time series data is <span class="math inline">\(y_{t}\)</span>, <span class="math inline">\(t=1,\ldots,T\)</span>, where <span class="math inline">\(t\)</span> denotes the time period and <span class="math inline">\(T\)</span> the total number of observations. The interval between observations <span class="math inline">\(y_{t-1}\)</span> and <span class="math inline">\(y_{t}\)</span>, or <span class="math inline">\(y_{t}\)</span> and <span class="math inline">\(y_{t+1}\)</span>, is a some unit of time, for example, an hour, a month, a quarter or one year. In many cases, it may be natural to use more concrete labels for the time periods, for instance <span class="math inline">\(t=2000,\ldots,2024\)</span> for yearly data, or <span class="math inline">\(t=2000:1, 2000:2,\ldots,2024:12\)</span> for monthly observations. Therefore, occasionally <span class="math inline">\(T\)</span> also denotes the concrete final time label such as 2024:12 (December 2024).</p>
+<p>A <strong>time series</strong> is a collection of data where observations correspond to consecutive time periods. A common notation for time series data is <span class="math inline">\(y_{t}\)</span>, <span class="math inline">\(t=1,\ldots,T\)</span>, where <span class="math inline">\(t\)</span> denotes the time period and <span class="math inline">\(T\)</span> the total number of observations. The interval between observations <span class="math inline">\(y_{t-1}\)</span> and <span class="math inline">\(y_{t}\)</span>, or <span class="math inline">\(y_{t}\)</span> and <span class="math inline">\(y_{t+1}\)</span>, represents a unit of time, for example, an hour, a month, a quarter or one year. In many cases, it is natural to use more concrete labels for the time periods, such as <span class="math inline">\(t=2000,\ldots,2024\)</span> for yearly data, or <span class="math inline">\(t=2000:1, 2000:2,\ldots,2024:12\)</span> for monthly observations. Therefore, occasionally <span class="math inline">\(T\)</span> may also refer to the final time label, such as 2024:12 (December 2024).</p>
 <ul>
-<li><p>Time series data are used and analysed in various fields, such as economics and finance, but also in social, natural, engineering, and medical sciences.</p></li>
-<li><p>In economics and finance, data sets are typically time series, which have led to relatively specific subfields of macroeconometrics and financial econometrics.</p></li>
+<li><p>Time series data are analyzed in various fields, including economics and finance, as well as social, natural, engineering, and medical sciences.</p></li>
+<li><p>In (macro)economics and finance, data sets are typically time series, which has led to the specialized subfields of <strong>macroeconometrics</strong> and <strong>financial econometrics</strong>.</p></li>
 </ul>
-<p>In this course, we assume that the observations recorded are equally spaced in time (or can be approximately treated as such). Irregularly spaced data call for different methods and are not treated here. If the time series observations <span class="math inline">\(y_{t}, \, t=1,\ldots,T,\)</span> are scalar valued, we talk about <strong>univariate time series</strong>. On the other hand, if <span class="math inline">\(\boldsymbol{y}_{t}=(y_{1t},\ldots,y_{nt})\)</span> is vector-valued, which is emphasized by the bolded symbol, we talk about <strong>multiple time series</strong> or <strong>vector-valued time series</strong>. In these latter cases, relationships between two or more time series is of interest.</p>
-<p>We restrict ourselves to the common case where <span class="math inline">\(y_t\)</span> is a real-valued time series, or is at least treated as such, meaning that realizations are real numbers. In discrete and limited dependent time series, <span class="math inline">\(y_t\)</span> takes only discrete values, such as binary values (<span class="math inline">\(y_t=1\)</span> or <span class="math inline">\(y_t=0\)</span>) or values where the range is limited (such as the case where <span class="math inline">\(y_t\)</span> is nonnegative). These type of time series variables require specific (nonlinear) models, which we will not consider in this course (except models used for volatility modelling and hence positive-valued variables).</p>
-<p>When analyzing time series data, often a useful and natural first step is to plot the data and inspect its main characteristics visually. Below we plot the monthly Consumer Price Index (CPI) in the United States for the time period <span class="math inline">\(1990:1-2025:6\)</span> (January 1990-June 2025). In this figure, and as almost always when plotting time series data, the depicted line goes through observation points to point out the nature of time series data (dependency between observations).</p>
+<p>In this course, we assume that observations recorded an equally spaced in time intervals (or can be reasonably treated as such). Irregularly spaced data require different methods and are not covered here. If the time series observations <span class="math inline">\(y_{t}, \, t=1,\ldots,T,\)</span> are scalar valued, we refer to them as a <strong>univariate time series</strong>. Conversely, if <span class="math inline">\(\boldsymbol{y}_{t}=(y_{1t},\ldots,y_{Kt})\)</span> is vector-valued (indicated by the bold symbol), we refer to it as a <strong>multiple time series</strong> or <strong>vector-valued time series</strong>. In these latter cases, relationships between two or more time series are of interest.</p>
+<p>We restrict ourselves to the common case where <span class="math inline">\(y_t\)</span> is a <strong>real-valued</strong> time series, or is <strong>at least treated as such</strong>, meaning that its realizations are real numbers. In discrete and limited dependent time series, <span class="math inline">\(y_t\)</span> takes only discrete values, such as binary values (<span class="math inline">\(y_t=1\)</span> or <span class="math inline">\(y_t=0\)</span>) or values where the range is limited (such as the case where <span class="math inline">\(y_t\)</span> is nonnegative). These types of time series require specific nonlinear models, which we will not cover in this course, except models used in volatility modelling where positive-valued variables are relevant).</p>
+<p>When analyzing time series data, a useful and natural first step is to plot the data and visually inspect its main characteristics visually. Below, we plot the monthly Consumer Price Index (CPI) for the United States over the time period 1990:1-2025:6 (January 1990-June 2025). In this figure, as is almost always the case when plotting time series data, the line connects observation points to highlight the sequential nature of the data and the dependency between observations.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -348,23 +348,23 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p><span class="fig-caption">Figure: (Annualized) U.S. quarterly real GDP growth rate (1985:Q1–2007:Q2) (ggplot2 figure).</span></p>
+<p><span class="fig-caption">Figure: Monthly U.S. CPI index (levels) (1990:1–2025:6).</span></p>
 <p>&nbsp;</p>
-<p><strong>The aim</strong> in time series analysis is often to build a <strong>statistical model</strong> that aims to represent the observed time series and its fluctuation over time. This typically happens by considering the dependence structure of consecutive observations. <strong>Autocorrelation</strong> (serial correlation) between observations is an essential property of the time series, which needs to be taken into account in statistical/econometric modelling.</p>
+<p><strong>The aim</strong> of time series analysis is often to build a <strong>statistical model</strong> that represent the observed time series and its fluctuation over time. This typically involves examining the dependence structure among consecutive observations. <strong>Autocorrelation</strong> (serial correlation) between observations is a key property of time series and must be accounted for in statistical and econometric modelling.</p>
 <ul>
-<li><p>This violates the no-autocorrelation assumption typically imposed on the linear regression model (for cross-sectional datasets) and typically considered in introductory econometrics and statistics courses.</p></li>
-<li><p>With cross-sectional data, random sampling (usually) implies (guarantees) that the error terms of the linear regression model for different observations are mutually independent, and hence autocorrelation is (typically) not an issue.</p></li>
+<li><p>This violates the no-autocorrelation assumption typically imposed in linear regression models for cross-sectional datasets, as introduced in basic econometrics and statistics courses.</p></li>
+<li><p>With cross-sectional data, random sampling generally ensures that the error terms of the linear regression model are mutually independent (i.e., not autocorrelated), so autocorrelation is usually not an issue.</p></li>
 </ul>
-<p>When analyzing time series data often <strong>a useful and natural first step is to plot the series and inspect its main characteristics</strong> visually in addition to possible underlying theory or background knowledge of the phenomenon that the time series presents. This will bring (at least) preliminary idea on dependence structures behind the data generating mechanism of the time series. Some important questions to consider when looking at a time series graph:</p>
+<p>When analyzing time series data, <strong>a useful and natural first step is to plot the series and visually inspect its main characteristics</strong>, alongside any underlying theory or background knowledge of the phenomenon the time series represents. This provides at least a preliminary understanding of the dependence structures behind the data-generating process. Some important questions to consider when examining a time series graph include:</p>
 <ul>
-<li><p>Is there a <strong>trend</strong> (i.e.&nbsp;the values of the time series tend to increase or decrease over time)?</p></li>
-<li><p>Are there <strong>seasonal effects</strong> (a regularly repeating pattern of highs and lows related to calendar time such as seasons, quarters, months or days of the week)?</p></li>
-<li><p>Any major <strong>outliers</strong> (observations far away from other data points)?</p></li>
-<li><p>Is the <strong>variability</strong> (variance) relatively <strong>constant</strong> over time?</p></li>
-<li><p>Are there any <strong>abrupt changes</strong> such as <strong>breaks</strong> or <strong>regime switches</strong> to either the level or variance of the series?</p></li>
+<li><p>Is there a <strong>trend</strong> (that is, do the values of the time series tend to increase or decrease over time)?</p></li>
+<li><p>Are there <strong>seasonal effects</strong> (a regularly repeating pattern of highs and lows related to calendar time, such as seasons, quarters, months or days of the week)?</p></li>
+<li><p>Are there major <strong>outliers</strong> (observations far away from other data points)?</p></li>
+<li><p>Is the <strong>variability</strong> (variance) relatively <strong>constant over time</strong>?</p></li>
+<li><p>Are there any <strong>abrupt changes</strong>, such as <strong>breaks</strong> or <strong>regime switches</strong>, in either the level or variance of the series?</p></li>
 </ul>
-<p>As an example, in the U.S. CPI time series above, a clear feature is an increasing trend over time. It turns out that instead of the levels, we are mainly interested in the changes of the CPI series as a measure of inflation, as will be discussed below.</p>
-<p>An upward trend is also evident in the monthly S&amp;P 500 stock market index. Stock prices have risen substantially between 1990 and 2025, with a pronounced surge clearly visible. However, there have also been several significant market corrections—commonly referred to as “bear markets”—throughout this period. It is important to note that this trending behavior differs markedly from that observed in the Consumer Price Index (CPI) series. The characteristics underlying these types of stochastic trends, as seen in the S&amp;P 500 index, will be explored later in the course when we discuss nonstationary time series data.</p>
+<p>As an example, in the U.S. CPI time series shown above, a clear feature is the persistent trend over time. However, rather than focusing on the level of the CPI, we are primarily interested in its changes as a measure of inflation, as will be discussed below.</p>
+<p>An upward trend is also evident in the monthly S&amp;P 500 stock market index. Stock prices have risen substantially between 1990 and 2025, with a pronounced surge is clearly visible. At the same time, several significant market corrections—commonly referred to as “bear markets”—occurred during this period. It is important to note that this trending behavior differs markedly from that observed in the CPI series. The characteristics underlying these types of stochastic trends, particularly those seen in the S&amp;P 500 index, will be explored later in this course when we discuss nonstationary time series.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -376,7 +376,7 @@ window.Quarto = {
 </div>
 <p><span class="fig-caption">Figure: S&amp;P 500 stock market index between January 1990 and June 2025 (source: Shiller data).</span></p>
 <p>&nbsp;</p>
-<p>Next figure depicts the monthly number of fatalities in traffic accidents in the U.S. between <span class="math inline">\(1973:1\)</span>–<span class="math inline">\(1978:12\)</span>. In this series, there is no apparent increasing or decreasing trend. Instead, the series exhibits clear <strong>seasonal variation</strong>, with the yearly maximum always in July and the minimum in February.</p>
+<p>The next figure depicts the monthly number of fatalities in traffic accidents in the U.S. between 1973:1–1978:12. In this series, there is no apparent upward or downward trend. Instead, the series exhibits a clear <strong>seasonal variation</strong>, with the yearly maximum consistently occurring in July and the minimum in February.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -388,7 +388,7 @@ window.Quarto = {
 </div>
 <p><span class="fig-caption">Figure: Monthly traffic accidents between January 1973 and December 1978. (source: Brockwell and Davis, 1996).</span></p>
 <p>&nbsp;</p>
-<p>Next figure shows the yearly number of sunspots for the period 1770–1870. This series has no trend or seasonal variation, although the <strong>cyclical pattern</strong> of the series could be confused with seasonal variation. However, the pattern is not seasonal because the nature of the cycle changes. In particular, the distance between consecutive peaks is not constant, as it would be in the case with seasonal variation. An apparent feature is a positive correlation between consecutive observations; a large observation is typically followed by another large one, and a small observation by another small one.</p>
+<p>The following figure shows the yearly number of sunspots for the period 1770–1870. This series has no trend or seasonal variation, although the <strong>cyclical pattern</strong> could easily be mistaken for seasonality. However, the pattern is not seasonal because the nature of the cycle changes over time. In particular, the distance between consecutive peaks is not constant as it would be in the case with seasonal variation. Another apparent feature is the positive correlation between consecutive observations: a large observation is typically followed by another large one, and a small observation by another small one.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -400,27 +400,27 @@ window.Quarto = {
 </div>
 <p><span class="fig-caption">Figure: The number of sunspots between the years 1770–1870 (source: Brockwell and Davis, 1996).</span></p>
 <p>&nbsp;</p>
-<p>Overall, these visual findings might already suggest which type of <strong>time series model</strong> could be useful. After at least a preliminary a statistical model, as we will consider more detail in the coming sections, has been chosen, one can then for example:</p>
+<p>Overall, these visual findings may already suggest which type of <strong>time series model</strong> could be appropriate. Once a model has been selected, as we will consider in more detail in the following sections, one can then:</p>
 <ul>
-<li><p>estimate the unknown parameters of the model,</p></li>
-<li><p>check whether the estimated model and the observations are compatible,</p></li>
-<li><p>test hypotheses concerning the model parameters,</p></li>
-<li><p>and finally, use the model for the intended end purpose.</p></li>
+<li><p>Estimate the unknown parameters of the model,</p></li>
+<li><p>Assess whether the estimated model is compatible with the observed data,</p></li>
+<li><p>Test hypotheses concerning the model parameters, and</p></li>
+<li><p>Use the model for its intended end purpose.</p></li>
 </ul>
-<p>The end purpose of how the statistical model will eventually be used varies depending on the situation and the field of application.</p>
+<p>The ultimate purpose of the statistical model depends on the context and the field of application.</p>
 <ul>
-<li><p>One use is to give a <strong>summarized description</strong> of the observed data set, which may be useful in understanding the underlying data generation process producing the data.</p></li>
-<li><p>Another central use of a time series model is to <strong>forecast</strong> the future values of the single or multiple time series. In the multivariate case, one time series of interest may be predicted by making use of information contained in other time series as predictive variables.</p></li>
-<li><p>Explore potential <strong>temporal and contemporaneous dependencies</strong> between the time series, such as the relationship between inflation and stock market returns, after relevant transformations, as discussed next. One may be interested in investigating whether higher inflation typically occurs simultaneously with increasing stock prices.</p></li>
+<li><p>One common use is to provide a <strong>summarized description</strong> of the observed dataset, which can help in understanding the underlying data-generating process.</p></li>
+<li><p>Another central use of a time series model is to <strong>forecast</strong> future values of one or more series. In the multivariate case, a series of interest can be predicted using its own past values but also information contained in other series as explanatory or predictive variables.</p></li>
+<li><p>A further objective is to explore potential <strong>temporal and contemporaneous dependencies</strong> between time series, such as the relationship between inflation and stock market returns (after applying relevant transformations, as discussed next). For example, one may investigate whether higher inflation tends to occur simultaneously with rising stock prices.</p></li>
 </ul>
 <p>&nbsp;</p>
 </section>
 <section id="transformations" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="transformations"><span class="header-section-number">1.2</span> Transformations</h2>
-<p>As described above, in time series modelling a good first step is always to plot the time series under investigation. This gives an idea of the main features of the time series such as trends, seasonal patterns and/or apparent sudden breaks or outlying observations. In what follows in the next few sections, it is assumed that these patterns do not exist. If the observed series does exhibit several such patterns, one should use a transformation is to eliminate these patterns.</p>
-<p>In time series analysis, a few transformations and “manipulations” are generally used. They are even natural and common parts of the empirical analyses in certain applications.</p>
+<p>As described above, in time series modelling a good first step is always to plot the time series under investigation. This provides an initial view of its main characteristics, such as trends, seasonal patterns, and any sudden breaks or outliers. In the following sections, we assume that such patterns are absent. If the observed series does exhibit these features, appropriate transformations should be applied to remove or mitigate them.</p>
+<p>In time series analysis, several transformations and adjustments/“manipulations” are commonly used. These are natural and often essential components of empirical analysis in many applications.</p>
 <ul>
-<li><p>The <strong>first lag</strong> of the time series <span class="math inline">\(y_t\)</span> is denoted by <span class="math inline">\(y_{t-1}\)</span>. Generally <strong><span class="math inline">\(k\)</span>th lag</strong> is <span class="math inline">\(y_{t-k}\)</span>.</p></li>
+<li><p><strong>The first lag</strong> of the time series <span class="math inline">\(y_t\)</span> is denoted by <span class="math inline">\(y_{t-1}\)</span>. Generally <strong><span class="math inline">\(k\)</span>th lag</strong> is <span class="math inline">\(y_{t-k}\)</span>.</p></li>
 <li><p>Perhaps the most commonly used transformation for time series data is <strong>differencing</strong>. The <strong>first difference</strong> of the series, <span class="math inline">\(\Delta y_t\)</span>, is the <strong>change</strong> between <span class="math inline">\(y_t\)</span> and <span class="math inline">\(y_{t-1}\)</span>. In other words, <span class="math display">\[\begin{equation*}
 \Delta y_t = y_t - y_{t-1}.
 \end{equation*}\]</span></p></li>
@@ -429,9 +429,9 @@ window.Quarto = {
 \end{equation*}\]</span> Importantly, the logarithmic changes can be interpreted as relative changes when the changes are small: <span class="math display">\[\begin{equation*}
 \Delta \mathrm{log}(y_t) \approx (y_t - y_{t-1})/y_{t-1}.
 \end{equation*}\]</span></p></li>
-<li><p>The <strong>percentage of change</strong> between periods <span class="math inline">\(t\)</span> and <span class="math inline">\(t-1\)</span> is <span class="math inline">\(100 \Delta \mathrm{log}(y_t)\)</span>. With quarterly data <span class="math inline">\(y_t\)</span>, <strong>annualized growth rates</strong> are obtained by multiplying 400, that is <span class="math inline">\(400 \Delta \mathrm{log}(y_t)\)</span>, whereas annualized growth rates with monthly data can be obtained as <span class="math inline">\(1200 \Delta \mathrm{log}(y_t)\)</span>.</p></li>
+<li><p>The <strong>percentage of change</strong> between periods <span class="math inline">\(t\)</span> and <span class="math inline">\(t-1\)</span> can be approximated as <span class="math inline">\(100 \Delta \mathrm{log}(y_t)\)</span>. For quarterly data <span class="math inline">\(y_t\)</span>, <strong>annualized growth rates</strong> are obtained by multiplying 400, that is <span class="math inline">\(400 \Delta \mathrm{log}(y_t)\)</span>. Similarly, for monthly data, annualized growth rates are computed as <span class="math inline">\(1200 \Delta \mathrm{log}(y_t)\)</span>.</p></li>
 </ul>
-<p>As an example, consider the quarterly U.S. CPI time series. Taking log-differences (first logs and then differences), and multiplying the resulting series with 1200, we obtain (one possible proxy for) yearly inflation rate. Due to an increasing trend in the CPI, after log-differencing, we obtain a time series without clear trend. This detrending via log-differencing means that instead of an increasing trend, we have a nonzero positive mean that can be seen here as a positive average inflation rate.</p>
+<p>As an example, consider the monthly U.S. CPI time series. Taking log-differences (first applying the logarithm and then differencing) and multiplying the resulting series with 1200, we obtain a (proxy) for the annualized inflation rate. Because the CPI typically exhibits an upward trend, log-differencing removes this trend, resulting in a series without a clear deterministic trend. This detrending implies that, instead of an increasing level, the transformed series has a positive mean, which reflects the average inflation rate over the sample period.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -460,15 +460,15 @@ window.Quarto = {
 </div>
 <p><span class="fig-caption">Figure: Annualized U.S. inflation (CPI inflation) obtained as year-to-year changes in the CPI (1990:2–2025:6).</span></p>
 <p>&nbsp;</p>
-<p>As another use of differencing, especially in financial econometrics and empirical finance, is to obtain returns that different assets yield for investors. Let <span class="math inline">\(P_t\)</span> the price of an asset at time <span class="math inline">\(t\)</span>. Holding the asset for one period from <span class="math inline">\(t-1\)</span> to <span class="math inline">\(t\)</span> would result in a simple return <span class="math display">\[\begin{equation*}
+<p>As another use of differencing, especially in financial econometrics and empirical finance, is to obtain returns that different assets yield for investors. Let <span class="math inline">\(P_t\)</span> the price of an asset at time <span class="math inline">\(t\)</span>. Holding the asset for one period from <span class="math inline">\(t-1\)</span> to <span class="math inline">\(t\)</span> yields the simple return <span class="math display">\[\begin{equation*}
 R_t = \frac{P_t}{P_{t-1}} - 1 = \frac{P_t - P_{t-1}}{P_{t-1}}.
-\end{equation*}\]</span> Moreover, so called continuously compounded returns (or log returns) are obtained as <span class="math display">\[\begin{equation*}
+\end{equation*}\]</span> In addition, the so-called continuously compounded returns (or log returns) are obtained as <span class="math display">\[\begin{equation*}
 r_t = \mathrm{log}(1+R_t) = \mathrm{log} \Big(\frac{P_t}{P_{t-1}}\Big) =p_t - p_{t-1},
-\end{equation*}\]</span> where <span class="math inline">\(p_t = \mathrm{log} (P_t)\)</span> and they have some advantages over simple returns. In both cases percentage returns are obtained by multiplying <span class="math inline">\(r_t\)</span> or <span class="math inline">\(R_t\)</span> by 100.</p>
+\end{equation*}\]</span> where <span class="math inline">\(p_t = \mathrm{log} (P_t)\)</span>. Log returns have several advantages over simple returns, such as time-additivity and better behavior under compounding. In both cases, percentage returns are obtained by multiplying <span class="math inline">\(r_t\)</span> or <span class="math inline">\(R_t\)</span> by 100.</p>
 <ul>
-<li>Importantly, in various financial applications, dividend (and equivalent) payments must also be taken into account when computing returns. If an asset pays dividends periodically, we must modify the definition of asset return. We will not consider these issues more detail in this course and details are left to more detailed studies in finance.</li>
+<li>Importantly, in many financial applications, dividend (and similar) payments must be considered when computing returns. If an asset pays dividends periodically, the definition of return needs to be adjusted accordingly. We will not explore these issues in detail in this course; they are left for more advanced studies in finance.</li>
 </ul>
-<p>Below we depict the annualized 1. log-differences of the monthly S&amp;P 500 index multiplied by 100 (percentage returns). We therefore use simple log-differences approximating percentage returns in the general U.S. market index. The shape of the time series is now clearly very different than the S&amp;P 500 index level data depicted above.</p>
+<p>Below, we depict the annualized log-differences of the monthly S&amp;P 500 index, multiplied by 100 to express them as percentage returns. These log-differences approximate monthly percantage returns for a broad U.S. market index. The shape of the return time series is clearly very different from the S&amp;P 500 index level data shown above.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -480,35 +480,35 @@ r_t = \mathrm{log}(1+R_t) = \mathrm{log} \Big(\frac{P_t}{P_{t-1}}\Big) =p_t - p_
 </div>
 <p><span class="fig-caption">Figure: (Annualized) monthly percentage changes in the S&amp;P 500 index.</span></p>
 <p>&nbsp;</p>
-<p><strong>Detrending</strong>. The trend and/or seasonal patterns etc. of the original time series are often modelled via transformation (if necessary) so that this step may itself require estimation of some parameters. For example, in the case of a linear trend, one can fit a trend line using least squares regression, and then consider modelling the resulting residual series using time series methods. In that case, an observed time series <span class="math inline">\(y_{t}\)</span> would be replaced by the time series <span class="math display">\[\begin{equation*}
+<p><strong>Detrending</strong>. The trend and/or seasonal patterns in the original time series are often removed through transformations (if necessary), which may require estimating certain parameters. For example, in the case of a linear trend, one can fit a trend line using least squares regression and then consider the resulting residual series using time series methods. In that case, the observed time series <span class="math inline">\(y_t\)</span> would be replaced by the (residual) time series <span class="math display">\[\begin{equation*}
     \widehat{x}_{t}=y_{t}-\widehat{\alpha}-\widehat{\boldsymbol{\beta}}t,\,\,t=1,\ldots,T,
-\end{equation*}\]</span> where the estimates <span class="math inline">\(\widehat{\alpha}\)</span> and <span class="math inline">\(\widehat{\boldsymbol{\beta}}\)</span> are obtained by regressing <span class="math inline">\(y_{t}\)</span>&nbsp;on a constant and <span class="math inline">\(t\)</span>. More generally, instead of the linear function of time, one can use more general polynomials as well.</p>
+\end{equation*}\]</span> where the estimates <span class="math inline">\(\widehat{\alpha}\)</span> and <span class="math inline">\(\widehat{\boldsymbol{\beta}}\)</span> are obtained by regressing <span class="math inline">\(y_{t}\)</span>&nbsp;on a constant and <span class="math inline">\(t\)</span>. More generally, instead of the linear function of time, one can use higher-order polynomials or other functional forms to capture more complex trends.</p>
 <ul>
 <li><p>To model seasonal variation, one could use trigonometric functions of time.</p></li>
 <li><p>An often used alternative to remove seasonal variation (if not using already existing seasonally adjusted data) is the so-called seasonal indicators. As an example of this, for quarterly data, one would obtain seasonally-adjusted series by <span class="math display">\[\begin{equation*}
   \widehat{x}_{t}=y_{t}-\widehat{\boldsymbol{\beta}}_{1}d_{1t}-\cdots-\widehat{\boldsymbol{\beta}}_{4}d_{4t},\,\,t=1,\ldots,T,
 \end{equation*}\]</span> where the <span class="math inline">\(i\)</span>th seasonal indicator <span class="math inline">\(d_{it}\)</span> takes value one when the observation in question corresponds to quarter <span class="math inline">\(i\)</span> and zero otherwise (<span class="math inline">\(i=1,\ldots,4)\)</span>.</p></li>
 </ul>
-<p>As for additional (extra) information, there is also a relatively broad literature on more advanced detrending techniques than differencing and seasonal dummies in econometrics.</p>
+<p>As for additional (extra) information, there is a substantial body of literature on advanced detrending techniques beyond simple differencing and seasonal dummy variables in econometrics.</p>
 <p>&nbsp;</p>
 </section>
 <section id="assumptions-and-limitations-of-this-course" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="assumptions-and-limitations-of-this-course"><span class="header-section-number">1.3</span> Assumptions and limitations of this course</h2>
-<p>In summary, we consider time series models/processes assuming that the observed time series do not exhibit clear seasonal patterns. If necessary, those patterns have been eliminated using some transformation or using some seasonal adjustment methods, and one is eventually modelling the transformed series.</p>
+<p>In summary, we consider time series models/processes under the assumption that the observed time series do not exhibit clear seasonal patterns. If necessary, such patterns have been removed through an appropriate transformation or a <strong>seasonal adjustment method</strong>, so that the modelling is applied to the transformed series.</p>
 <ul>
-<li>The typical approach especially with macroeconomic data is to use <strong>seasonally-adjusted datasets</strong> provided by official statistics organizations, like Statistics Finland. Therefore, we can assume that the seasonal effects are, at least at reasonable degree, already taken into account.</li>
+<li>A common approach, especially with macroeconomic data, is to use <strong>seasonally adjusted datasets</strong> provided by official statistical agencies, such as Statistics Finland. Therefore, we can reasonably assume that seasonal effects have already been accounted for to a satisfactory degree.</li>
 </ul>
-<p>Concerning trends, in the first part of this course (Sections 2–11) we consider <strong>stationary time series processes</strong> and their realizations (i.e.&nbsp;time series). These assume that there are no clear trends and/or trending type behaviour in the time series.</p>
+<p>Concerning trends, in the first part of this course (Sections 2–11) we focus on <strong>stationary time series processes</strong> and their realizations (i.e.&nbsp;observed time series). These models assume that the time series does not exhibit clear trends or very persistent/trending behaviour.</p>
 <ul>
-<li><p>That is the time series are more or less realizations which resemble more U.S. inflation series and stock market returns above in Section 12 than the CPI level series or the S&amp;P 500 price series.</p></li>
-<li><p>As for now, it suffices to understand that non-stationary time series can usually (though not always) be transformed by differencing such that stationarity assumptions hold reasonably well and thus a stationary such as ARMA(<span class="math inline">\(p,q\)</span>) process (to be introduced) is possible.</p></li>
-<li><p>An exception to the stationary time series becomes at the later part of the material where trending type of behaviour will be considered more detail. The basics of nonstationary processes will be discussed in Sections 12–13 where modelling the deterministic and/or especially the stochastic trend is of interest in several applications.</p></li>
+<li><p>That is, the time series considered here resemble the U.S. inflation series and stock market returns (as depicted above), rather than the CPI level series or the S&amp;P 500 price series.</p></li>
+<li><p>For now, it is sufficient to understand that non-stationary time series can usually (though not always) be transformed through differencing so that the stationarity assumption holds reasonably well. This allows us to model the resulting series as a stationary process such as ARMA(<span class="math inline">\(p,q\)</span>) process, which will be introduced later.</p></li>
+<li><p>An exception to this focus on stationary time series occurs in the latter part of the material, where trending behaviour is examined in more detail. The basics of non-stationary processes will be discussed in Sections 12–13, where modelling the deterministic, and, especially, stochastic trends becomes important in several applications.</p></li>
 </ul>
-<p>Finally, we will start with univariate time series. That is we are analysing one time series at hand in Sections 2–9. Later on in Sections 10–11 and 13, we will also consider basics of multiple (multivariate) time series analysis.</p>
+<p>Finally, we begin with univariate time series, meaning we analyze a single series at a time in Sections 2–9. Later, in Sections 10–11 and 13, we will introduce the basics of multivariate time series analysis, where multiple time series are modeled jointly.</p>
 </section>
 <section id="r-lab" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="r-lab"><span class="header-section-number">1.4</span> R Lab</h2>
-<p>All the R codes considered in this section are compiled in the following Tab. Notice that you might need to download some datasets from the course website and include them to the same folder as this file when trying to replicate analyses.</p>
+<p>All the R codes examples considered in this section are compiled in the following Tab. Note that you may need to download certain datasets from the course website and place them in the same folder as this file to successfully replicate the analyses.</p>
 <button class="toggle-button toggle-button-r" onclick="toggleCode('r-code2')">
 R Code
 </button>
@@ -580,7 +580,7 @@ R Code
 <span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot (i): CPI Time Series ---</span></span>
 <span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="co"># (i) Base R Implementation for CPI using plot.ts</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Base R Implementation for CPI using plot.ts</span></span>
 <span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(cpi_ts,<span class="at">col =</span> <span class="st">"blue"</span>,<span class="at">lwd =</span> <span class="dv">2</span>,<span class="at">main =</span> <span class="st">"CPI"</span>,<span class="at">xlab =</span> <span class="st">"Date"</span>,<span class="at">ylab =</span> <span class="st">"CPI"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
@@ -589,16 +589,11 @@ R Code
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># (i) ggplot2 Implementation for CPI</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>cpi_plot_ggplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data_subset, <span class="fu">aes</span>(<span class="at">x =</span> Date_ts, <span class="at">y =</span> CPI)) <span class="sc">+</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"steelblue"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"CPI"</span>,<span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"From"</span>, start_period, <span class="st">"to"</span>, end_period),</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Date"</span>,<span class="at">y =</span> <span class="st">"Consumer Price Index (CPI)"</span>) <span class="sc">+</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the ggplot object to display it</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cpi_plot_ggplot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot (ii): S&amp;P 500 (P) Time Series ---</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Base R Implementation for S&amp;P 500 (P) using plot.ts</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(p_ts,<span class="at">col =</span> <span class="st">"blue"</span>,<span class="at">lwd =</span> <span class="dv">2</span>,<span class="at">main =</span> <span class="st">"S&amp;P 500 (variable P)"</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Date"</span>, <span class="at">ylab =</span> <span class="st">"S&amp;P 500 Index"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -606,11 +601,28 @@ R Code
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot (ii): S&amp;P 500 (P) Time Series ---</span></span>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Differencing: Calculate and plot log-differences ---</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># (ii) Base R Implementation for S&amp;P 500 (P) using plot.ts</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(p_ts,<span class="at">col =</span> <span class="st">"blue"</span>,<span class="at">lwd =</span> <span class="dv">2</span>,<span class="at">main =</span> <span class="st">"S&amp;P 500 (variable P)"</span>,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Date"</span>, <span class="at">ylab =</span> <span class="st">"S&amp;P 500 Index"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate log-differences. The result is shorter, so we add NA to align it.</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>data_subset<span class="sc">$</span>cpi_log_diff_1m <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="dv">1200</span><span class="sc">*</span><span class="fu">diff</span>(<span class="fu">log</span>(data_subset<span class="sc">$</span>CPI))) <span class="co"># annualized</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>data_subset<span class="sc">$</span>cpi_log_diff_12m <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">12</span>), <span class="dv">100</span><span class="sc">*</span><span class="fu">diff</span>(<span class="fu">log</span>(data_subset<span class="sc">$</span>CPI), <span class="dv">12</span>))</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>data_subset<span class="sc">$</span>p_log_diff <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="dv">100</span><span class="sc">*</span><span class="fu">diff</span>(<span class="fu">log</span>(data_subset<span class="sc">$</span>P)))</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create new 'ts' objects for the differenced series</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>cpi_log_diff_1m_ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(data_subset<span class="sc">$</span>cpi_log_diff_1m, <span class="at">start =</span> <span class="fu">c</span>(start_year, </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                        start_month), <span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>cpi_log_diff_12m_ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(data_subset<span class="sc">$</span>cpi_log_diff_12m, <span class="at">start =</span> <span class="fu">c</span>(start_year, </span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>                        start_month), <span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>p_log_diff_ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(data_subset<span class="sc">$</span>p_log_diff, <span class="at">start =</span> <span class="fu">c</span>(start_year, </span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                        start_month), <span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot (iii): 1. log-difference in CPI (Monthly Inflation) ---</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co"># (iii) Base R Implementation</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(cpi_log_diff_1m_ts, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, </span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Annualized monthly inflation"</span>, <span class="at">xlab =</span> <span class="st">"Date"</span>,</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"(Annualized) 1. log-difference of U.S. CPI"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -618,16 +630,15 @@ R Code
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># (ii) ggplot2 Implementation for S&amp;P 500 (P)</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>p_plot_ggplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data_subset, <span class="fu">aes</span>(<span class="at">x =</span> Date_ts, <span class="at">y =</span> P)) <span class="sc">+</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"darkseagreen4"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span><span class="fu">labs</span>(</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"S&amp;P 500 (P) Time Series (ggplot2)"</span>, <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"From"</span>, </span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    start_period, <span class="st">"to"</span>, end_period),<span class="at">x =</span> <span class="st">"Date"</span>,<span class="at">y =</span> <span class="st">"S&amp;P 500 Index (P)"</span>) <span class="sc">+</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the ggplot object</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p_plot_ggplot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># (iii) ggplot2 Implementation</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_subset, <span class="fu">aes</span>(<span class="at">x =</span> Date_ts, <span class="at">y =</span> cpi_log_diff_1m)) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"purple"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Annualized monthly inflation (ggplot2)"</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"(Annualized) 1. log-difference of CPI"</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Log-Difference"</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -635,28 +646,12 @@ R Code
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Differencing: Calculate and plot log-differences ---</span></span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot (iv): 12-month log-difference in CPI (Year-over-Year Inflation) ---</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate log-differences. The result is shorter, so we add NA to align it.</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>data_subset<span class="sc">$</span>cpi_log_diff_1m <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="dv">1200</span><span class="sc">*</span><span class="fu">diff</span>(<span class="fu">log</span>(data_subset<span class="sc">$</span>CPI))) <span class="co"># annualized</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>data_subset<span class="sc">$</span>cpi_log_diff_12m <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">12</span>), <span class="dv">100</span><span class="sc">*</span><span class="fu">diff</span>(<span class="fu">log</span>(data_subset<span class="sc">$</span>CPI), <span class="dv">12</span>))</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>data_subset<span class="sc">$</span>p_log_diff <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="dv">100</span><span class="sc">*</span><span class="fu">diff</span>(<span class="fu">log</span>(data_subset<span class="sc">$</span>P)))</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create new 'ts' objects for the differenced series</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>cpi_log_diff_1m_ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(data_subset<span class="sc">$</span>cpi_log_diff_1m, <span class="at">start =</span> <span class="fu">c</span>(start_year, </span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                        start_month), <span class="at">frequency =</span> <span class="dv">12</span>)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>cpi_log_diff_12m_ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(data_subset<span class="sc">$</span>cpi_log_diff_12m, <span class="at">start =</span> <span class="fu">c</span>(start_year, </span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>                        start_month), <span class="at">frequency =</span> <span class="dv">12</span>)</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>p_log_diff_ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(data_subset<span class="sc">$</span>p_log_diff, <span class="at">start =</span> <span class="fu">c</span>(start_year, </span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>                        start_month), <span class="at">frequency =</span> <span class="dv">12</span>)</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot (iii): 1. log-difference in CPI (Monthly Inflation) ---</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co"># (iii) Base R Implementation</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(cpi_log_diff_1m_ts, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, </span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Annualized monthly inflation"</span>, <span class="at">xlab =</span> <span class="st">"Date"</span>,</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"(Annualized) 1. log-difference of U.S. CPI"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># (iv) Base R Implementation</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(cpi_log_diff_12m_ts,<span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Year-over-Year U.S. inflation "</span>, <span class="at">xlab =</span> <span class="st">"Date"</span>, </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"12-month log-difference of CPI"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -664,15 +659,16 @@ R Code
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># (iii) ggplot2 Implementation</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_subset, <span class="fu">aes</span>(<span class="at">x =</span> Date_ts, <span class="at">y =</span> cpi_log_diff_1m)) <span class="sc">+</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"purple"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Annualized monthly inflation (ggplot2)"</span>,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"(Annualized) 1. log-difference of CPI"</span>,</span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># (iv) ggplot2 Implementation</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_subset, <span class="fu">aes</span>(<span class="at">x =</span> Date_ts, <span class="at">y =</span> cpi_log_diff_12m)) <span class="sc">+</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">labs</span>(</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Year-over-Year Inflation (ggplot2)"</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"12-month log-difference of CPI"</span>,</span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Log-Difference"</span></span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -680,12 +676,12 @@ R Code
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot (iv): 12-month log-difference in CPI (Year-over-Year Inflation) ---</span></span>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot (v): Log-difference of P (S&amp;P 500 monthly returns) ---</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># (iv) Base R Implementation</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(cpi_log_diff_12m_ts,<span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>,</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Year-over-Year U.S. inflation "</span>, <span class="at">xlab =</span> <span class="st">"Date"</span>, </span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"12-month log-difference of CPI"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># (v) Base R Implementation</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(p_log_diff_ts,<span class="at">col =</span> <span class="st">"blue"</span>,<span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">main =</span> <span class="st">"S&amp;P 500 monthly returns"</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Date"</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"log-difference of P"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -693,13 +689,13 @@ R Code
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># (iv) ggplot2 Implementation</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_subset, <span class="fu">aes</span>(<span class="at">x =</span> Date_ts, <span class="at">y =</span> cpi_log_diff_12m)) <span class="sc">+</span> </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">labs</span>(</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Year-over-Year Inflation (ggplot2)"</span>,</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"12-month log-difference of CPI"</span>,</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Log-Difference"</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># (v) ggplot2 Implementation</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_subset, <span class="fu">aes</span>(<span class="at">x =</span> Date_ts, <span class="at">y =</span> p_log_diff)) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"S&amp;P 500 monthly returns (ggplot2)"</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"log-difference of P"</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Log-Difference"</span>) <span class="sc">+</span></span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -710,12 +706,9 @@ R Code
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot (v): Log-difference of P (S&amp;P 500 monthly returns) ---</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># (v) Base R Implementation</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(p_log_diff_ts,<span class="at">col =</span> <span class="st">"blue"</span>,<span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">main =</span> <span class="st">"S&amp;P 500 monthly returns"</span>,</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Date"</span>,</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"log-difference of P"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot Built-in Dataset: sunspots ---</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(sunspots, <span class="at">main =</span> <span class="st">"sunspots data"</span>, <span class="at">xlab =</span> <span class="st">"Year"</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Monthly sunspot numbers"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -723,40 +716,13 @@ R Code
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># (v) ggplot2 Implementation</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_subset, <span class="fu">aes</span>(<span class="at">x =</span> Date_ts, <span class="at">y =</span> p_log_diff)) <span class="sc">+</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"S&amp;P 500 monthly returns (ggplot2)"</span>,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"log-difference of P"</span>,</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Log-Difference"</span>) <span class="sc">+</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot Built-in Dataset: USAccDeaths ---</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(USAccDeaths,<span class="at">main =</span> <span class="st">"Accidental Deaths in the US 1973-1978"</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Year"</span>, <span class="at">ylab =</span> <span class="st">"Number of Accidental Deaths"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
 <p><img src="TSE-ch1_files/figure-html/unnamed-chunk-1-10.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot Built-in Dataset: sunspots ---</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(sunspots, <span class="at">main =</span> <span class="st">"Sunspots data"</span>, <span class="at">xlab =</span> <span class="st">"Year"</span>,</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Monthly sunspot numbers"</span>,<span class="at">col =</span> <span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="TSE-ch1_files/figure-html/unnamed-chunk-1-11.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Plot Built-in Dataset: USAccDeaths ---</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(USAccDeaths,<span class="at">main =</span> <span class="st">"Accidental Deaths in the US 1973-1978"</span>,</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Year"</span>, <span class="at">ylab =</span> <span class="st">"Number of Accidental Deaths"</span>, <span class="at">col =</span> <span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="TSE-ch1_files/figure-html/unnamed-chunk-1-12.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>

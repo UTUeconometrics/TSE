@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Henri Nyberg">
-<meta name="dcterms.date" content="2025-10-27">
 
 <title>Time Series Econometrics (TSE)</title>
 <style>
@@ -290,12 +289,6 @@ window.Quarto = {
           </div>
   </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">October 27, 2025</p>
-    </div>
-  </div>
   
     
   </div>
@@ -307,45 +300,68 @@ window.Quarto = {
 
 <section id="preface" class="level1 unnumbered">
 <h1 class="unnumbered">Preface</h1>
+<!-- # Preface {-} -->
 <a class="toggle-link" onclick="toggleCode('foreword')">Foreword</a>
 <div id="foreword" style="display:none;">
-<p>This material is contained from various sources. The material is largely based on the materials of the previous Aikasarja-analyysi/Time Series Analysis course at the University of Turku 2016–2025. Furthermore, that material was largely based on the many courses on time series analysis held by Professor emeritus Pentti Saikkonen at the University of Helsinki. Many thanks to him for giving access to the previous course materials, especially on the course <em>Stationaariset aikasarjat</em> (2015). Thanks also to Professor Mika Meitz and his lecture notes “Lecture Notes on Time Series Econometrics” concerning the English translation.</p>
+<p>&nbsp;</p>
+<p>This material is compiled from various sources. It is largely based on the Aikasarja-analyysi (Time Series Analysis) course taught at the University of Turku from 2016 to 2025. That course material was, in turn, heavily based on the numerous time series analysis courses taught by Professor Emeritus Pentti Saikkonen at the University of Helsinki. My/our sincere thanks to him for providing access to his course materials, particularly for the course “Stationaariset aikasarjat” (2015). Thanks also to Professor Mika Meitz, whose lecture notes, “Lecture Notes on Time Series Econometrics” were valuable reference for the English translation and terminology.</p>
+<p>Special thanks to Professor Markku Lanne for sharing his lecture notes on linear regressions with time series variables, originally part of the “Econometrics 2” course at the University of Helsinki. I also wish to thank MSocSc and doctoral researcher Roope Rihtamo for setting up the Quarto and GitHub documents of this material.</p>
+<p>All remaining errors are solely the responsibility of the author.</p>
 <p>Other sources and potential references include the following:</p>
 <ul>
 <li><p>Brockwell, P.J. &amp; R.A. Davis (1996 or 2002). Introduction to Time Series and Forecasting. Springer (2002, 2nd ed.).</p></li>
 <li><p>Franses, P.H. &amp; D. van Dijk (2000). Non-linear time series models in empirical finance. Cambridge University Press.</p></li>
 <li><p>Hamilton, J. (1994). Time Series Analysis. Princeton University Press.</p></li>
-<li><p>L"{u}tkepohl, H. &amp; M. Kr"{a}tzig (2004). Applied Time Series Econometrics. Cambridge University Press.</p></li>
+<li><p>Lütkepohl, H. &amp; Krätzig, M. (2004). Applied Time Series Econometrics. Cambridge University Press.</p></li>
 <li><p>Tsay, R.S. (2010). Analysis of Financial Time Series. Wiley</p></li>
 <li><p>Verbeek, M. (2008). A Guide To Modern Econometrics. John Wiley &amp; Sons. Third Edition</p></li>
 </ul>
-<p>These materials focus largely on univariate time series models, but we will also briefly consider the main points of multiple time series, specifically vector autoregressive (VAR) models and cointegration. Moreover, we will also consider some basics of machine learning techniques in time series econometrics. The empirical examples (carried out by RStudio) provide illustration of the theoretical basis. The empirical examples are mostly from economic and financial applications, but the methods are applicable in many other fields as well.</p>
-<p>Some empirical examples are based on well-known journal articles:</p>
+<p>This lecture manuscript primarily focus on univariate time series models. However, we will also briefly cover key aspects of multiple time series analysis, particularly vector autoregressive (VAR) models and cointegration. In addition, we will introduce some fundamental concepts of machine learning techniques relevant to time series econometrics.</p>
+<p>The empirical examples, implemented using RStudio, serve to illustrations to theoretical concepts. While most examples are drawn from (macro)economic and financial applications, the methods are broadly applicable across various fields.</p>
+<p>Some of the empirical examples and materials are based on well-known journal articles:</p>
 <ul>
 <li><p>Hall, R.E. (1978). Stochastic implications of the life cycle-permanent income hypothesis: Theory and evidence. Journal of Political Economy, 86(6), 971–987.</p></li>
 <li><p>Stock, J.H. &amp; M.W. Watson (1988). Variable trends in economic time series. Journal of Economic Perspectives, 2(3), 147–174</p></li>
 <li><p>Stock, J.H. &amp; M.W. Watson (2001). Vector autoregressions. Journal of Economic Perspectives, 15(4), 101–115.</p></li>
 </ul>
+<p>More background information (journal articles and their references)</p>
+<ul>
+<li><p>Engle, R.F., Lilien, D.M. &amp; Robins, R.P. (1987). Estimating time varying risk premia in the term structure: The ARCH-M model. Econometrica, 55, 391–407.</p></li>
+<li><p>Glosten, L.R., Jagannathan, R. &amp; Runkle, D.E. (1993). On the relation between the expected value of the volatility of the nominal excess return on stocks. Journal of Finance, 48 , 1779–1801.</p></li>
+<li><p>Lanne, M. &amp; Saikkonen, P. (2006). Why is it so difficult to uncover the risk-return tradeoff in stock returns? Economics Letters, 92, 118–125.</p></li>
+<li><p>Newey, W.K., &amp; West, K. D. (1987). A simple, positive semi-definite, heteroskedasticity and autocorrelation consistent covariance matrix. Econometrica, 55(3), 703–708.</p></li>
+<li><p>Nyberg, H. (2012). Risk-return tradeoff in U.S. stock returns over the business cycle. Journal of Financial and Quantitative Analysis, 47, 137–158.</p></li>
+<li><p>Scruggs, J. (1998). Resolving the puzzling intertemporal relation between the market risk premium and conditional market variance: A two-factor approach. Journal of Finance, 53, 575–603.</p></li>
+</ul>
 <p>Datasets and data sources used in this lecture manuscript:</p>
 <ul>
-<li><p>Shiller data: Robert Shiller’s updated data on Irrational Exuberance. Shiller, R. (2005). Irrational Exuberance. 2nd Edition. Currency Books.</p></li>
-<li><p>FRED data</p></li>
-<li><p>quantmod R package</p></li>
+<li><p>“Shiller data” refers to Robert Shiller’s updated data on Irrational Exuberance: http://www.econ.yale.edu/~shiller/data.htm.</p>
+<ul>
+<li>See Shiller, R. (2005). Irrational Exuberance. 2nd Edition. Currency Books.</li>
+</ul></li>
+<li><p>FRED data (Federal Reserve Bank of St.&nbsp;Louis): https://fred.stlouisfed.org/.</p>
+<ul>
+<li>Hereafter “FRED” (“FRED data”) refers to the Federal Reserve Economic Data (FRED) database, maintained by the Federal Reserve Bank of St.&nbsp;Louis.</li>
+</ul></li>
+<li><p>quantmod R package: https://cran.r-project.org/web/packages/quantmod/index.html.</p>
+<ul>
+<li><p>Data retrieved via the quantmod R package is seemingly often from Yahoo Finance (https://finance.yahoo.com)</p></li>
+<li><p>This package provides tools for quantitative financial modeling and data retrieval. Note that when using financial data in more “serious analyses”, like in your thesis work, ensure always that you have the appropriate license and permission to access and use the data sources, such as possibly integrated via quantmod.</p></li>
+</ul></li>
 </ul>
-<p>Thanks also to Professor Markku Lanne for sharing his lecture notes on linear regressions with time series variables (that is the previous “Econometrics 2” course at the University of Helsinki) and doctoral student Roope Rihtamo for setting up the quarto document. All remaining errors are by the author.</p>
 </div>
 <p>&nbsp;</p>
 <a class="toggle-link" onclick="toggleCode('notation')">Notation</a>
 <div id="notation" style="display:none;">
-<p>On this course, we follow the following notational selections:</p>
+<p>On this course, we follow, for example, the following key notational selections:</p>
 <ul>
 <li><p>We will use the same notation for random quantities and their realized values. The context should make the difference clear.</p></li>
-<li><p>In matrix calculations, vectors are interpreted as column vectors and we might also denote, for example, <span class="math inline">\(y=\left[y_{1}\text{ }\cdots\text{ }y_{T}\right]^{\prime}\)</span>, where the superscripted comma denotes transpose of a vector (or elsewhere also of a matrix).</p></li>
+<li><p>In vector and matrix calculations, vectors are interpreted as column vectors and we might also denote, for example, <span class="math inline">\(\boldsymbol{y} = \left[y_{1} \, \cdots \, y_T \right]^{\prime}\)</span>, where the superscripted comma denotes transpose of a vector (here <span class="math inline">\(T \times 1\)</span> vector), or elsewhere also of a matrix. Vectors (column vectors) are also at times denoted as <span class="math inline">\(\boldsymbol{y}=(y_1,\ldots,y_T)\)</span>, indicating the same vector as above.</p></li>
 </ul>
-<p>Concerning different processes,</p>
+<p>Concerning different (stochastic/time series) processes, we use mainly notations <span class="math inline">\(y_t\)</span>, <span class="math inline">\(x_t\)</span> and <span class="math inline">\(z_t\)</span>.</p>
 <ul>
-<li><p><span class="math inline">\(x_t\)</span>, or <span class="math inline">\(\boldsymbol{x}_t\)</span> in the case of multiple time series, is used for a general time series process (for different notational purposes) and most often they are explanatory (predictive) variables.</p></li>
-<li><p><span class="math inline">\(z_t\)</span> is a zero mean process and at times denoting demeaned process. That is <span class="math inline">\(z_t = y_t- \mathsf{E}(y_t)\)</span>.</p></li>
+<li><p><span class="math inline">\(z_t\)</span> is typically a zero mean process and denoting often a demeaned process. That is <span class="math inline">\(z_t = y_t- \mathsf{E}(y_t)\)</span>, where <span class="math inline">\(y_t\)</span> is the “original” time series.</p></li>
+<li><p><span class="math inline">\(x_t\)</span>, or <span class="math inline">\(\boldsymbol{x}_t\)</span> in the case of multiple time series, is used for a general time series or a vector of time series for different notational purposes, but most often they are in the role of explanatory (predictive) variables.</p></li>
 </ul>
 </div>
 <p>&nbsp;</p>

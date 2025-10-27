@@ -303,7 +303,7 @@ window.Quarto = {
   <li><a href="#integrated-process" id="toc-integrated-process" class="nav-link active" data-scroll-target="#integrated-process"><span class="header-section-number">12.1</span> Integrated process</a></li>
   <li><a href="#arimapdq-process" id="toc-arimapdq-process" class="nav-link" data-scroll-target="#arimapdq-process"><span class="header-section-number">12.2</span> ARIMA(<span class="math inline">\(p\)</span>,<span class="math inline">\(d\)</span>,<span class="math inline">\(q\)</span>) process</a></li>
   <li><a href="#unit-root-process" id="toc-unit-root-process" class="nav-link" data-scroll-target="#unit-root-process"><span class="header-section-number">12.3</span> Unit root process</a></li>
-  <li><a href="#testing-for-a-unit-root" id="toc-testing-for-a-unit-root" class="nav-link" data-scroll-target="#testing-for-a-unit-root"><span class="header-section-number">12.4</span> Testing for a unit root</a></li>
+  <li><a href="#testing-for-a-unit-root-adf-test" id="toc-testing-for-a-unit-root-adf-test" class="nav-link" data-scroll-target="#testing-for-a-unit-root-adf-test"><span class="header-section-number">12.4</span> Testing for a unit root: ADF test</a></li>
   <li><a href="#r-lab" id="toc-r-lab" class="nav-link" data-scroll-target="#r-lab"><span class="header-section-number">12.5</span> R Lab</a></li>
   </ul>
 </nav>
@@ -330,7 +330,6 @@ window.Quarto = {
 </header>
 
 
-<!-- ## Integrated and ARIMA($p$, $q$) processes -->
 <section id="integrated-process" class="level2" data-number="12.1">
 <h2 data-number="12.1" class="anchored" data-anchor-id="integrated-process"><span class="header-section-number">12.1</span> Integrated process</h2>
 <p>In some application fields, such as economics and finance, the existence of trends in the analyzed time series is common.</p>
@@ -343,12 +342,16 @@ window.Quarto = {
 <li><p>If the differences still include some sort of trend, it is natural to extend this procedure to the difference of these differences <span class="math inline">\(\Delta^2 y_{t} = y_t-2y_{t-1}+y_{t-2}\)</span>, and so on. This, however, is very rare in practice, and typically only first differences are considered when differencing data.</p></li>
 </ul>
 <p>&nbsp;</p>
-<p>Based on the aforementioned, let us introduce the following definition for univariate time series process:</p>
-<p><strong>Integrated process</strong>. Stochastic process <span class="math inline">\(y_t\)</span> <span class="math inline">\(\{y_t, t=1,2,\dots\}\)</span> is said to be <strong>an integrated process of order <span class="math inline">\(d\)</span> or <span class="math inline">\(I(d\)</span>) process</strong> if the <span class="math inline">\(d\)</span> times differenced process <span class="math display">\[\begin{equation*}
+<p>Based on the aforementioned, let us introduce the following definition (here for univariate time series processes):</p>
+<p><strong>Integrated process</strong>. A stochastic process <span class="math inline">\(y_t\)</span> <span class="math inline">\(\{y_t, t=1,2,\dots\}\)</span> is said to be <strong>an integrated process of order <span class="math inline">\(d\)</span></strong>, or an <span class="math inline">\(I(d\)</span>) <strong>process</strong> if the <span class="math inline">\(d\)</span> times differenced process <span class="math display">\[\begin{equation*}
+\Delta^d y_t
+\end{equation*}\]</span> is stationary (or asymptotically stationary), but the <span class="math inline">\((d-1)\)</span> differenced process <span class="math inline">\(\Delta^{d-1} y_t\)</span> is not.</p>
+<ul>
+<li>In some definitions, the process is first centered by subtracting its mean, that is <span class="math display">\[\begin{equation*}
 \Delta^d(y_t-\mathsf{E}(y_t)), \quad t=1,2,\dots,
-\end{equation*}\]</span> is stationary, but the <span class="math inline">\(d-1\)</span> times differenced process <span class="math display">\[\begin{equation*}
-\Delta^{d-1}(y_t-\mathsf{E}(y_t)), \quad t=1,2,\dots,
-\end{equation*}\]</span> is not. If <span class="math inline">\(y_t\)</span> is an <span class="math inline">\(I(d)\)</span> <strong>process</strong>, we denote <span class="math display">\[\begin{equation*}
+\end{equation*}\]</span> is stationary, while <span class="math inline">\(\Delta^{d-1}(y_t-\mathsf{E}(y_t))\)</span> is not. This form accounts for the deterministic component of the process.</li>
+</ul>
+<p>If <span class="math inline">\(y_t\)</span> is an <span class="math inline">\(I(d)\)</span> <strong>process</strong>, we denote <span class="math display">\[\begin{equation*}
 y_t\sim \mathrm{I}(d) \,\,\, (d\geq 1).
 \end{equation*}\]</span> In this course, we will consider only <span class="math inline">\(d=1\)</span> and <span class="math inline">\(d=0\)</span>.</p>
 <p>&nbsp;</p>
@@ -356,7 +359,10 @@ y_t\sim \mathrm{I}(d) \,\,\, (d\geq 1).
     \Delta y_t = \nu + u_t, \,\, t=1,2,\ldots,
 \end{equation*}\]</span> where <span class="math inline">\(u_t\sim \mathsf{iid}(0,\sigma^2\)</span>). By recursive substitutions, we get <span class="math display">\[\begin{equation*}
     y_t=y_0+\nu t + \sum_{j=1}^{t}u_j, \,\,\, t=1,2,\dots
-\end{equation*}\]</span> Sometimes, depending on the time series and application that we are considering. it is assumed that <span class="math inline">\(\nu=0\)</span>, that is, we have a <strong>random walk without drift</strong>, and hence the term <span class="math inline">\(\nu t\)</span> above vanishes. Moreover, in that case, differences <span class="math inline">\(y_t-y_{t-1}=u_t\)</span> from the process <span class="math inline">\(y_t=y_0+\sum_{j=0}^{t-1}u_{t-j}\)</span> are stationary, and this holds even if instead of <span class="math inline">\(u_t\sim\mathsf{iid}(0,\sigma^2)\)</span> we only assume <span class="math inline">\(u_t\)</span> is stationary.</p>
+\end{equation*}\]</span></p>
+<ul>
+<li>Sometimes, depending on the time series and application that we are considering. it is assumed that <span class="math inline">\(\nu=0\)</span>, that is, we have a <strong>random walk without drift</strong>, and hence the term <span class="math inline">\(\nu t\)</span> above vanishes. Furthermore, in this case, differences <span class="math inline">\(y_t-y_{t-1}=u_t\)</span> from the process <span class="math inline">\(y_t=y_0+\sum_{j=0}^{t-1}u_{t-j}\)</span> are stationary, and this holds even if instead of <span class="math inline">\(u_t\sim\mathsf{iid}(0,\sigma^2)\)</span> we only assume <span class="math inline">\(u_t\)</span> is stationary.</li>
+</ul>
 <p>Assuming the initial (starting) value <span class="math inline">\(y_0\)</span> as constant, for the random walk we get (details are left as an exercise) <span class="math display">\[\begin{equation*}
     \mathsf{E}(y_t)=y_0+\nu t,
 \end{equation*}\]</span> <span class="math display">\[\begin{equation*}
@@ -368,22 +374,31 @@ y_t\sim \mathrm{I}(d) \,\,\, (d\geq 1).
 <li><p>As <span class="math inline">\(\Delta y_t\sim\mathsf{iid}(\nu,\sigma^2)\)</span> is stationary, we can conclude that the random walk is an <span class="math inline">\(I(1)\)</span> process.</p></li>
 <li><p>From the calculations above, we can observe that for random walk <span class="math inline">\(\mathsf{Var}(y_t)\rightarrow\infty\)</span> and <span class="math inline">\(\mathsf{Cor}(y_t,y_{t+k})\rightarrow 1\)</span> with any <span class="math inline">\(k&gt;0\)</span> as <span class="math inline">\(t\rightarrow\infty\)</span>. Therefore, random walk processes are strongly autocorrelated, and due to their wandering nature, they exhibit trend-like features.</p></li>
 </ul>
+<p>In other words, we can summarize:</p>
+<ul>
+<li><p>An <span class="math inline">\(I(0)\)</span> process is stationary: it fluctuates around a constant mean, has constant variance, and autocorrelations decay quickly. It is often described as mean-reverting and has short memory.</p></li>
+<li><p>An <span class="math inline">\(I(1)\)</span> process is non-stationary: it exhibits a <strong>stochastic trend</strong> (see below) and <strong>wanders</strong> over time. Each innovation has a permanent effect, and autocorrelations decay slowly, indicating long memory.</p></li>
+</ul>
 <p>&nbsp;</p>
-<p>Random walk is the simplest example of so-called <strong>ARIMA processes</strong>, as introduced below. The letter <span class="math inline">\(I\)</span> in the middle refers to the term “integrated” as the sum <span class="math inline">\(\sum_{j=0}^{t-1}u_{t-j}\)</span> is interpreted as an integral. Furthermore, as the term <span class="math inline">\(\sum_{j=1}^{t}u_j\)</span> is stochastic (random), this trend component is often called a <strong>stochastic trend</strong>.</p>
+<p><strong>ARIMA processes and trends in time series</strong>. Random walk is the simplest example of so-called <strong>ARIMA processes</strong>.</p>
 <ul>
-<li><p>If <span class="math inline">\(\nu\neq0\)</span>, this stochastic trend appears around the <strong>deterministic trend</strong> <span class="math inline">\(y_0+\nu t\)</span>. A deterministic trend is a non-random function of time, such as a linear function. A time series fluctuates around its deterministic trend component.</p></li>
-<li><p>A <strong>stochastic trend</strong> is random and varies over time. A stochastic trend exhibits a prolonged period of increase followed by a prolonged period of decrease in the time series.</p></li>
-<li><p>Moreover, a process, say, <span class="math inline">\(y_t = \alpha + \beta t + \psi(B) u_t\)</span>, where <span class="math inline">\(\psi(B)\)</span> refers to the MA(<span class="math inline">\(\infty\)</span>) presentation of the ARMA process (including the special case of <span class="math inline">\(\psi(B) =1\)</span>, as discussed in Section 1), is sometimes described as a trend-stationary process, because if one subtracts the trend (<span class="math inline">\(\alpha + \beta t\)</span>) the result is a stationary process.</p></li>
+<li><p>The acronym ARIMA stands for AutoRegressive Integrated Moving Average, where the letter <span class="math inline">\(I\)</span> refers to integration — the idea that the process is formed by summing (or “integrating”) past innovations <span class="math inline">\(y_t = \sum_{j=0}^{t-1} u_{t-j}\)</span>. This cumulative sum introduces a <strong>stochastic trend</strong>, meaning the trend component is random and evolves over time due to the accumulation of shocks.</p></li>
+<li><p>If the process includes a drift term <span class="math inline">\(\nu \neq 0\)</span>, the stochastic trend fluctuates around a <strong>deterministic trend</strong> <span class="math inline">\(y_0 + \nu t\)</span>. A deterministic trend is a non-random, predictable function of time — typically linear — around which the series may fluctuate.</p></li>
 </ul>
-<p>This brings us to the conclusion: As many economic (and other) time series exhibit a trend, it is important to distinguish whether a trend (persistent long-term movement over time) in a time series is generated by stochastic or deterministic trend.</p>
+<p>&nbsp;</p>
+<p><strong>Trend-stationary vs.&nbsp;difference-stationary processes</strong>. A process of the form <span class="math display">\[\begin{equation*}
+y_t = \alpha + \beta t + \psi(B) u_t,
+\end{equation*}\]</span> where <span class="math inline">\(\psi(B)\)</span> is the MA(<span class="math inline">\(\infty\)</span>) representation of an ARMA process (including the special case <span class="math inline">\(\psi(B) = 1\)</span>), is called a trend-stationary process. If the deterministic trend <span class="math inline">\(\beta t\)</span> (or <span class="math inline">\(\alpha + \beta t\)</span>) is removed, the residual process is stationary.</p>
 <ul>
-<li>It turns out that it is often more appropriate to model economic (macroeconomic and financial) time series assuming that there is a stochastic trend rather than a deterministic trend.</li>
+<li>In contrast, a difference-stationary process (e.g., a random walk) requires differencing to achieve stationarity, as it contains a stochastic trend.</li>
 </ul>
-<p>Still in a nutshell, an <span class="math inline">\(I(0)\)</span> time series process fluctuates around its mean with a constant and infinite variance that does not depend on time, while <span class="math inline">\(I(1)\)</span> series <strong>wanders</strong> widely.</p>
+<p>&nbsp;</p>
+<p><strong>Types of trends</strong>. Many economic and financial time series exhibit trends, which can be either deterministic or stochastic.</p>
 <ul>
-<li><p>At times it is said that an <span class="math inline">\(I(0)\)</span> process is <strong>mean reverting</strong>, as there is tendency that the series returns to its mean. Furthermore, the process has a limited memory of its past behaviour and sample autocorrelations decay relatively rapidly to zero.</p></li>
-<li><p>In contrast, <span class="math inline">\(I(1)\)</span> process has an infinitely <strong>long memory</strong> (see, e.g., random walk case above). Each innovation has a permanent effect on the process. Estimated autocorrelations decay to zero very slowly.</p></li>
+<li><p>A <strong>deterministic trend</strong> is a fixed function of time (e.g., <span class="math inline">\(\beta t\)</span>), around which the series fluctuates due to stationary noise. Removing the trend yields a stationary process and implies mean reversion.</p></li>
+<li><p>A <strong>stochastic trend</strong> results from the accumulation of random shocks, causing the series to drift persistently. It implies permanent effects of innovations and requires differencing for stationarity.</p></li>
 </ul>
+<p>Empirical evidence suggests that stochastic trends are often more appropriate for modeling macroeconomic and financial time series.</p>
 <p>&nbsp;</p>
 </section>
 <section id="arimapdq-process" class="level2" data-number="12.2">
@@ -408,21 +423,17 @@ y_t\sim \mathrm{I}(d) \,\,\, (d\geq 1).
 </ul>
 <p>Overdifferencing does not make a series “more stationary”. Instead, it introduces new artificial patterns into the data that were not present in the original process. This complicates model building and can lead to poor analyses and forecasts.</p>
 <ul>
-<li><p>The most significant problem is that overdifferencing creates a specific, predictable correlation structure. Specifically, it often introduces a strong negative autocorrelation at lag 1. A model then has to be made more complex (e.g., by adding a moving average term, MA(1)) just to remove the artificial pattern you introduced. This violates the principle of parsimony.</p></li>
-<li><p>Increased Variance: Differencing a stationary series can actually increase its variance, making the series noisier and harder to model accurately.</p></li>
+<li>The most significant problem is that overdifferencing creates a specific, predictable correlation structure.</li>
 </ul>
 <p><strong>Illustration: Overdifferencing white noise</strong>. Let see what happens when we difference a series that is already stationary: a white noise process, <span class="math inline">\(y_t = \varepsilon_t\)</span>, where <span class="math inline">\(\varepsilon_t \sim \mathsf{wn}(0, \sigma^2)\)</span>. This series has by definition zero autocorrelation at all lags. If we mistakenly difference it, we create a new series, <span class="math inline">\(z_t= \Delta y_t = y_t - y_{t-1} = \varepsilon_t - \varepsilon_{t-1}\)</span>. This new series, <span class="math inline">\(z_t\)</span>, is no longer white noise. Let’s examine its properties:</p>
 <ul>
-<li><p>Variance: <span class="math inline">\(\mathsf{Var}(z_t) = \mathsf{Var}(\varepsilon_t - \varepsilon_{t-1}) = \mathsf{Var}(\varepsilon_t) + \mathsf{Var}(\varepsilon_{t-1}) = \sigma^2 + \sigma^2 = 2\sigma^2\)</span>. We have doubled the variance!</p></li>
+<li><p>Variance: <span class="math inline">\(\mathsf{Var}(z_t) = \mathsf{Var}(\varepsilon_t - \varepsilon_{t-1}) = \mathsf{Var}(\varepsilon_t) + \mathsf{Var}(\varepsilon_{t-1}) = 2\sigma^2\)</span>. We have doubled the variance!</p></li>
 <li><p>Autocorrelation: The autocovariance at lag 1 is <span class="math inline">\(\mathsf{Cov}(z_t, z_{t-1}) = \mathsf{Cov}(\varepsilon_t - \varepsilon_{t-1}, \varepsilon_{t-1} - \varepsilon_{t-2}) = -\mathsf{Var}(\varepsilon_{t-1}) = -\sigma^2\)</span>.</p></li>
 </ul>
 <p>The autocorrelation at lag 1 is therefore: <span class="math display">\[\begin{equation*}
-\rho_1 = \frac{\mathsf{Cov}(z_t, z_{t-1})}{\sqrt{\mathsf{Var}(z_t)\mathsf{Var}(z_{t-1})}} = \frac{-\sigma^2}{\sqrt{2\sigma^2 \cdot 2\sigma^2}} = \frac{-\sigma^2}{2\sigma^2} = -0.5
+\rho_1 = \frac{\mathsf{Cov}(z_t, z_{t-1})}{\sqrt{\mathsf{Var}(z_t)\mathsf{Var}(z_{t-1})}} = \frac{-\sigma^2}{\sqrt{2\sigma^2 \cdot 2\sigma^2}} = \frac{-\sigma^2}{2\sigma^2} = -0.5.
 \end{equation*}\]</span> By differencing a series with zero autocorrelation, we created a new series with a perfectly defined negative autocorrelation of -0.5 at the lag 1.</p>
-<!-- These two results suggest that some evidence for potential overdifferencing by looking for these tell-tale signs: 
-- The ACF Plot: The most obvious sign is a large, significant negative spike at lag 1 in the autocorrelation function (ACF) plot of your differenced series. 
-- Increased standard deviation: Calculate the standard deviation of your series before and after differencing. If it increases noticeably, you may have overdifferenced.-->
-<p>As we will discuss later on, always check for stationarity using tools like the ACF plot and unit root tests (e.g., ADF test, see the coming section) before applying another round of differencing. If the series already appears stationary enough, stop.</p>
+<p>As we will discuss later on, always check for stationarity using tools like the ACF plot and unit root tests (e.g., ADF test, see the coming section) before applying another round of differencing. If the series already appears stationary enough, stop!</p>
 <p>&nbsp;</p>
 </section>
 <section id="unit-root-process" class="level2" data-number="12.3">
@@ -437,7 +448,7 @@ a(B)z_t=u_t,
 a\left(B\right) =\Delta -\phi B - \phi _{1}\Delta B -\cdots -\phi _{p-1}\Delta B^{p-1}, \quad  \phi =-a\left( 1\right),
 \end{equation*}\]</span> so the process <span class="math inline">\(z_t\)</span> can be represented as <span class="math display">\[\begin{equation*}
 \Delta z_{t}=\phi z_{t-1}+\phi _{1}\Delta z_{t-1}+\cdots +\phi _{p-1}\Delta z_{t-p+1}+ u _{t}, \quad t=1,2,\ldots,
-\end{equation*}\]</span> where <span class="math inline">\(u _{t}\sim \mathsf{iid}(0,\sigma ^{2})\)</span>.</p>
+\end{equation*}\]</span> where <span class="math inline">\(u _{t}\sim \mathsf{iid}(0,\sigma ^{2})\)</span> (or that <span class="math inline">\(u_t\)</span> is white noise).</p>
 <p>Let’s assume that for <span class="math inline">\(a(z)\)</span> the following holds: <span class="math display">\[\begin{equation*}
     \text{If} \,\, a(z)=0, \,\, \mathrm{then} \,\, |z|&gt;1 \,\, \mathrm{or} \,\, |z|=1.
 \end{equation*}\]</span> In other words, the roots of the polynomial <span class="math inline">\(a(z)\)</span> lie outside or at the unit circle on the complex plane.</p>
@@ -482,14 +493,21 @@ Extra: Polynomials and power series
 <p>As discussed above in connection to integrated and ARIMA processes, the presence of a unit root is particularly interesting question from an economic point of view. In models (and processes) with unit roots, shocks (such as policy or technological interventions and disruptions) have persistent effects that last forever, whereas with stationary cases such shocks have only a temporary effect. Therefore, it is of particular interest to test the unit root hypothesis in <span class="math inline">\(y_t\)</span>.</p>
 <p>&nbsp;</p>
 </section>
-<section id="testing-for-a-unit-root" class="level2" data-number="12.4">
-<h2 data-number="12.4" class="anchored" data-anchor-id="testing-for-a-unit-root"><span class="header-section-number">12.4</span> Testing for a unit root</h2>
+<section id="testing-for-a-unit-root-adf-test" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="testing-for-a-unit-root-adf-test"><span class="header-section-number">12.4</span> Testing for a unit root: ADF test</h2>
+<p>Let us continue to work with unit root processes and examine how the unit root can be tested. Among various alternatives, we focus on the Augmented Dickey-Fuller (ADF) test, which is the most commonly used unit root test.</p>
+<p>Additional background and motivation for unit root testing are provided below in the Extra tab before proceeding to the ADF test.</p>
+<p>&nbsp;</p>
+<div class="toggle-button" onclick="toggleCode('Extra10')">
+Extra: Details on the above unit root test statistics
+</div>
+<div id="Extra10" style="display:none;">
 <p>Let us continue with the autoregressive unit root process from the previous section <span class="math display">\[\begin{equation*}
     \Delta z_{t}=\phi z_{t-1}+u _{t}, \quad t=1,2,...,
 \end{equation*}\]</span> where for the sake simplicity <span class="math inline">\(z_0=0\)</span> and <span class="math inline">\(u_t \sim \mathsf{iid}(0,\sigma^2)\)</span>. The question of interest is to <strong>test the unit root hypothesis</strong> <span class="math display">\[\begin{equation*}
     H_{0}:\phi =0
 \end{equation*}\]</span> against the stationary (or stable) alternative of <span class="math inline">\(\phi&lt;1\)</span>.</p>
-<p>It seems natural to base the test on the least squares estimator (or maximum likelihood estimator, see the forthcoming section on parameter estimation) of <span class="math inline">\(\phi\)</span>: <span class="math display">\[\begin{equation*}
+<p>It seems natural to base the test on the least squares estimator (or maximum likelihood estimator) of <span class="math inline">\(\phi\)</span>: <span class="math display">\[\begin{equation*}
 \widehat{\phi}=\left(\sum_{t=1}^{T} z_{t-1}^{2}\right)^{-1} \sum_{t=1}^{T} z_{t-1} \Delta z_{t} \overset{H_0}{=} \left(\sum_{t=1}^{T} z_{t-1}^{2}\right)^{-1} \sum_{t=1}^{T} z_{t-1} u_{t},
 \end{equation*}\]</span> where <span class="math inline">\(T\)</span> is the number of observations. The unit root test can be based directly on the estimator <span class="math inline">\(\widehat{\phi}\)</span>, but it is more common to use the “t-ratio” printed by different statistical programs <span class="math display">\[\begin{equation*}
     \tau :=\frac{\sqrt{\sum_{t=1}^{T}z_{t-1}^{2}}}{\widehat{\sigma}}\widehat{\phi},
@@ -498,7 +516,6 @@ Extra: Polynomials and power series
 <li><p>The limiting distribution is independent of the unknown parameters and can be tabulated (tables are often presented in books and computer programs).</p></li>
 <li><p>The percentage points of the limiting distributions usually require numerical methods or simulations. In fact both the estimator <span class="math inline">\(\widehat{\phi}\)</span> and the “t-ratio” <span class="math inline">\(\tau\)</span> have a non-Gaussian and left skewed asymptotic distribution. For example, with the <span class="math inline">\(\tau\)</span> test statistic the 5%-percentage point is about -1.94 while with a <span class="math inline">\(\mathsf{N}(0,1)\)</span> it is -1.645, and thus the unit root hypothesis gets rejected too easily.</p></li>
 </ul>
-<p>&nbsp;</p>
 <p>The above unit root test can be generalized into a case with deterministic constant and trend (if appropriate due to shape of the time series or background information on it). A common model for this is <span class="math display">\[\begin{equation*}
     y_{t}=\mu_{t}+z_{t}, \quad t=1,2,\ldots,
 \end{equation*}\]</span> where <span class="math inline">\(z_t\)</span> is as determined above (using <span class="math inline">\(x_t\)</span>) and the deterministic trend is <span class="math display">\[\begin{equation*}
@@ -508,12 +525,6 @@ Extra: Polynomials and power series
 <li><p>The limiting distribution of the “t-ratio” can again be tabled. It deviates from the one with no constant and is more skewed to the left (5% percentage point is now -2.86).</p></li>
 <li><p>The skewedness of the asymptotic distribution keeps growing when the “t-ratio”-based test is generalized for the linear trend <span class="math inline">\(d_{t}=\mu _{1}+\mu_{2}t\)</span> (the details will be skipped now).</p></li>
 </ul>
-<p>&nbsp;</p>
-<div class="toggle-button" onclick="toggleCode('Extra10')">
-Extra: Details on the above unit root test statistics
-</div>
-<div id="Extra10" style="display:none;">
-<p>Let’s consider more details about unit root testing as described above.</p>
 <p>The asymptotic distribution of the estimator <span class="math inline">\(\widehat{\phi}\)</span>: Under the null hypothesis, then <span class="math inline">\(z_{t}=\sum_{j=1}^{t}u _{j}\)</span> is a (Gaussian) random walk, so the usual limit theorems do not hold. Moreover, it can be shown that the “t-ratio” follows the following (non-standard) asymptotic distribution <span class="math display">\[\begin{equation*}
     \tau :=\frac{\sqrt{\sum_{t=1}^{T}z_{t-1}^{2}}}{\widehat{\sigma}}\widehat{\phi}
     \overset{d}{\rightarrow }\left( \int_{0}^{1}W\left( u\right) ^{2}du\right)^{-1/2}\int_{0}^{1}W\left( u\right) dW(u),
@@ -526,30 +537,32 @@ Extra: Details on the above unit root test statistics
 \end{equation*}\]</span> where <span class="math inline">\(\bar{W}\)</span> is the centered version of the standard Brownian motion.</p>
 </div>
 <p>&nbsp;</p>
-<p><strong>Augmented Dickey-Fuller (ADF) test</strong>. For now we should point out that the unit root test above can be generalized into the AR(<span class="math inline">\(p\)</span>) case.</p>
+<p><strong>Augmented Dickey-Fuller (ADF) test</strong>. Based on the discussion in the previous section, assume (for simplicity) that <span class="math inline">\(y_t = \mu + z_t\)</span>, where <span class="math inline">\(z_t \sim \text{AR}(p)\)</span>, and hence <span class="math inline">\(y_t\)</span> also follows an AR(<span class="math inline">\(p\)</span>) process. To test for a unit root in <span class="math inline">\(y_t\)</span>, we use the following test regression model <span class="math display">\[\begin{equation*}
+\Delta y_t = \nu + \phi y_{t-1} + \sum_{j=1}^{p-1} \phi_j \Delta y_{t-j} + u_t, \quad u_t \sim \mathsf{iid}(0, \sigma^2), \quad t = 1, 2, \ldots
+\end{equation*}\]</span> The null hypothesis is <span class="math inline">\(H_0: \phi = 0\)</span>, which implies that <span class="math inline">\(y_t\)</span> has a unit root and is non-stationary. Under the alternative hypothesis <span class="math inline">\(H_1: \phi &lt; 0\)</span>, the process is stationary around a deterministic mean.</p>
 <ul>
-<li>Unlike additional deterministic components (as we saw above), additional lags (i.e.&nbsp;higher degree <span class="math inline">\(p\)</span>) of the AR process do not impact the asymptotic distributions of the test statistics (assuming that the process is <span class="math inline">\(I(1)\)</span> when the null hypothesis holds).</li>
+<li><p>Here in the ADF test the intercept term <span class="math inline">\(\nu\)</span> is related to the mean of the process via <span class="math inline">\(\nu = -\phi \mu\)</span>.</p></li>
+<li><p>The test statistic is the <strong>t-ratio</strong> of the estimated coefficient <span class="math inline">\(\widehat{\phi}\)</span>, often denoted <span class="math inline">\(\tau_\phi = \frac{\widehat{\phi}}{\mathrm{s.e.} (\widehat{\phi})}\)</span>. Its asymptotic distribution under the null is non-standard but known, and critical values are tabulated in the literature.</p></li>
+<li><p>Importantly, the asymptotic properties of the test hold even without assuming normality of the errors; it is sufficient that <span class="math inline">\(u_t\)</span> are independent and identically distributed with finite variance.</p></li>
 </ul>
-<p>For example, given <span class="math inline">\(y_t=\mu+z_t\)</span> where <span class="math inline">\(z_t\sim\)</span> AR(<span class="math inline">\(p\)</span>), and hence <span class="math inline">\(y_t\)</span> also follows AR(<span class="math inline">\(p\)</span>), we can use the test regression model <span class="math display">\[\begin{equation*}
-    \Delta y_{t}=\nu +\phi y_{t-1}+\sum_{j=1}^{p-1}\phi _{j}\Delta y_{t-j}+u _{t}, \quad t=1,2,...,
-\end{equation*}\]</span> where (see the notation and discussion above) <span class="math display">\[\begin{equation*}
-u _{t}\sim \mathsf{nid}\left( 0,\sigma ^{2}\right) \quad \mathrm{and} \quad \nu= -\phi \mu.
-\end{equation*}\]</span> and the null hypothesis <span class="math inline">\(H_0:\phi=0\)</span> implies the unit root process.</p>
+<p>If the null hypothesis of unit root (<span class="math inline">\(H_0: \phi=0\)</span>) cannot be rejected, according to the above equation, an AR(<span class="math inline">\(p-1\)</span>) model can be built on the differences.</p>
 <ul>
-<li>The “t-ratio” <span class="math inline">\(\tau \mu\)</span> of the parameter <span class="math inline">\(\phi\)</span> with the same asymptotic distribution as above can be used here as the test statistic. All of the asymptotic assumptions hold also without Gaussian assumptions (so <span class="math inline">\(u _{t}\sim \mathsf{iid}\left( 0,\sigma ^{2}\right)\)</span> is enough).</li>
-</ul>
-<p>The test regression model and the null hypothesis <span class="math inline">\(\phi=0\)</span> is called the <strong>Augmented Dickey-Fuller (ADF) test</strong>. If the null hypothesis of unit root cannot be rejected, according to the above equation, an AR(<span class="math inline">\(p-1\)</span>) model can be built on the differences.</p>
-<ul>
-<li><p>In other words, this implies the need to take first differences to get stationary time series.</p></li>
-<li><p>Executing the ADF test regression requires the lag length <span class="math inline">\(p\)</span> to be specified, which could be done by information criteria or consecutive tests, covered in the next section, or basing it some common fixed choice(s), possibly linked to the data frequency. All in all, it is recommended to consider a few different choices of <span class="math inline">\(p\)</span> and compare the resulting testing results.</p></li>
-<li><p>Moreover, as discussed above, we can also extend the ADF test regression by deterministic trend component. That is, we would have then deterministic term <span class="math inline">\(\mu_1 + \mu_2 t\)</span>.</p></li>
-<li><p><strong>Determining the deterministic terms</strong> included in the ADF test is an important and necessary step. It can be based on graphical inspection of the time series and/or theoretical or other experience on the application of interest. That is whether including a trend is reasonable or not, while a constant term is almost always included in the test regression.</p></li>
+<li>In other words, this implies the need to take first differences to get stationary time series.</li>
 </ul>
 <p>&nbsp;</p>
+<p><strong>Determining the lag length <span class="math inline">\(p\)</span> and deterministic terms in the ADF test</strong>. Executing the ADF test regression requires specifying the lag length <span class="math inline">\(p\)</span>, which can be selected using information criteria (such as AIC or BIC), sequential testing (covered in the next section), or based on common fixed choices related to the data frequency.</p>
+<ul>
+<li>It is generally advisable to try a few different values of <span class="math inline">\(p\)</span> and compare the resulting test outcomes for robustness.</li>
+</ul>
+<p>The ADF test regression can also be extended to include a trend (together with the constant). In this case, the test regression includes the term <span class="math inline">\(\mu_0 + \mu_1 t\)</span>, allowing for a deterministic trend in the data: <span class="math display">\[\begin{equation*}
+\Delta y_t = \mu_0 + \mu_1 t + \phi y_{t-1} + \sum_{j=1}^{p-1} \phi_j \Delta y_{t-j} + u_t.
+\end{equation*}\]</span> The null hypothesis remains <span class="math inline">\(H_0:\phi = 0\)</span>, indicating a unit root.</p>
+<p>Deciding which deterministic terms to include is a crucial step. A constant term is typically included by default, while the inclusion of a trend term depends on whether a trending pattern is evident in the data. This decision can be guided by graphical inspection or theoretical considerations relevant to the application.</p>
+<p>&nbsp;</p>
 <p><strong>Empirical examples</strong>. Let us consider unit root testing for the few time series considered above in different parts. As discussed, the first thing in the ADF test is to determine which deterministic terms to include in the test regression. Basically you should always include a constant term, but whether the deterministic trend component should be included as well should be determined based on visual inspection and background knowledge on the time series at hand.</p>
-<p>In the following illustrations, for simplicity, we fix the number of lagged differenced lags <span class="math inline">\(p\)</span> in the ADF test to 8 lags. This number of lags could and should be varied to examine whether the testing results are intact for this selection.</p>
+<p>In the following illustrations, for simplicity, we fix the number of lagged differenced lags <span class="math inline">\(p\)</span> in the ADF test to 6, 8 or 10 lags. The lag length could and should be varied to examine whether the testing results are intact for this selection.</p>
 <ol type="i">
-<li>Consider <strong>log</strong> of the CPI time series (Introduction): In this case, there is clearly an upward trend present but is it deterministic? Well, it seems reasonable to argue that due to different (economic) reasons we can think that price level is steadily going up and a deterministic trend seems reasonable to be included in the ADF test.</li>
+<li>Consider <strong>log</strong> of the CPI time series (Introduction): In this case, there is clearly an upward trend present. It seems reasonable to argue that due to different (economic) reasons we can think that price level is steadily going up and a deterministic trend seems reasonable to be included in the ADF test.</li>
 </ol>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
@@ -561,12 +574,14 @@ u _{t}\sim \mathsf{nid}\left( 0,\sigma ^{2}\right) \quad \mathrm{and} \quad \nu=
 </div>
 </div>
 <center>
-<span style="color: #0069d9;">Figure: Monthly log(CPI) time series (1990–2025).</span>
+<span style="color: #0069d9;">Figure: Monthly log(CPI) time series (1990:1–2025:6).</span>
 </center>
 <p>&nbsp;</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="an">ADF-test:</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">Test Statistic:</span><span class="co"> -1.1129 </span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">P-value:</span><span class="co"> 0.924528 </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ADF-test (deterministic terms: constant and trend)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>p=8: Test statistic: -1.113, p-value: 0.925 </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>p=6: Test statistic: -1.517, p-value: 0.823 </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>p=10: Test statistic: -1.451, p-value: 0.845</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>&nbsp;</p>
 <ol start="2" type="i">
 <li>Log of the S&amp;P 500 index. Increasing stock prices point out very well a possible stochastic trend, but it seems difficult to argue that there is deterministic upward trend in stock prices. Therefore, including a constant is surely good choice, but for robustness we could also examine the unit root hypothesis also when including deterministic trend as well (together with the constant) in the ADF regression.</li>
 </ol>
@@ -580,39 +595,47 @@ u _{t}\sim \mathsf{nid}\left( 0,\sigma ^{2}\right) \quad \mathrm{and} \quad \nu=
 </div>
 </div>
 <center>
-<span style="color: #0069d9;">Figure: Monthly log(S&amp;P 500) time series (1990-2025).</span>
+<span style="color: #0069d9;">Figure: Monthly log(S&amp;P 500) time series (1990:1-2025:6).</span>
 </center>
 <p>&nbsp;</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="an">ADF-test:</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="an">Test Statistic:</span><span class="co"> -0.7689838 </span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="an">P-value:</span><span class="co"> 0.8262138 </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ADF-test (deterministic terms: constant)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>p=8: Test statistic: -0.769, p-value: 0.826</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>p=6: Test statistic: -0.302, p-value: 0.922 </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>p=10: Test statistic: -0.772, p-value: 0.825 </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>ADF-test (deterministic terms: constant and trend)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>p=8: Test statistic: -2.193, p-value: 0.492</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>&nbsp;</p>
 <ol start="3" type="i">
 <li>Taking the log-differences of the CPI and S&amp;P 500 indices results in the time series previously shown in the Introduction. A visual inspection alone suggests that the unit root hypothesis is no longer reasonable for these differenced series. To confirm this, let’s examine the Augmented Dickey-Fuller (ADF) test results below. The test includes a constant, as a deterministic trend is clearly no longer present in the data.</li>
 </ol>
-<p>The testing results show that the ADF tests fail to reject the unit root hypothesis for the original level series of both the CPI and the S&amp;P 500.</p>
+<p>Putting the testing results together, the results show that the ADF tests fail to reject the unit root hypothesis for the original level series of both the CPI and the S&amp;P 500.</p>
 <ul>
 <li><p>For the CPI levels, even after including a constant and a linear trend in the test regression, we still cannot reject the null hypothesis of a unit root. This strongly suggests that the CPI can be treated as an <span class="math inline">\(I(1)\)</span> process (integrated of order one).</p></li>
 <li><p>A similar conclusion holds for the S&amp;P 500 index.</p></li>
 </ul>
 <p>These conclusions are reinforced by the test results for their log-differences, which appear to be stationary (i.e., <span class="math inline">\(I(0)\)</span> variables). This provides a consistent picture: the original series are non-stationary <span class="math inline">\(I(1)\)</span>, but their first differences are stationary (<span class="math inline">\(I(0)\)</span>).</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="an">ADF-tests:</span></span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ADF-tests (deterministic terms: constant)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>logdiff(CPI):</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>Test Statistic: -7.744163 </span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>P-value: 1.248182e-11 </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>logdiff(S&amp;P 500)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>Test Statistic: -6.094829 </span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>P-value: 1.302771e-07 </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>logdiff(CPI): </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>p=8: Test Statistic: -7.744 , p-value: 1.248e-11 </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>p=6: Test Statistic: -4.764, p-value: 7.568e-05</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>p=10: Test Statistic: -7.886, p-value: 5.331e-12</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>logdiff(S&amp;P 500)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>p=8: Test statistic: -6.095, p-value: 1.303e-07 </span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>p=6: Test statistic: -7.011, p-value: 8.741e-10 </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>p=10: Test statistic: -5.451, p-value: 3.299e-06</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>&nbsp;</p>
-<p><strong>A critical limitation: The Low Power of the ADF Test</strong>. An important limitation of the ADF test is its low statistical power. In practical terms, this means: <strong>The ADF test often fails to reject the null hypothesis of a unit root, even when the time series is actually stationary</strong>.</p>
+<p><strong>A critical limitation: The low power of the ADF test</strong>. An important limitation of the ADF test is its low statistical power. In practical terms, this means: <strong>The ADF test often fails to reject the null hypothesis of a unit root, even when the time series is actually stationary</strong>.</p>
 <ul>
-<li><p>In other words, the test is not always very good at correctly identifying a stationary process, especially if the process is close to non-stationary (e.g., an AR(1) process where the autoregressive coefficient is close to 1). If we are unable to reject the presence of a unit root, it does not necessarily mean that it is true and the process is necessarily <span class="math inline">\(I(1)\)</span>. It could just be (but of course not always!) that there is not sufficient amount of informationin the data to reject the unit root.</p></li>
-<li><p>The practical takeaway is that it’s common for a truly stationary time series to produce a p-value from the ADF test that is too high to be considered statistically significant. You can observe this phenomenon by running the following code, which simulates AR(1) processes and ADF test, with a varying value of the AR(1) coefficient.</p></li>
+<li><p>In other words, the test is not always very good at correctly identifying a stationary process, especially if the process is close to non-stationary (e.g., an AR(1) process where the autoregressive coefficient <span class="math inline">\(\phi_1\)</span> is close to 1).</p></li>
+<li><p>If we are unable to reject the presence of a unit root, it does not necessarily mean that it is true and the process is necessarily <span class="math inline">\(I(1)\)</span>. It could just be (but of course not always!) that there is not sufficient amount of information in the data to reject the unit root.</p></li>
+<li><p>The practical takeaway is that it’s common for a truly stationary time series to produce a p-value from the ADF test that is too high to be considered statistically significant. You can observe this phenomenon by running the following code, which simulates AR(1) processes and computes the ADF test statistic, with a varying value of the AR(1) coefficient.</p></li>
 </ul>
 <p>From empirical point of view, the choice whether the process is a unit root process (nonstationary) or a “near” unit root process (stationary) is interesting but at times complicated.</p>
 <ul>
-<li>Particularly ambiguous are, for example, interest rates. Interest rates are highly persistent and the unit root hypothesis cannot often be rejected, although nonstationary interest rates do not seem to be very plausible from an economic point of view.</li>
+<li>Particularly ambiguous are, for example, interest rates. Interest rates are highly persistent and the unit root hypothesis cannot often be rejected, although nonstationary such as random walk interest rates do not seem to be very plausible from an economic point of view.</li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Simulating AR(1) process with different values of phi_1 </span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu"># - Change T and phi_1</span></span>

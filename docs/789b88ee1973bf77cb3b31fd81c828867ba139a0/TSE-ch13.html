@@ -330,9 +330,8 @@ window.Quarto = {
 
 <p>Instead of stationary variables, as considered earlier in Section 10, let us now assume that there are two variables, <span class="math inline">\(y_t\)</span> and <span class="math inline">\(x_t\)</span>, and either of them or both are nonstationary and specifically <span class="math inline">\(I(1)\)</span> variables.</p>
 <ul>
-<li><span class="math inline">\(y_t\)</span> is again the dependent variable and <span class="math inline">\(x_t\)</span> is the predictive/explanatory variable</li>
+<li><span class="math inline">\(y_t\)</span> is again the dependent variable and <span class="math inline">\(x_t\)</span> is the predictive/explanatory variable.</li>
 </ul>
-<!-- - In general, when considering a linear regression model between $y_t$ and $x_t$, the OLS estimator $\widehat{\boldsymbol{\beta}}$ is not generally consistent estimator for the parameter vector. -->
 <p>Before continuing to examine linear (predictive) regressions between <span class="math inline">\(y_t\)</span> and <span class="math inline">\(x_t\)</span> in different cases, let us introduce an important concept of cointegration.</p>
 <p>&nbsp;</p>
 <section id="basics-of-cointegration" class="level2" data-number="13.1">
@@ -356,17 +355,7 @@ z_t= y_t - \delta x_t = [y_t \quad x_t] [1 \quad -\delta]^{\prime} \thicksim I(0
 <li><p>As <span class="math inline">\(z_t\)</span> is <span class="math inline">\(I(0)\)</span>, the equilibrium error is stationary and fluctuating around zero. In other words, on average, the system is in equilibrium.<br>
 &nbsp;</p></li>
 </ul>
-<p>Notice that we can also use a slightly modified definition of cointegration for the above, especially when there will be more than two variables involved. We will consider this definition, and cointegration in connection to the VAR model more detail in the <strong>Advanced Time Series Econometrics course</strong>.<br>
-<!-- (Lutkepohl's definition). --></p>
-<!-- [TSEK. Periaatteessa kai seuraavaa määritelmää ei ehkä tarvittaisi tällä kurssilla (JOS VECM-mallia ei esitellä) ja jäisi ATSE:n puolelle. Voi vaan sotkea tilannetta kun muuten yi on nyt esitetty y_t:n ja x_t:n välillä] 
-
-**A slightly modified definition of cointegration** where all the variables are included in vector $\boldsymbol{y}_t = (y_{1t},\ldots, y_{nt})$ (such as both $y_t$ and $x_t$ above): The $I(d)$ process $\boldsymbol{y}_t = (y_{1t},\ldots, y_{nt})$ (where $n$ can be larger than 2 as above) is called **cointegrated** if there is a linear combination $\boldsymbol{\beta}^{\prime} \boldsymbol{y}_t$ with $\boldsymbol{\beta} \neq \boldsymbol{0}$ which is integrated of order less than $d$.
-
-- In a typical case, $\boldsymbol{y}_t \thicksim I(1)$ and hence the `order less than $d$' implies $I(0)$. 
-
-- A consequence of this definition is that if there is just one $I(d)$ component in $y_t$ and all the other components are stable (= $I(0)$), then the vector $\boldsymbol{y}_t$ is $I(d)$ and $\boldsymbol{\beta}^{\prime} \boldsymbol{y}_t$ involves a cointegration relation according to this definition.
-
--->
+<p>Notice that we can also use a slightly modified definition of cointegration for the above, especially when there will be more than two variables involved. We will consider this definition, and cointegration in connection to the VAR model more detail in the <strong>Advanced Time Series Econometrics course</strong>.</p>
 <p>&nbsp;</p>
 </section>
 <section id="testing-cointegration-between-two-variables" class="level2" data-number="13.2">
@@ -379,7 +368,7 @@ y_t= \alpha + \delta x_t + u_t.
 <p><strong>Testing for cointegration with a known coefficient</strong>. In some applications, the cointegration coefficient <span class="math inline">\(\delta\)</span> (and the intercept <span class="math inline">\(\alpha\)</span>) is known in advance due to economic theory or other application-specific knowledge. When the coefficient is known, the cointegration relationship can be tested as follows. For the sake of simplicity, we will assume <span class="math inline">\(\alpha=0\)</span> in the procedure described below</p>
 <ul>
 <li><p>Construct the series <span class="math inline">\(z_t = y_{t} - \delta x_t\)</span>.</p></li>
-<li><p>Use the ADF test for the null hypothesis, which implies <span class="math inline">\(z_t \thicksim I(1)\)</span>. If <span class="math inline">\(H_0\)</span> is rejected, then there is a cointegration relationship.</p></li>
+<li><p>Use the ADF test for the null hypothesis of unit root, which implies <span class="math inline">\(z_t \thicksim I(1)\)</span>. If <span class="math inline">\(H_0\)</span> is rejected, then there is a cointegration relationship.</p></li>
 </ul>
 <p>&nbsp;</p>
 <p><strong>Testing for cointegration with unknown coefficients</strong>. If <span class="math inline">\(\delta\)</span> (and <span class="math inline">\(\alpha\)</span>) are unknown, then we can proceed as follows (Engle-Granger ADF-test):</p>
@@ -387,23 +376,22 @@ y_t= \alpha + \delta x_t + u_t.
 <li><p>Estimate the following model by using OLS <span class="math display">\[\begin{equation*}
 y_t = \alpha + \delta x_t + u_t.
 \end{equation*}\]</span></p></li>
-<li><p>The series <span class="math inline">\(\widehat{u}_t= y_t - \widehat{\alpha} - \widehat{\delta} x_t\)</span> is the residual of the regression.</p></li>
+<li><p>Construct the series <span class="math inline">\(\widehat{u}_t= y_t - \widehat{\alpha} - \widehat{\delta} x_t\)</span>, which is the residual of the regression.</p></li>
 <li><p>Test the null hypothesis implying <span class="math inline">\(\widehat{u}_t \thicksim I(1)\)</span>.</p></li>
-<li><p>Critical values are now different than in the above case (and ADF test) as unit root testing is based on the residuals.</p></li>
+<li><p>Critical values are now different than in the above case, and in the ADF test, as unit root testing is based on the (estimated) residuals.</p></li>
 </ul>
+<p>Notice that if <span class="math inline">\(y_t\)</span> and <span class="math inline">\(x_t\)</span> are indeed cointegrated, OLS yields a consistent estimator for the cointegration coefficient <span class="math inline">\(\delta\)</span>. However, the OLS estimator of <span class="math inline">\(\delta\)</span> has a non-normal asymptotic distribution, and the inferences based on the standard <span class="math inline">\(t\)</span>-test statistic can be misleading.</p>
 <p>&nbsp;</p>
-<p>If <span class="math inline">\(y_t\)</span> and <span class="math inline">\(x_t\)</span> are indeed cointegrated, OLS yields a consistent estimator for the cointegration coefficient <span class="math inline">\(\delta\)</span>. However, the OLS estimator of <span class="math inline">\(\delta\)</span> has a non-normal asymptotic distribution, and the inferences based on the standard <span class="math inline">\(t\)</span>-test statistic can be misleading.</p>
-<p>&nbsp;</p>
-<p><strong>Example: Consumption and income</strong>. Let us consider an important empirical question derived from Hall’s (1978) Permanent Income Hypothesis (PIH) in the context of cointegration.</p>
+<p><strong>Emprirical example: Consumption and income</strong>. Let us consider an important empirical question derived from Hall’s (1978) Permanent Income Hypothesis (PIH) in the context of cointegration.</p>
 <ul>
-<li>R. E. Hall (1978). Stochastic implications of the life cycle-permanent income hypothesis: Theory and evidence. Journal of Political Economy, 86(6), 971–987.</li>
+<li><p>R. E. Hall (1978). Stochastic implications of the life cycle-permanent income hypothesis: Theory and evidence. Journal of Political Economy, 86(6), 971–987.</p></li>
+<li><p>Source of data: FRED.</p></li>
 </ul>
-<p>The testable hypothesis is that there is a stable long-run relationship exist between real consumption and real income, such that the difference between them (the cointegrating residual) is stationary.</p>
+<p>The testable hypothesis is that there is a stable long-run relationship exist between real consumption and real income (that is for inflation adjusted consumption and income), such that the difference between them (the cointegration residual) is stationary.</p>
 <ul>
-<li>In other words, the cointegration theory predicts that since consumption is proportional to permanent income (the present value of expected future income), and both are driven by a common stochastic trend (permanent income shocks), they should be cointegrated.</li>
+<li>In other words, the cointegration theory predicts that since consumption <span class="math inline">\(c_t\)</span> is proportional to permanent income <span class="math inline">\(y_t\)</span> so that <span class="math inline">\(c_t=a \, y_t, \, 0 \le a \le 1\)</span> (the present value of expected future income), and both are driven by a common stochastic trend (permanent income shocks), they should be cointegrated. That is there is a long-term equilibrium between <span class="math inline">\(c_t\)</span> and <span class="math inline">\(y_t\)</span>, and if <span class="math inline">\(c_t\)</span> and <span class="math inline">\(y_t\)</span> are now <span class="math inline">\(I(1)\)</span> processes, then there should be a cointegration relationship between the variables.</li>
 </ul>
-<!-- - In other words, one can think that consumption $c_t$ is related to the income $y_t$ so that $c_t=a \, y_t, \, 0 \le a \le 1$. Therefore, it seems reasonable to assume that there is a long-term equilibrium between $c_t$ and $y_t$. If $c_t$ and $y_t$ are now $I(1)$ processes, then there should be a cointegration relationship between the variables. -->
-<p>So, let us test the prediction of the PIH that real per capita consumption (log(<span class="math inline">\(c_t\)</span>) and real per capita disposable income (log(<span class="math inline">\(y_t\)</span>) share a single cointegrating relationship.</p>
+<p>So, let us test the prediction of the PIH that real per capita consumption (log(<span class="math inline">\(c_t\)</span>)) and real per capita disposable income (log(<span class="math inline">\(y_t\)</span>)) share a single cointegrating relationship.</p>
 <ul>
 <li><p>Hypothesis: The two variables (<span class="math inline">\(\log(c_t)\)</span> and <span class="math inline">\(\log(y_t)\)</span>) are <span class="math inline">\(I(1)\)</span> and cointegrated.</p></li>
 <li><p>Long-run equation: <span class="math inline">\(\log(c_t) = \alpha + \delta \log(y_t) + u_t\)</span></p></li>
@@ -419,17 +407,19 @@ y_t = \alpha + \delta x_t + u_t.
 </div>
 </div>
 <center>
-<span style="color: #0069d9;">Figure: Monthly U.S. data (sample period 1959:1–2025:8) on (log) consumption and income.</span>
+<span style="color: #0069d9;">Figure: Monthly U.S. data (sample period 1959:1–2025:8) on (log) consumption and income. (Source: FRED)</span>
 </center>
 <p>&nbsp;</p>
 <p>Check first the unit root hypothesis for the two time series. In these ADF tests, a constant and linear trend component is included in the test regression and the number lagged differences <span class="math inline">\(p\)</span> is 4:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>log(c_t)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Test Statistic: -2.005634 </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>P-value: 0.595</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>log(y_t)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>Test Statistic: -2.582764 </span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>P-value: 0.289 </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ADF tests (deterministic terms: constant and trend)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>log(c_t):</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>p=4: Test Statistic: -2.005, p-value: 0.595</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>p=6: Test Statistic: -2.160, p-value: 0.510 </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>log(y_t)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>p=4: Test Statistic: -2.583, p-value: 0.289 </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>p=6: Test Statistic: -2.473, p-value: 0.341</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Estimation result of the cointegration regression:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="an">Coefficients:</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">            Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
@@ -442,7 +432,10 @@ y_t = \alpha + \delta x_t + u_t.
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>Multiple R-squared:  0.9957,    Adjusted R-squared:  0.9957 </span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>F-statistic: 6.1e+04 on 1 and 264 DF,  p-value: &lt; 2.2e-16</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>&nbsp;</p>
-<p>Based on the Engle-Granger two-step procedure, the null hypothesis of no cointegration can be rejected at 5% level (see testing result below).</p>
+<p>Based on the Engle-Granger two-step procedure, the null hypothesis of no cointegration can be rejected at 5% level (see testing result below). Despite one large outlier related to the Covid-10, the cointegration residual series seems to fluctuate as stationary I(0) variable.</p>
+<ul>
+<li>In the ADF test below, we are using the critical values of the ADF test even though, as discussed above, that is not completely correct.</li>
+</ul>
 <p>&nbsp;</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
@@ -545,10 +538,10 @@ x_t &amp;=&amp; x_{t-1} + u_{2t}, \quad u_{2t} \thicksim \mathsf{iid}(0, \sigma^
 <li><p>Estimation results like this should not be taken seriously.</p></li>
 <li><p>The reason is that with <span class="math inline">\(y_t\)</span> and <span class="math inline">\(x_t\)</span> being <span class="math inline">\(I(1)\)</span> variables, the error term <span class="math inline">\(u_t\)</span> will also be <span class="math inline">\(I(1)\)</span>, not stationary (<span class="math inline">\(I(0)\)</span>).</p></li>
 </ul>
-<p>Solution to this problem is to include both the lags of <span class="math inline">\(y_t\)</span> and <span class="math inline">\(x_t\)</span> as predictors in the model. In other words, we end up a model <span class="math display">\[\begin{equation*}
+<p>Solution to this problem is to include the lags of <span class="math inline">\(y_t\)</span> and <span class="math inline">\(x_t\)</span> as predictors in the model. In other words, we end up a model (cf.&nbsp;dynamic regression models in Section 10) <span class="math display">\[\begin{equation*}
 y_t = \beta_0 + \beta_1 x_t + \beta_2 y_{t-1} + \beta_3 x_{t-1} +  u_t.
 \end{equation*}\]</span> In this case the OLS estimator is consistent. Thus, in general, including lagged values in the regression is sufficient to solve many of the problems associated with possibly spurious regressions.</p>
-<p>An example of a spurious regression situation can be replicated with the following program code below in R lab.</p>
+<p>An example of a spurious regression situation can be replicated with the following program code in R lab.</p>
 <p>&nbsp;</p>
 </section>
 <section id="r-lab" class="level2" data-number="13.4">

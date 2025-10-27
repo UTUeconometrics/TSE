@@ -349,6 +349,7 @@ window.Quarto = {
 <ul>
 <li><p>It includes 100 of the largest domestic and international companies listed on NASDAQ, weighted by a modified market capitalization method to limit the influence of the very large firms. The index excludes financial companies and is heavily concentrated in the technology sector and dominated by a few extremely large companies like (as in 2025) NVIDIA Corporation (NVDA), Microsoft Corp.&nbsp;(MSFT), Apple Inc.&nbsp;(AAPL) and Amazon.com Inc.&nbsp;(AMZN).</p></li>
 <li><p>The NASDAQ 100 is widely viewed as the benchmark for large-cap growth stocks.</p></li>
+<li><p>The data source: quantmod package in R, which accesses publicly available financial data—seemingly sourced from Yahoo Finance.</p></li>
 </ul>
 <p>Let us consider excess stock returns of the NASDAQ 100 over the 3-Month Treasury Bill rate. As a simple approximation, we can think that we are interested in the percentage changes (log-differences) of the NASDAQ 100 index adjusted for risk-free rate return (see Transformations in Section 1). Below we depict the daily excess stock returns between 1.1.2003–30.9.2025.</p>
 <div class="cell" data-layout-align="center">
@@ -361,7 +362,7 @@ window.Quarto = {
 </div>
 </div>
 <center>
-<span style="color: #0069d9;">Figure: Excess stock returns of the NASDAQ 100 stock market index.</span>
+<span style="color: #0069d9;">Figure: Excess stock returns of the NASDAQ 100 stock market index. (source: R package quantmod)</span>
 </center>
 <p>&nbsp;</p>
 <p>The return series seems quite stationary in terms of its level. Below we depict the sample autocorrelation and partial autocorrelation functions for the first 40 lags and their approximate 95% critical bounds. These suggest that there is some autocorrelation but its degree is not very high.</p>
@@ -416,7 +417,6 @@ u_{t} = h_{t}^{1/2}\varepsilon_{t},\quad \varepsilon_{t}\sim\mathsf{iid}\left(0,
 <p>Regarding the conditional variance, by its definition, the variance of a random variable is associated with the squares of the random variable. Therefore, it seems natural that the conditional variance <span class="math inline">\(h_t\)</span> would depend on the past squared values of the process. For concreteness sake, consider a general <strong>GARCH(<span class="math inline">\(r\)</span>,<span class="math inline">\(s\)</span>) model</strong> <span class="math display">\[\begin{equation*}
     h_{t}=\omega+\beta_{1}h_{t-1}+\cdots+\beta_{r}h_{t-r}+\alpha_{1}u_{t-1}^{2}+\cdots+\alpha_{s}u_{t-s}^{2},
 \end{equation*}\]</span> whose parameters are assumed to satisfy the required conditions for non-negativeness, identification, and strict stationarity (to be considered below).</p>
-<!-- If the condition for weak stationarity is also satisfied, the errors $u_{t}$ in the AR($p$) model are uncorrelated, but not independent. In what follows, we assume these conditions (unless otherwise mentioned). -->
 <p>As before, we denote the conditional expectation as <span class="math inline">\(\mathsf{E}_{t-1}\left(\cdot\right)=\mathsf{E}\left(\cdot\left\vert y_{s},\text{ }s\leq t-1\right.\right)\)</span>. Because <span class="math inline">\(u_{t}\)</span> is a function of the variables <span class="math inline">\(y_{t}\)</span>, …, <span class="math inline">\(y_{t-p}\)</span>, the conditional variance <span class="math inline">\(h_{t}\)</span> is a function of the variables <span class="math inline">\(y_{t-j}\)</span>, <span class="math inline">\(j&gt;0\)</span>. Therefore, we can use the same arguments as considered, e.g., in forecast construction (see CEV4) to conclude that in the AR-GARCH model <span class="math display">\[\begin{equation*}
 \mathsf{E}_{t-1}\left(  u_{t}\right)  =h_{t}^{1/2} \mathsf{E}_{t-1}\left(\varepsilon_{t}\right)  =h_{t}^{1/2}\mathsf{E}\left(\varepsilon_{t}\right)=0.
 \end{equation*}\]</span> Together with this result, the model equations of the AR-GARCH model can be used to justify the following two results <span class="math display">\[\begin{equation*}
@@ -432,10 +432,7 @@ u_{t} = h_{t}^{1/2}\varepsilon_{t},\quad \varepsilon_{t}\sim\mathsf{iid}\left(0,
 </ul>
 <p>These two results demonstrate that the conditional mean and conditional variance of the process <span class="math inline">\(y_{t}\)</span> depend on the past values of the process. Based on the above points, <strong>building a volatility model</strong>, that is selecting the model equation for <span class="math inline">\(h_t\)</span>, roughly consists of the following steps:</p>
 <ul>
-<li>Finding an adequate specification for the conditional mean <span class="math inline">\(\mathsf{E}_{t-1}(y_t)\)</span> (e.g., to select a suitable AR or ARMA model, and including also possible deterministic terms) is necessary to obtain a suitable specification for the conditional variance.</li>
-</ul>
-<!-- In this section, for simplicity, an AR($p$) model whose error term is conditionally heteroskedastic. AR model can be extended to more general alternatives. -->
-<ul>
+<li><p>Finding an adequate specification for the conditional mean <span class="math inline">\(\mathsf{E}_{t-1}(y_t)\)</span> (e.g., to select a suitable AR or ARMA model, and including also possible deterministic terms) is necessary to obtain a suitable specification for the conditional variance.</p></li>
 <li><p>Checking for the (conditional) heteroskedasticity of the error term. This can be based on residuals, as they are empirical counterparts of the error terms. That is testing “ARCH effects” using, e.g., the McLeod-Li test.</p></li>
 <li><p>Finding a sufficient specification for the conditional variance <span class="math inline">\(h_t\)</span>. There are a lot of different alternative model specifications to GARCH(<span class="math inline">\(r,s\)</span>) suggested in the econometric literature. Replacing it with some of the alternatives yield a straightforward extension of the AR-GARCH model introduced above.</p></li>
 <li><p>Estimation of the full model can be carried out by the method of maximum likelihood (see details below).</p></li>
@@ -448,7 +445,7 @@ Extra: Relation to risk management and Value-at-Risk (VaR)
 <p>The core motivation for modeling conditional heteroskedasticity (time-varying volatility <span class="math inline">\(h_t\)</span>) in asset returns <span class="math inline">\(y_t\)</span> is its direct and profound impact on risk management, particularly in calculating measures like Value-at-Risk (VaR).</p>
 <p>The question that often arises in risk management is: What is the maximum expected loss over a specific time horizon with a given confidence level? This loss is the Value-at-Risk (VaR) threshold <span class="math inline">\(c\)</span>. The VaR threshold <span class="math inline">\(c\)</span> is the loss level such that the probability of the actual loss <span class="math inline">\(y_{t+1}\)</span> being less than or equal to <span class="math inline">\(c\)</span> is a fixed, small probability <span class="math inline">\(\pi\)</span> (e.g., 1% or 5%): <span class="math display">\[\begin{equation*}
 P_t(y_{t+1} \le c ) = G \Bigg(\frac{c - \mathsf{E}_{t}(y_{t+1})}{ h^{1/2}_{t+1}} \Bigg) = \pi,
-\end{equation*}\]</span> where <span class="math inline">\(\mathsf{E}_{t}(y_{t+1})\)</span> is the conditional mean (return forecast), <span class="math inline">\(h_{t+1}\)</span> is the conditional variance forecast (volatility), and <span class="math inline">\(G(\cdot)\)</span> is the cumulative distribution function (CDF) of the standardized innovation <span class="math inline">\(\frac{y_{t+1} - \mathsf{E}_{t}(y_{t+1})}{ h^{1/2}_{t+1}}\)</span>.</p>
+\end{equation*}\]</span> where <span class="math inline">\(P_t(\cdot)\)</span> denotes the conditional probability given information up to time <span class="math inline">\(t\)</span>, <span class="math inline">\(\mathsf{E}_{t}(y_{t+1})\)</span> is the conditional mean (return forecast), <span class="math inline">\(h_{t+1}\)</span> is the conditional variance forecast (volatility), and <span class="math inline">\(G(\cdot)\)</span> is the cumulative distribution function (CDF) of the standardized innovation <span class="math inline">\(\frac{y_{t+1} - \mathsf{E}_{t}(y_{t+1})}{ h^{1/2}_{t+1}}\)</span>.</p>
 <p>The Value-at-Risk is the most commonly used risk measure. For the VaR model to be a useful and reliable tool in practice, the specification of the conditional variance <span class="math inline">\(h_t\)</span> is critical. Ignoring or otherwise misspecifying the time-varying nature of volatility (for example, treating <span class="math inline">\(h_t\)</span> as a constant) leads to severely flawed risk estimates.</p>
 </div>
 <p>&nbsp;</p>
@@ -515,34 +512,46 @@ h_t = \omega +  \sum_{i=1}^{s} \alpha_i y^2_{t-i}.
 u_t = h^{1/2}_t \varepsilon_t, \quad \varepsilon_t \thicksim \mathsf{nid}(0,1),
 \end{equation*}\]</span> where <span class="math inline">\(h_t = h_t(y_{t-1}, y_{t-2},\ldots)\)</span>, <span class="math inline">\(\varepsilon_t\)</span> and vector <span class="math inline">\((y_{t-1}, y_{t-2},\ldots)\)</span> are independent, and <span class="math inline">\(u_t = y_t - \mathsf{E}_{t-1}(y_t)\)</span>. Assume also that <span class="math inline">\(y_t\)</span> is stationary. Given the above assumptions and the conditional moments (conditional mean and variance) of the AR-GARCH model, we get the conditional density function of the observation <span class="math inline">\(y_t\)</span> as <span class="math display">\[\begin{equation*}
 y_t|\{y_{t-j}, \, j \ge 1 \} \thicksim \mathsf{N}(\nu + \phi_1 y_{t-1} + \cdots + \phi_p y_{t-p}, h_t).
-\end{equation*}\]</span> Therefore, it can be concluded that the conditional distribution of <span class="math inline">\(y_{t}\)</span>, conditional on <span class="math inline">\(\ubar{\mathbf{Y}}_{t-1}=(y_1, \ldots y_{t-1}), \, t=1,\ldots,T\)</span>, is Gaussian with conditional mean <span class="math inline">\(\nu + \phi_{1}y_{t-1}+\cdots+\phi_{p}y_{t-p}\)</span> and conditional variance <span class="math inline">\(h_{t}\)</span> where the model equation for <span class="math inline">\(h_{t}\)</span> needs to be specified.</p>
-<p>Using the observed time series and <span class="math inline">\(l\)</span> initial values <span class="math inline">\(y_{-l},\ldots, y_0, y_1, \ldots, y_T\)</span>, as in the parameter estimation of ARMA models, this leads to the conditional joint density function <span class="math display">\[\begin{equation*}
+\end{equation*}\]</span> Therefore, it can be concluded that the conditional distribution of <span class="math inline">\(y_{t}\)</span>, conditional on <span class="math inline">\(\ubar{\mathbf{Y}}_{t-1}=(y_1, \ldots y_{t-1}), \, t=1,\ldots,T\)</span>, is Gaussian with the conditional mean (see above) <span class="math inline">\(\nu + \phi_{1}y_{t-1}+\cdots+\phi_{p}y_{t-p}\)</span> and conditional variance <span class="math inline">\(h_{t}\)</span> where the model equation for <span class="math inline">\(h_{t}\)</span> needs to be specified.</p>
+<p>Using the observed time series and required initial values (depending on the specific model) <span class="math inline">\(\ldots, y_{-1}, y_0, y_1, \ldots, y_T\)</span>, as in the parameter estimation of ARMA models, this leads to the conditional joint density function <span class="math display">\[\begin{equation*}
 \prod_{t=1}^{T} f_{y_t|\ubar{\mathbf{Y}}_{t-1}} = (2\pi)^{-T/2} \cdot
 \prod_{t=1}^{T} h^{-1/2}_t \cdot \mathrm{exp}\Big(-\frac{1}{2} \sum_{t=1}^{T} \frac{u^2_t}{h_t} \Big).
-\end{equation*}\]</span> Denote the parameter vector of the AR-GARCH model <span class="math inline">\(\boldsymbol{\vartheta}=\left(\boldsymbol{\phi,\delta}\right)\)</span> where <span class="math inline">\(\boldsymbol{\phi} = (\nu, \phi_1,\ldots, \phi_p)\)</span> contains parameters related to the conditional mean and <span class="math inline">\(\boldsymbol{\delta} = (\omega, \alpha_1, \ldots, \alpha_s, \beta_1, \ldots, \beta_r)\)</span> contains the parameters of the model for the conditional variance. The log-likelihood then becomes (omitting constant terms not dependent on the model parameters) <span class="math display">\[\begin{equation*}
-l(\boldsymbol{\vartheta}) = \sum_{t=1}^{T} l_t(\boldsymbol{\vartheta}) =  -\frac{1}{2} \sum_{t=1}^{T} \mathrm{log}\, h_t(\boldsymbol{\phi}, \boldsymbol{\delta}) - \frac{1}{2} \sum_{t=1}^{T} \frac{u_t(\boldsymbol{\phi})^2}{h_t(\boldsymbol{\phi},\boldsymbol{\delta})},
-\end{equation*}\]</span> with <span class="math inline">\(u_t(\boldsymbol{\phi}) = y_t - \nu - \phi_1 y_{t-1} - \cdots - \phi_p y_{t-p}\)</span> and <span class="math inline">\(h_t(\boldsymbol{\phi}, \boldsymbol{\delta})\)</span> are functions of the parameters <span class="math inline">\(\boldsymbol{\phi}\)</span> and <span class="math inline">\(\boldsymbol{\delta}\)</span>. Maximization of the likelihood function is performed using numerical methods similar to the ARMA models.</p>
+\end{equation*}\]</span> Denote the parameter vector of the AR-GARCH model <span class="math inline">\(\boldsymbol{\vartheta}=\left(\boldsymbol{\phi},\boldsymbol{\lambda}\right)\)</span> where</p>
 <ul>
-<li>As an example, in the GARCH(1,1) case <span class="math inline">\(r=s=1\)</span> and hence <span class="math inline">\(h_{t} = \omega + \beta_1 h_{t-1} + \alpha_1 u_{t-1}^{2},\)</span> for the conditional variance. This means that <span class="math inline">\(\boldsymbol{\delta} = (\omega, \alpha_1, \beta_1)\)</span>.</li>
+<li><p><span class="math inline">\(\boldsymbol{\phi} = (\nu, \phi_1,\ldots, \phi_p)\)</span> contains parameters related to the conditional mean, and</p></li>
+<li><p><span class="math inline">\(\boldsymbol{\lambda} = (\omega, \alpha_1, \ldots, \alpha_s, \beta_1, \ldots, \beta_r)\)</span> contains the parameters of the model for the conditional variance.</p></li>
 </ul>
+<p>The log-likelihood then becomes (omitting constant terms not dependent on the model parameters) <span class="math display">\[\begin{equation*}
+l(\boldsymbol{\vartheta}) = \sum_{t=1}^{T} l_t(\boldsymbol{\vartheta}) =  -\frac{1}{2} \sum_{t=1}^{T} \mathrm{log}\, h_t(\boldsymbol{\phi}, \boldsymbol{\lambda}) - \frac{1}{2} \sum_{t=1}^{T} \frac{u_t(\boldsymbol{\phi})^2}{h_t(\boldsymbol{\phi},\boldsymbol{\lambda})},
+\end{equation*}\]</span> with <span class="math inline">\(u_t(\boldsymbol{\phi}) = y_t - \nu - \phi_1 y_{t-1} - \cdots - \phi_p y_{t-p}\)</span> and <span class="math inline">\(h_t(\boldsymbol{\phi}, \boldsymbol{\lambda})\)</span> are functions of the parameters <span class="math inline">\(\boldsymbol{\phi}\)</span> and <span class="math inline">\(\boldsymbol{\lambda}\)</span>.</p>
+<ul>
+<li>As an example, in the GARCH(1,1) case <span class="math inline">\(r=s=1\)</span> and hence <span class="math inline">\(h_{t} = \omega + \beta_1 h_{t-1} + \alpha_1 u_{t-1}^{2},\)</span> for the conditional variance. This means that <span class="math inline">\(\boldsymbol{\lambda} = (\omega, \alpha_1, \beta_1)\)</span>.</li>
+</ul>
+<p>Maximization of the likelihood function is performed using numerical methods similar to the ARMA models.</p>
 <p>&nbsp;</p>
 <p>If the normality assumption of the error term <span class="math inline">\(\varepsilon_t \thicksim \mathsf{nid}(0,1)\)</span> made above holds, the usual asymptotic properties of the maximum likelihood estimator (consistency and asymptotic normality) hold. If the Gaussianity assumption is found inappropriate, one could either (or both):</p>
 <ul>
 <li><p>Use a non-Gaussian distribution, like the <span class="math inline">\(t\)</span>-distribution for the error term. This leads to the different form for the log-likelihood function, but the general lines to obtain it are the same as above.</p></li>
 <li><p>Modify the asymptotic distribution and interpret the maximum likelihood estimator (MLE) as <strong>quasi-MLE (QMLE)</strong>.</p></li>
 </ul>
-<p>Concerning the QMLE approach, if the likelihood function is maximized at <span class="math inline">\(\boldsymbol{\widehat{\vartheta}}=(\boldsymbol{\widehat{\phi},\widehat{\delta})}\)</span>, it can be shown, even without the normality assumption and under general assumptions and regularity conditions, that it holds <span class="math display">\[\begin{equation*}
-\widehat{\boldsymbol{\vartheta}} \underset{as}{\sim}\mathsf{N}\left(\boldsymbol{\vartheta},\boldsymbol{V}\left(\boldsymbol{\vartheta}\right)^{-1} \boldsymbol{B} \left(\boldsymbol{\vartheta}\right)  \boldsymbol{V}\left(\boldsymbol{\vartheta}\right)^{-1}\right),
+<p>Concerning the QMLE approach, if the likelihood function is maximized at <span class="math inline">\(\boldsymbol{\widehat{\vartheta}}=(\boldsymbol{\widehat{\phi},\widehat{\lambda})}\)</span>, it can be shown, even without the normality assumption and under general assumptions and regularity conditions, it holds <span class="math display">\[\begin{equation*}
+\widehat{\boldsymbol{\vartheta}} \underset{as}{\sim}\mathsf{N}\left(\boldsymbol{\vartheta},\boldsymbol{\mathrm{V}}\left(\boldsymbol{\vartheta}\right)^{-1} \boldsymbol{\mathrm{B}} \left(\boldsymbol{\vartheta}\right) \boldsymbol{\mathrm{V}}\left(\boldsymbol{\vartheta}\right)^{-1}\right),
 \end{equation*}\]</span> where <span class="math display">\[\begin{equation*}
-    \boldsymbol{V}\left(\boldsymbol{\vartheta}\right) = \mathsf{E}\left[-\partial^{2}l(\boldsymbol{\vartheta})/\partial\boldsymbol{\vartheta}\partial\boldsymbol{\vartheta}^{\prime}\right]
+    \boldsymbol{\mathrm{V}}\left(\boldsymbol{\vartheta}\right) = \mathsf{E}\left[-\partial^{2}l(\boldsymbol{\vartheta})/\partial\boldsymbol{\vartheta}\partial\boldsymbol{\vartheta}^{\prime}\right]
 \end{equation*}\]</span> and <span class="math display">\[\begin{equation*}
-\boldsymbol{B}\left(\boldsymbol{\vartheta}\right)  =\mathsf{E}\left[\sum_{t=1}^{T}\left(\frac{\partial}{\partial\boldsymbol{\vartheta}}l_{t}(\boldsymbol{\vartheta})\right)  \left(\frac{\partial}{\partial\boldsymbol{\vartheta}}l_{t}(\boldsymbol{\vartheta})\right)^{\prime}\right],
-\end{equation*}\]</span> where <span class="math inline">\(l_{t}(\boldsymbol{\vartheta})\)</span> is as described above. Using the empirical counterparts of the matrices <span class="math inline">\(\boldsymbol{V} \left(\boldsymbol{\vartheta}\right)\)</span> and <span class="math inline">\(\boldsymbol{B}\left(\boldsymbol{\vartheta}\right)\)</span>, namely <span class="math display">\[\begin{equation*}
-    \widehat{\boldsymbol{V}}(\boldsymbol{\widehat{\vartheta})}=-\partial^{2}l(\boldsymbol{\widehat{\vartheta}})/\partial\boldsymbol{\vartheta}\partial\boldsymbol{\vartheta}^{\prime} \quad \mathrm{and} \quad \widehat{\boldsymbol{B}}(\boldsymbol{\widehat{\vartheta})}=\sum_{t=1}^{T}\left(  \frac{\partial}{\partial\boldsymbol{\vartheta}}l_{t}(\boldsymbol{\widehat{\vartheta}})\right)\left(\frac{\partial}{\partial\boldsymbol{\vartheta}}l_{t}(\boldsymbol{\widehat{\vartheta}})\right)^{\prime}
-\end{equation*}\]</span> the asymptotic distribution of the estimator <span class="math inline">\(\boldsymbol{\widehat{\vartheta}}\)</span> presented above can be used to form approximate standard errors and Wald tests about the parameter <span class="math inline">\(\boldsymbol{\vartheta}\)</span>.</p>
+\boldsymbol{\mathrm{B}}\left(\boldsymbol{\vartheta}\right)  =\mathsf{E}\left[\sum_{t=1}^{T}\left(\frac{\partial}{\partial\boldsymbol{\vartheta}}l_{t}(\boldsymbol{\vartheta})\right)  \left(\frac{\partial}{\partial\boldsymbol{\vartheta}}l_{t}(\boldsymbol{\vartheta})\right)^{\prime}\right],
+\end{equation*}\]</span> where <span class="math inline">\(l_{t}(\boldsymbol{\vartheta})\)</span> is as described above and its specific form naturally depends on the selected AR-GARCH model.</p>
+<p>Using the empirical counterparts of the matrices <span class="math inline">\(\boldsymbol{\mathrm{V}} \left(\boldsymbol{\vartheta}\right)\)</span> and <span class="math inline">\(\boldsymbol{\mathrm{B}}\left(\boldsymbol{\vartheta}\right)\)</span>, namely <span class="math display">\[\begin{equation*}
+    \widehat{\boldsymbol{\mathrm{V}}}(\boldsymbol{\widehat{\vartheta})}=-\partial^{2}l(\boldsymbol{\widehat{\vartheta}})/\partial\boldsymbol{\vartheta}\partial\boldsymbol{\vartheta}^{\prime} \quad \mathrm{and} \quad \widehat{\boldsymbol{\mathrm{B}}}(\boldsymbol{\widehat{\vartheta})}=\sum_{t=1}^{T}\left(  \frac{\partial}{\partial\boldsymbol{\vartheta}}l_{t}(\boldsymbol{\widehat{\vartheta}})\right)\left(\frac{\partial}{\partial\boldsymbol{\vartheta}}l_{t}(\boldsymbol{\widehat{\vartheta}})\right)^{\prime}
+\end{equation*}\]</span> the asymptotic distribution of the estimator <span class="math inline">\(\boldsymbol{\widehat{\vartheta}}\)</span> presented above can be used to form approximate standard errors (when taking the square roots of the diagonal elements of the above matrix) and Wald tests about the parameter <span class="math inline">\(\boldsymbol{\vartheta}\)</span>.</p>
 <ul>
-<li><p>If the normality assumption (i.e.&nbsp;<span class="math inline">\(\varepsilon_t \thicksim \mathsf{nid}(0,1)\)</span>) holds, then <span class="math inline">\(\boldsymbol{V}\left(\boldsymbol{\vartheta}\right) = \boldsymbol{B}\left(\boldsymbol{\vartheta}\right)\)</span>, and the expressions above for the (QMLE) asymptotic distribution and the standard errors and Wald tests simplify to the usual MLE case.</p></li>
-<li><p>The practical message from above is that it is often reasonable to rely on the QMLE-based asymptotic distribution result and resulting robust standard errors, such as so called Bollerslev-Wooldridge standard errors, for different parameter estimates of the AR-GARCH model. The rationale is that model specification, including the distribution assumption <span class="math inline">\(\varepsilon_t \thicksim \mathsf{nid}(0,1)\)</span>, is often not entirely correctly specified. Hence allowing for the additional robustness to the possible misspecification through QMLE estimates is advisable.</p></li>
+<li><p>Cf. the maximum likelihood estimation of AR (and ARMA) models.</p></li>
+<li><p>If the normality assumption (i.e.&nbsp;<span class="math inline">\(\varepsilon_t \thicksim \mathsf{nid}(0,1)\)</span>) holds, then <span class="math inline">\(\boldsymbol{\mathrm{V}}\left(\boldsymbol{\vartheta}\right) = \boldsymbol{\mathrm{B}}\left(\boldsymbol{\vartheta}\right)\)</span>, and the expressions above for the (QMLE) asymptotic distribution and the standard errors and Wald tests simplify to the usual MLE (maximum likelihood estimator) case.</p></li>
+</ul>
+<p>The practical message from above is that it is often reasonable to rely on the QMLE-based asymptotic distribution result and resulting robust standard errors, such as so called Bollerslev-Wooldridge standard errors, for different parameter estimates of the AR-GARCH model.</p>
+<ul>
+<li><p>The rationale is that model specification, including especially the distribution assumption <span class="math inline">\(\varepsilon_t \thicksim \mathsf{nid}(0,1)\)</span>, is that even though the model is not entirely correctly specified, allowing for the additional robustness to the possible misspecification through QMLE estimates is advisable.</p></li>
+<li><p>Using the QMLE specifically means that we obtain the same estimates <span class="math inline">\(\boldsymbol{\widehat{\vartheta}}\)</span> but we rely on the asymptotic covariance matrix and hence the resulting robust standard errors.</p></li>
 </ul>
 <p>&nbsp;</p>
 <p><strong>Empirical example (continue)</strong>. Consider the estimation result of the AR-GARCH model with Gaussian error term for the excess stock returns of the NASDAQ 100 index. For simplicity, fit a relatively simple AR(1)-GARCH(1,1) model (see above with selections <span class="math inline">\(p=r=s=1\)</span>). That is, we specify</p>
@@ -623,7 +632,7 @@ y_{t} &amp;=&amp; \underset{{\left(0.013\right) }}{0.087} - \underset{{\left(0.0
 <p>The estimation result shows well the point using the QMLE:</p>
 <ul>
 <li><p>The estimated coefficients (“AR”,“ARCH” and “GARCH” estimates) are the same for “optimal paramaters” (that is, when we assume that the normality assumption <span class="math inline">\(\varepsilon_t\)</span> holds) and for QMLE (resulting robust estimation results), but the estimated standard errors are different. Especially for the GARCH part this means, as often in these circumstances, that the robust standard errors are somwhat higher reflecting the additional uncertainty coming from possible model misspecification.</p></li>
-<li><p>All in all, all the estimated coefficients are statistically significant at the conventional significance levels. Moreover, the typical pattern of the GARCH(1,1) model is also present where the GARCH parameter (here <span class="math inline">\(\beta_1\)</span>) is larger than the ARCH coefficient <span class="math inline">\(\alpha_1\)</span>, and their sum is relatively close to 1. Estimated volatility (conditional standard deviation <span class="math inline">\(\widehat{h}^{1/2}_t\)</span>) of the estimated model is depicted below.</p></li>
+<li><p>All in all, all the estimated coefficients are statistically significant at the conventional significance levels. Moreover, the typical pattern of the GARCH(1,1) model is also present where the GARCH parameter (here <span class="math inline">\(\beta_1\)</span>) is larger than the ARCH coefficient <span class="math inline">\(\alpha_1\)</span>, and their sum is relatively close to 1. Estimated volatility, which is here the conditional standard deviation <span class="math inline">\(\widehat{h}^{1/2}_t\)</span>) of the estimated model, and at times interpreted as a risk in financial markets is depicted below.</p></li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
@@ -661,7 +670,7 @@ y_{t} &amp;=&amp; \underset{{\left(0.013\right) }}{0.087} - \underset{{\left(0.0
 <section id="forecasting" class="level2" data-number="9.5">
 <h2 data-number="9.5" class="anchored" data-anchor-id="forecasting"><span class="header-section-number">9.5</span> Forecasting</h2>
 <p>Assume observations are available up to time <span class="math inline">\(t\)</span> and the object of interest is to forecast the future values of <span class="math inline">\(y_{t+k}\)</span>&nbsp;(<span class="math inline">\(k\geq1\)</span>). In addition to stationarity, assume that <span class="math inline">\(\mathsf{E}\left(y_{t}^{2}\right)&lt;\infty\)</span>.</p>
-<p><strong>Forecasts for <span class="math inline">\(y_t\)</span></strong>. From the first equation of the AR-GARCH model, that is the model for the conditional variance, it can be seen that the optimal (in the mean square sense) one-step-ahead forecast is <span class="math display">\[\begin{equation*}
+<p><strong>Forecasts for <span class="math inline">\(y_t\)</span></strong>. From the first equation of the AR(<span class="math inline">\(p\)</span>)-GARCH model, that is the model for the conditional variance, it can be seen that the optimal (in the mean square sense) one-step-ahead forecast is <span class="math display">\[\begin{equation*}
 \mathsf{E}_{t}\left(y_{t+1}\right) = \nu + \phi_{1}y_{t}+\cdots+\phi_{p}y_{t+1-p}.
 \end{equation*}\]</span> When <span class="math inline">\(k\geq2\)</span>, it can be seen that (cf.&nbsp;forecasting formulae for AR(MA) models) <span class="math display">\[\begin{equation*}
     \mathsf{E}_{t}(u_{t+k})=\mathsf{E}_{t}\left[  \mathsf{E}_{t+k-1}(u_{t+k})\right]=0,
@@ -678,7 +687,7 @@ y_{t} &amp;=&amp; \underset{{\left(0.013\right) }}{0.087} - \underset{{\left(0.0
 Extra: Prediction intervals under conditional heteroskedasticity
 </div>
 <div id="Extra15" style="display:none;">
-<p>To see this, note that because the forecasts can be derived exactly as in the homoskedastic AR(<span class="math inline">\(p\)</span>) model, the same also holds for the <span class="math inline">\(k\)</span> step forecast errors. Based on the calculations above, <span class="math display">\[\begin{equation*}
+<p>To see this, note that because the forecasts can be derived exactly as in the homoskedastic AR(<span class="math inline">\(p\)</span>) model, the same also holds for the <span class="math inline">\(k\)</span>-step forecast errors. Based on the calculations above, <span class="math display">\[\begin{equation*}
     \mathsf{E}_{t}\left(  u_{t+k-j}\right)  =\left\{
     \begin{array}{cc}
          &amp; u_{t+k-j}, \quad \mathrm{when} \quad k\leq j \\
@@ -713,7 +722,7 @@ Extra: Prediction intervals under conditional heteroskedasticity
 \end{equation*}\]</span> so that <span class="math display">\[\begin{equation*}
     \mathsf{E}_{t}\left(h_{t+2}\right)=\omega+(\alpha_1+\beta_1)h_{t+1}.
 \end{equation*}\]</span></p>
-<p>When the forecast horizon is <span class="math inline">\(k\geq3\)</span>, in a similar fashion we obtain <span class="math display">\[\begin{equation*}
+<p>When the forecast horizon is <span class="math inline">\(k\geq3\)</span>, in a similar fashion, we obtain <span class="math display">\[\begin{equation*}
     \mathsf{E}_{t}\left(h_{t+k}\right) = \omega+\beta_1 \mathsf{E}_{t}\left(h_{t+k-1}\right)+\alpha_1 \mathsf{E}_{t}\left(u_{t+k-1}^{2}\right),
 \end{equation*}\]</span> and finally <span class="math display">\[\begin{equation*}
     \mathsf{E}_{t}\left(h_{t+k}\right)=\omega \sum_{j=0}^{k-2}\left(\alpha_1+\beta_1\right)^{j}+\left(\alpha_1+\beta_1\right)^{k-1}h_{t+1}, \quad  k=2,3,\ldots,
@@ -753,9 +762,9 @@ Extra: Details for forecasting formulae multiple periods ahead
 <h2 data-number="9.6" class="anchored" data-anchor-id="garch-in-mean-model"><span class="header-section-number">9.6</span> GARCH-in-mean model</h2>
 <p>In the <strong>GARCH-in-mean</strong> (<strong>GARCH-M</strong>) <strong>model</strong>, the conditional variance is allowed to directly affect the conditional mean as well.</p>
 <p>To simplify the notation, let us consider the first-order special case, i.e., the AR(1)-GARCH(1,1)-M model <span class="math display">\[\begin{eqnarray*}
-\nonumber y_t = \nu + \phi_1 y_{t-1} + \delta g(h_t) + u_t, \quad
+y_t = \nu + \phi_1 y_{t-1} + \delta g(h_t) + u_t, \quad
 h_t = \omega + \alpha_1 u^2_{t-1} + \beta_1 h_{t-1},
-\end{eqnarray*}\]</span> where, as before, <span class="math inline">\(u_t = y_t - \nu - \phi_1 y_{t-1} - \delta g(h_t)\)</span>, but now the conditional variance <span class="math inline">\(h_t\)</span> also affects the level of <span class="math inline">\(y_t\)</span> through the function <span class="math inline">\(g(h_t)\)</span>. Depending on the situation, the “in-mean effect” can be defined</p>
+\end{eqnarray*}\]</span> where, as before, <span class="math inline">\(u_t = y_t - \nu - \phi_1 y_{t-1} - \delta g(h_t)\)</span>, but now the conditional variance <span class="math inline">\(h_t\)</span> also affects the level of <span class="math inline">\(y_t\)</span> through the function <span class="math inline">\(g(h_t)\)</span>. Depending on the situation, the “in-mean effect” can be defined as</p>
 <ul>
 <li><p><span class="math inline">\(g(h_t) = h_t\)</span>,</p></li>
 <li><p><span class="math inline">\(g(h_t) = \sqrt{h_t}\)</span>, or</p></li>
@@ -772,7 +781,7 @@ h_t = \omega + \alpha_1 u^2_{t-1} + \beta_1 h_{t-1},
 \nonumber y_t = \nu + \phi_1 y_{t-1} + \delta \sqrt{h_t} + u_t.
 \end{eqnarray*}\]</span> That is we include the conditional standard deviation to the conditional mean.</p>
 <ul>
-<li>This is one possible way to examine the fundamental risk-return relationship in (excess) stock returns (here NASDAQ 100 index). The positive risk-return relation is the cornerstone of financial economics.</li>
+<li>This is one possible way to examine the fundamental risk-return relationship in (excess) stock returns (here NASDAQ 100 index). The positive risk-return relation is the cornerstone of financial economics, as postulated, e.g., by the intertemporal capital asset pricing model (ICAPM). However, the existing empirical findings have been highly ambiguous: Different GARCH-M models have led to both positive and negative relationships (see, e.g., Engle, Lilien and Robins, 1987; Glosten et al., 1993; Scruggs, 1998; Lanne and Saikkonen, 2006; Nyberg, 2012).</li>
 </ul>
 QMLE-based estimation result obtained with the rugarch package on AR(1)-GARCH(1,1)-M model:
 <center>
@@ -1121,7 +1130,7 @@ Adjusted Pearson Goodness-of-Fit Test:
 4    50     251.7    4.746e-29
 
 
-Elapsed time : 0.1395671 </code></pre>
+Elapsed time : 0.1276491 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the standardized residuals (should follow the assumed distribution: 'std')</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>std_residuals <span class="ot">&lt;-</span> <span class="fu">residuals</span>(sGARCH_fit_norm, <span class="at">standardize =</span> <span class="cn">TRUE</span>)</span>
@@ -1276,7 +1285,7 @@ Adjusted Pearson Goodness-of-Fit Test:
 4    50    123.47    2.329e-08
 
 
-Elapsed time : 0.2332799 </code></pre>
+Elapsed time : 0.316283 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Visualization of Conditional Volatility (Standard Deviation)</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------------------------</span></span>
@@ -1438,7 +1447,7 @@ Adjusted Pearson Goodness-of-Fit Test:
 4    50     264.0    3.115e-31
 
 
-Elapsed time : 0.4767458 </code></pre>
+Elapsed time : 0.4072838 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the 'archm' coefficient (in-mean parameter)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>

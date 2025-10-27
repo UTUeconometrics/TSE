@@ -336,7 +336,7 @@ window.Quarto = {
     \mathsf{E}\left[\left(Y-\mathsf{E}\left(Y\left\vert \boldsymbol{X}=\boldsymbol{x}\right.\right)\right)^{2}\right]\leq\mathsf{E}\left[\left(Y-g\left(\boldsymbol{x}\right)\right)^{2}\right]
 \end{equation*}\]</span> for any function <span class="math inline">\(g\left(\boldsymbol{x}\right)\)</span> of <span class="math inline">\(\boldsymbol{x}\)</span> (assuming the expectations above are finite).</p>
 <div class="toggle-button" onclick="toggleCode('Extra11')">
-Extra: Some details on the conditional expectation
+Extra: Some details on the conditional expectations
 </div>
 <div id="Extra11" style="display:none;">
 <p>In the case of continuous distributions, the conditional expectation of <span class="math inline">\(Y\)</span> given <span class="math inline">\(\boldsymbol{X} = \boldsymbol{x}\)</span> is defined by the equation <span class="math display">\[\begin{equation*}
@@ -449,7 +449,6 @@ Extra: Some details on the conditional expectation
 </section>
 <section id="prediction-intervals" class="level2" data-number="8.3">
 <h2 data-number="8.3" class="anchored" data-anchor-id="prediction-intervals"><span class="header-section-number">8.3</span> Prediction intervals</h2>
-<!-- (confidence interval of a forecast).} -->
 <p>An alternative way to approach forecasting an ARMA(<span class="math inline">\(p\)</span>,<span class="math inline">\(q\)</span>) process is via the MA<span class="math inline">\(\left(\infty\right)\)</span> representation. Taking conditional expectations of both sides of the equation <span class="math display">\[\begin{equation*}
     y_{t+h}= \mu + \sum_{j=0}^{\infty}\psi_{j}u_{t+h-j},
 \end{equation*}\]</span> and using results of conditional expectations used above, we obtain <span class="math display">\[\begin{equation*}
@@ -473,7 +472,7 @@ Extra: Some details on the conditional expectation
 \mathsf{E}_{t}(y_{t+h})\pm1.96\sigma_{h}
 \end{equation*}\]</span> with 95% probability (in repeated sampling). In practice, the unknown parameters in the forecast <span class="math inline">\(\mathsf{E}_{t}(y_{t+h})\)</span> and in the standard deviation <span class="math inline">\(\sigma_{h}\)</span> are replaced by their estimates, and hence the normality of the forecast errors hold only approximately.</p>
 <p>&nbsp;</p>
-<p><strong>Empirical example (continue)</strong>. In the previous two sections, we concluded that an AR(2) model to be one possible candidate for the U.S real GDP growth (1985:Q1–2007:Q2). The estimated AR(2) model <span class="math display">\[\begin{equation*}
+<p><strong>Empirical example (continued)</strong>. In the previous two sections, we concluded that an AR(2) model to be one possible candidate for the U.S real GDP growth (1985:Q1–2007:Q2). The estimated AR(2) model <span class="math display">\[\begin{equation*}
     y_{t} = \underset{\left(0.197\right) }{1.693} + \underset{\left(0.101\right) }{0.160} y_{t-1} + \underset{\left(0.101\right) }{0.287} y_{t-1} + \widehat{u}_{t}, \quad \widehat{\sigma}^{2}=3.536,
 \end{equation*}\]</span> is now used to compute 8-quarter-ahead predictions. Starting from the last observation (2007:Q2), forecasts are obtained with the forecasting formulae above applied in the case of <span class="math inline">\(p=2\)</span> (and <span class="math inline">\(q=0\)</span>) and <span class="math inline">\(h=8\)</span>. The resulting (point) forecasts of the estimated AR(2) model and their 80 and 95% confidence intervals are presented below.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">        Point Forecast      Lo 80    Hi 80      Lo 95    Hi 95</span></span>
@@ -886,16 +885,12 @@ sigma^2 = 3.97:  log likelihood = -189.25</code></pre>
 <span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Computing forecasts. Forecast origin is the last observation of time series</span></span>
 <span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Computing forecasts. Forecast origin is the last observation of time series</span></span>
-<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Notice that this part requires the running of ARMA modelling code above in </span></span>
-<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Sections 5-7 (i.e. "final model" contain estimation result for gdp growth).</span></span>
-<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n\n</span><span class="st">--- Forecasting from Final Model ---</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Notice that this part requires the running of ARMA modelling code above in </span></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Sections 5-7 (i.e. "final model" contain estimation result for gdp growth).</span></span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n\n</span><span class="st">--- Forecasting from Final Model ---</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 
@@ -1576,8 +1571,8 @@ Extra: Notes for attached out-of-sample forecasting code
 <p>Connecting to the Provided R Code</p>
 <p>The R program, specifically the <code>ar_forecast</code> function, implements the pseudo out-of-sample forecasting methodology for Autoregressive (AR) models as described above.</p>
 <ol type="1">
-<li><p><strong>Data Acquisition and Preparation:</strong> The initial section of the R code, labelled <code>DATA ACQUISITION AND PREPARATION</code>, loads the <code>GDPC1-qdata.xlsx</code> file and transforms it into the <code>gdp_growth</code> time series. This <code>gdp_growth</code> series represents the <em>full dataset</em> available for the forecasting exercise. All subsequent training and test sample selections operate <em>within the bounds</em> of this <code>gdp_growth</code> series.</p></li>
-<li><p><strong>Initial Training and Test Sample Selection:</strong> The section <code>&gt;&gt;&gt; SELECTION OF TRAINING (ESTIMATION) AND FORECASTING (TEST) SAMPLE &lt;&lt;&lt;</code> within the R code is crucial for defining the initial split. Here, you specify the <code>initial_train_end_date_selected</code> (or <code>initial_train_end_idx_selected</code>).</p>
+<li><p><strong>Data acquisition and preparation:</strong> The initial section of the R code, labelled <code>DATA ACQUISITION AND PREPARATION</code>, loads the <code>GDPC1-qdata.xlsx</code> file and transforms it into the <code>gdp_growth</code> time series. This <code>gdp_growth</code> series represents the <em>full dataset</em> available for the forecasting exercise. All subsequent training and test sample selections operate <em>within the bounds</em> of this <code>gdp_growth</code> series.</p></li>
+<li><p><strong>Initial training and test sample selection:</strong> The section <code>&gt;&gt;&gt; SELECTION OF TRAINING (ESTIMATION) AND FORECASTING (TEST) SAMPLE &lt;&lt;&lt;</code> within the R code is crucial for defining the initial split. Here, you specify the <code>initial_train_end_date_selected</code> (or <code>initial_train_end_idx_selected</code>).</p>
 <ul>
 <li><strong>Initial Training Sample (Estimation Sample):</strong> The data from the beginning of <code>gdp_growth</code> up to and including the <code>initial_train_end_date_selected</code> comprises the initial training sample (our <span class="math inline">\(y_1, \dots, y_T\)</span>).</li>
 <li><strong>Forecasting (Test) Sample:</strong> The data <em>after</em> <code>initial_train_end_date_selected</code> up to the end of the <code>gdp_growth</code> series forms the basis of the out-of-sample test period. The first forecast in the evaluation will be made for the observation immediately following <code>initial_train_end_date_selected</code>.</li>
@@ -1597,7 +1592,7 @@ Extra: Notes for attached out-of-sample forecasting code
 <li>Updates the training window according to <code>window_type</code>.</li>
 </ul></li>
 </ul></li>
-<li><p><strong>MSFE Calculation and Reporting:</strong> The function automatically computes the MSFE for each AR(p) model and each specified <code>forecast_horizon</code> over the entire out-of-sample period (which contains <span class="math inline">\(m\)</span> forecast origins). The results, specifically the MSFE values, are returned and printed by the R script, allowing for direct comparison of model performance.</p></li>
+<li><p><strong>MSFE calculation and reporting:</strong> The function automatically computes the MSFE for each AR(p) model and each specified <code>forecast_horizon</code> over the entire out-of-sample period (which contains <span class="math inline">\(m\)</span> forecast origins). The results, specifically the MSFE values, are returned and printed by the R script, allowing for direct comparison of model performance.</p></li>
 </ol>
 <p>By running the accompanying R code, you can practically apply these theoretical concepts to evaluate the out-of-sample forecasting capabilities of different AR(p) models for GDP growth, understanding how parameter updating and forecast horizons influence performance.</p>
 </div>

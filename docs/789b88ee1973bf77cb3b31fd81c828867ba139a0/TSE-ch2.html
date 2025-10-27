@@ -295,41 +295,41 @@ window.Quarto = {
 
 <section id="starting-point" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="starting-point"><span class="header-section-number">2.1</span> Starting point</h2>
-<p><strong>Relation to the linear regression for cross-sectional datasets</strong>. In standard econometrics or statistics courses, linear regression models are typically introduced using cross-sectional data. A key assumption for these models is the absence of autocorrelation in the error term. With time series data, however, autocorrelation is a fundamental characteristic and is almost always present.</p>
+<p><strong>Relation to linear regression for cross-sectional datasets</strong>. In standard econometrics or statistics courses, linear regression models are typically introduced using cross-sectional data. A key assumption in these models is the absence of autocorrelation in the error term. With time series data, however, autocorrelation is a fundamental characteristic and is almost always present.</p>
 <ul>
 <li>While linear regression can be applied to time series variables, the notation changes to reflect the temporal ordering. Variables are indexed by time, such as <span class="math inline">\(y_t\)</span> and <span class="math inline">\(x_t\)</span> (instead of <span class="math inline">\(y_i\)</span> and <span class="math inline">\(x_i\)</span> for cross-sectional observations).</li>
 </ul>
 <p>We will return to multivariate regression models with time series variables later. First, we will explore <strong>a pure time series approach</strong>, as characterized by Verbeek (2008).</p>
 <ul>
 <li><p>In this approach, the current value of a univariate time series, <span class="math inline">\(y_t\)</span>, is modeled as a function of its past values, either directly or indirectly.</p></li>
-<li><p>The emphasis is therefore entirely on using the information contained in <span class="math inline">\(y_t\)</span> and its own history for modeling and forecasting purposes.</p></li>
+<li><p>The emphasis is entirely on exploiting the information contained in <span class="math inline">\(y_t\)</span> and its own history for modeling and forecasting purposes.</p></li>
 </ul>
 <p>&nbsp;</p>
 </section>
 <section id="notes-on-deterministic-components" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="notes-on-deterministic-components"><span class="header-section-number">2.2</span> Notes on deterministic components</h2>
-<p>In time series analysis and models for such data, we often decompose a time series process <span class="math inline">\(y_t\)</span> into a deterministic and stochastic parts. This allows us to separate deterministic parts, like the mean and trend, from random fluctuations that are often the primary focus in stochastic models, such as in ARMA or VAR models to be introduced in this course.</p>
-<p>The general decomposition and starting point in our notation throughout this material is given by <span class="math display">\[\begin{equation*}
+<p>In time series analysis, we often decompose a process <span class="math inline">\(y_t\)</span> into deterministic and stochastic components. This separation allows us to distinguish deterministic elements, such as the mean or the trend, from random fluctuations, which are typically the primary focus in stochastic models like ARMA or VAR models to be introduced later in this course.</p>
+<p>The general decomposition and notation used throughout this material is <span class="math display">\[\begin{equation*}
 y_t = \mu_t + z_t,
 \end{equation*}\]</span> where</p>
 <ul>
-<li><p><span class="math inline">\(\mu_t\)</span>: This term represents the <strong>deterministic part</strong>.</p></li>
-<li><p><span class="math inline">\(z_t\)</span>: This is the <strong>stochastic part</strong>, representing (random) fluctuations around the deterministic component. An assumption is that this process has a zero mean, i.e., <span class="math inline">\(\mathsf{E}(z_t)=0\)</span>. Therefore, <span class="math inline">\(z_t\)</span> represents the demeaned and detrended time series process, which may, and typically, have its own autocorrelation structure and hence, importantly, <span class="math inline">\(z_t\)</span> is typically not just pure random noise.</p></li>
+<li><p><span class="math inline">\(\mu_t\)</span> is the <strong>deterministic component</strong>, represeting features such as mean, trend or seasonality</p></li>
+<li><p><span class="math inline">\(z_t\)</span> is the <strong>stochastic component</strong>, capturing random fluctuations around the deterministic part. We assume <span class="math inline">\(\mathsf{E}(z_t)=0\)</span>, so <span class="math inline">\(z_t\)</span> represents the demeaned and detrended process. Importantly, <span class="math inline">\(z_t\)</span> typically exhibits its own autocorrelation structure and is therefore not merely pure random noise.</p></li>
 </ul>
 <p>By construction, the expected value of <span class="math inline">\(y_t\)</span> is then simply its deterministic component: <span class="math display">\[\begin{equation*}
 \mathsf{E}(y_t) = \mathsf{E}(\mu_t + z_t) = \mu_t + \mathsf{E}(z_t) = \mu_t
 \end{equation*}\]</span></p>
 <p>&nbsp;</p>
-<p><strong>Common forms of the deterministic component</strong>. The functional form of <span class="math inline">\(\mu_t\)</span> depends on the underlying characteristics of the data and application in general. Two of the most common specifications are:</p>
+<p><strong>Common forms of the deterministic component</strong>. The functional form of <span class="math inline">\(\mu_t\)</span> depends on the underlying characteristics of the data and the application. Two of the most common specifications are:</p>
 <ul>
 <li><p><strong>Constant mean</strong>: If the time series fluctuates around a fixed, time-invariant level, the deterministic component is simply a constant <span class="math display">\[\begin{equation*}  
   \mu_t = \mu.
-\end{equation*}\]</span> Here, <span class="math inline">\(\mu\)</span>, or at times <span class="math inline">\(\mu_0\)</span>, represents the unconditional mean of <span class="math inline">\(y_t\)</span>, <span class="math inline">\(\mathsf{E}(y_t)\)</span>. In general, almost all real-life time series have nonzero mean.</p></li>
-<li><p><strong>Constant and linear time trend</strong>: If the series exhibits a persistent upward, or downward, movement over time, we also include a linear trend (together with the constant term). The deterministic component then includes both a constant and a time trend <span class="math display">\[\begin{equation*}
+\end{equation*}\]</span> Here, <span class="math inline">\(\mu\)</span> (sometimes denoted <span class="math inline">\(\mu_0\)</span>) represents the unconditional mean of <span class="math inline">\(y_t\)</span>, that is <span class="math inline">\(\mathsf{E}(y_t)\)</span>. In practice, almost all real-world time series have a nonzero mean.</p></li>
+<li><p><strong>Constant and linear time trend</strong>: If the series exhibits a persistent upward, or downward movement over time, the deterministic component includes both a constant and a linear trend <span class="math display">\[\begin{equation*}
   \mu_t = \mu_0 + \mu_1 t
-\end{equation*}\]</span> where <span class="math inline">\(\mu_0\)</span> is the constant (the value of <span class="math inline">\(\mu_t\)</span> at <span class="math inline">\(t=0\)</span>), and <span class="math inline">\(\mu_1\)</span> is the trend coefficient, representing the average change in <span class="math inline">\(y_t\)</span> from one period to the next.</p></li>
+\end{equation*}\]</span> where <span class="math inline">\(\mu_0\)</span> is the constant (intercept) (the value of <span class="math inline">\(\mu_t\)</span> at <span class="math inline">\(t=0\)</span>), and <span class="math inline">\(\mu_1\)</span> is the trend coefficient, representing the average change in <span class="math inline">\(y_t\)</span> from one period to the next.</p></li>
 </ul>
-<p>In practice, at times we first estimate the parameters of the deterministic part <span class="math inline">\(\mu_t\)</span>, e.g., via Ordinary Least Squares, and then work with <span class="math inline">\(z_t\)</span> as a residual between <span class="math inline">\(y_t - \mu_t\)</span>. This is the tactic as described in Section 1 in connection to simple detrending techniques. Alternatively, and more often, modelling deterministic and stochastic components will be carried out simultaneously.</p>
+<p>In practice, we may first estimate the parameters of the deterministic component <span class="math inline">\(\mu_t\)</span>, for example, using Ordinary Least Squares (OLS), and then work with <span class="math inline">\(z_t\)</span> as the residual <span class="math inline">\(y_t - \mu_t\)</span>. This approach corresponds to the simple detrending technique described in Section 1. Alternatively, and more commonly, the deterministic and stochastic components are modelled simultaneously.</p>
 <p>&nbsp;</p>
 
 
