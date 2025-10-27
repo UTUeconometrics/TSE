@@ -135,9 +135,8 @@ function toggleCode(id) {
 
   </style>
 -->
-</head><body class="nav-sidebar docked">$$
+</head><body class="nav-sidebar docked">\usepackage{amsmath}
 \newcommand{\ubar}[1]{\mkern3mu\underline{\mkern-3mu#1\mkern-3mu}\mkern3mu}
-$$
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -339,7 +338,7 @@ window.Quarto = {
 <p>&nbsp;</p>
 <section id="varp-process" class="level2" data-number="12.1">
 <h2 data-number="12.1" class="anchored" data-anchor-id="varp-process"><span class="header-section-number">12.1</span> VAR(<span class="math inline">\(p\)</span>) process</h2>
-Let us start with a bivariate model. That is we have two stationary time series <span class="math inline">\(y_{1t}\)</span> and <span class="math inline">\(y_{2t}\)</span> with <span class="math inline">\(\mathsf{E}(y_{1t}) = \mu_1\)</span> and <span class="math inline">\(\mathsf{E}(y_{2t})=\mu_2\)</span>. <strong>A bivariate (i.e., a two-variable) first-order VAR process</strong> (i.e., a bivariate <strong>VAR(1) process</strong>) is given as <span class="math display">\[\begin{eqnarray*}
+<p>Let us start with a bivariate model. That is we have two stationary time series <span class="math inline">\(y_{1t}\)</span> and <span class="math inline">\(y_{2t}\)</span> with <span class="math inline">\(\mathsf{E}(y_{1t}) = \mu_1\)</span> and <span class="math inline">\(\mathsf{E}(y_{2t})=\mu_2\)</span>. <strong>A bivariate (i.e., a two-variable) first-order VAR process</strong> (i.e., a bivariate <strong>VAR(1) process</strong>) is given as <span class="math display">\[\begin{eqnarray*}
 y_{1t} &amp;=&amp; \nu_1 + a_{11} y_{1, t-1} + a_{12} y_{2, t-1} + u_{1t} \\
 y_{2t} &amp;=&amp; \nu_2 + a_{21} y_{1, t-1} + a_{22} y_{2, t-1} + u_{2t},
 \end{eqnarray*}\]</span> where <span class="math inline">\(u_{1t}\)</span> and <span class="math inline">\(u_{2t}\)</span> are two error terms (independent of the history of <span class="math inline">\(y_{1t}\)</span> and <span class="math inline">\(y_{2t}\)</span>) that may be correlated. In a matrix notation, the VAR(1) process can be rewritten <span class="math display">\[\begin{eqnarray*}
@@ -358,8 +357,7 @@ y_{2, t-1} \end{array} \right] +
 \left[ \begin{array}{c}
 u_{1t} \\
 u_{2t} \end{array} \right].
-\end{eqnarray*}\]</span>
-<p>Equivalently, <span class="math display">\[\begin{equation*}
+\end{eqnarray*}\]</span> - Equivalently, <span class="math display">\[\begin{equation*}
 \boldsymbol{y}_t = \boldsymbol{\nu} + \boldsymbol{A}_1 \boldsymbol{y}_{t-1} + \boldsymbol{u}_t,
 \end{equation*}\]</span> where now <span class="math inline">\(\boldsymbol{y}_t = (y_{1t}, y_{2t})\)</span>, <span class="math inline">\(\boldsymbol{\nu}_t = (\nu_{1}, \nu_{2})\)</span> and <span class="math inline">\(\boldsymbol{u}_t = (u_{1t}, u_{2t})\)</span> are two <span class="math inline">\(2 \times 1\)</span> vectors.</p>
 <ul>
@@ -1031,15 +1029,28 @@ Fedfunds      0.158370    -0.447925   1.0000</code></pre>
 <pre><code>'log Lik.' -396.6383 (df=39)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#----- Residual diagnostics, checking the adequacy of the selected model -----</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(VAR_lag_p)  <span class="co"># residuals (time series) and their autocorrelations</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">png</span>(<span class="st">"VAR_diagnostics.png"</span>, <span class="at">width=</span><span class="dv">1200</span>, <span class="at">height=</span><span class="dv">1200</span>, <span class="at">res=</span><span class="dv">120</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(VAR_lag_p) <span class="co"># residuals (time series) and their autocorrelations</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>quartz_off_screen 
+                2 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"VAR_diagnostics.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="TSE-ch11_files/figure-html/unnamed-chunk-1-5.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="VAR_diagnostics.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cross-correlations and the correlations of the squared residuals</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>res<span class="ot">=</span><span class="fu">resid</span>(VAR_lag_p) </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(res)<span class="ot">=</span><span class="fu">c</span>(<span class="st">"Inflation"</span>,<span class="st">"Unemployment"</span>,<span class="st">"FedFunds"</span>) <span class="co"># the SW_system</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Auto and cross-correlations as above </span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(res,<span class="at">lag.max =</span> <span class="dv">10</span>, <span class="at">type=</span><span class="st">"correlation"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1047,6 +1058,9 @@ Fedfunds      0.158370    -0.447925   1.0000</code></pre>
 </figure>
 </div>
 </div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Squared residuals </span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(res)<span class="ot">=</span><span class="fu">c</span>(<span class="st">"res_Inflation^2"</span>,<span class="st">"res_Unemployment^2"</span>,<span class="st">"res_FedFunds^2"</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(res<span class="sc">^</span><span class="dv">2</span>,<span class="at">lag.max =</span> <span class="dv">10</span>, <span class="at">type=</span><span class="st">"correlation"</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1054,13 +1068,11 @@ Fedfunds      0.158370    -0.447925   1.0000</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cross-correlations and the correlations of the squared residuals</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>res<span class="ot">=</span><span class="fu">resid</span>(VAR_lag_p) </span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(res)<span class="ot">=</span><span class="fu">c</span>(<span class="st">"Inflation"</span>,<span class="st">"Unemployment"</span>,<span class="st">"FedFunds"</span>) <span class="co"># the SW_system</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Auto and cross-correlations as above </span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(res,<span class="at">lag.max =</span> <span class="dv">10</span>, <span class="at">type=</span><span class="st">"correlation"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Quantile-to-quantile plots. How well the residuals correspond the quantiles </span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># of the normal distribution</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ?qqnorm # see details there</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(res[,<span class="dv">1</span>]) <span class="co"># the component to be considered must be specified. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1068,37 +1080,15 @@ Fedfunds      0.158370    -0.447925   1.0000</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Squared residuals </span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(res)<span class="ot">=</span><span class="fu">c</span>(<span class="st">"res_Inflation^2"</span>,<span class="st">"res_Unemployment^2"</span>,<span class="st">"res_FedFunds^2"</span>)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(res<span class="sc">^</span><span class="dv">2</span>,<span class="at">lag.max =</span> <span class="dv">10</span>, <span class="at">type=</span><span class="st">"correlation"</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="TSE-ch11_files/figure-html/unnamed-chunk-1-9.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Quantile-to-quantile plots. How well the residuals correspond the quantiles </span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># of the normal distribution</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ?qqnorm # see details there</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(res[,<span class="dv">1</span>]) <span class="co"># the component to be considered must be specified. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="TSE-ch11_files/figure-html/unnamed-chunk-1-10.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Here the first variable (inflation in this case).</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># The statistical significance of the auto and cross-correlations </span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">#  --&gt; Portmanteau test</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># ?serial.test</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="fu">serial.test</span>(VAR_lag_p, <span class="at">lags.pt =</span> <span class="dv">12</span>, <span class="at">type =</span> <span class="st">"PT.adjusted"</span>) <span class="co">#</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Here the first variable (inflation in this case).</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># The statistical significance of the auto and cross-correlations </span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">#  --&gt; Portmanteau test</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># ?serial.test</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="fu">serial.test</span>(VAR_lag_p, <span class="at">lags.pt =</span> <span class="dv">12</span>, <span class="at">type =</span> <span class="st">"PT.adjusted"</span>) <span class="co">#</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Portmanteau Test (adjusted)
@@ -1106,7 +1096,7 @@ Fedfunds      0.158370    -0.447925   1.0000</code></pre>
 data:  Residuals of VAR object VAR_lag_p
 Chi-squared = 132.39, df = 72, p-value = 1.904e-05</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">serial.test</span>(VAR_lag_p, <span class="at">lags.pt =</span> <span class="dv">15</span>, <span class="at">type =</span> <span class="st">"PT.adjusted"</span>) <span class="co"># </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">serial.test</span>(VAR_lag_p, <span class="at">lags.pt =</span> <span class="dv">15</span>, <span class="at">type =</span> <span class="st">"PT.adjusted"</span>) <span class="co"># </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Portmanteau Test (adjusted)
@@ -1114,7 +1104,7 @@ Chi-squared = 132.39, df = 72, p-value = 1.904e-05</code></pre>
 data:  Residuals of VAR object VAR_lag_p
 Chi-squared = 149.51, df = 99, p-value = 0.0007889</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">serial.test</span>(VAR_lag_p, <span class="at">lags.pt =</span> <span class="dv">6</span>, <span class="at">type =</span> <span class="st">"PT.adjusted"</span>) <span class="co"># </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">serial.test</span>(VAR_lag_p, <span class="at">lags.pt =</span> <span class="dv">6</span>, <span class="at">type =</span> <span class="st">"PT.adjusted"</span>) <span class="co"># </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Portmanteau Test (adjusted)
@@ -1122,23 +1112,23 @@ Chi-squared = 149.51, df = 99, p-value = 0.0007889</code></pre>
 data:  Residuals of VAR object VAR_lag_p
 Chi-squared = 48.748, df = 18, p-value = 0.0001165</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------------- Forecasting --------------------------------</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Let us use the sample period of SW (up to 2000:Q4) to estimate </span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># the parameters andconstruct forecasts for the next few observations</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co"># - As output, we get forecast, forecast intervals based on the given upper </span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co"># and lower bounds and "CI" which is the distance between the interval forecasts.</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co"># - Forecasts are constructed using the iterative approach where, e.g., </span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co"># two-period forecast is based on one-period forecasts, and so on </span></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="co"># (see the equations in the lecture manuscript)</span></span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>SW_forecasting<span class="ot">=</span><span class="fu">window</span>(SW_system,<span class="at">end=</span><span class="fu">c</span>(<span class="dv">2000</span>,<span class="dv">4</span>))</span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>VAR_p_forecasting<span class="ot">=</span><span class="fu">VAR</span>(SW_forecasting, <span class="at">p =</span> <span class="dv">4</span>, <span class="at">type =</span> <span class="fu">c</span>(<span class="st">"const"</span>),<span class="at">season =</span> <span class="cn">NULL</span>, </span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>                      <span class="at">exogen =</span> <span class="cn">NULL</span>, <span class="at">lag.max =</span> <span class="cn">NULL</span>)</span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>forecasts<span class="ot">=</span><span class="fu">predict</span>(VAR_p_forecasting,<span class="at">n.ahead=</span><span class="dv">4</span>,<span class="at">ci=</span><span class="fl">0.95</span>) <span class="co"># forecasts 4-periods ahead</span></span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>forecasts<span class="sc">$</span>fcst</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------------- Forecasting --------------------------------</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Let us use the sample period of SW (up to 2000:Q4) to estimate </span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># the parameters andconstruct forecasts for the next few observations</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co"># - As output, we get forecast, forecast intervals based on the given upper </span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># and lower bounds and "CI" which is the distance between the interval forecasts.</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co"># - Forecasts are constructed using the iterative approach where, e.g., </span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="co"># two-period forecast is based on one-period forecasts, and so on </span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="co"># (see the equations in the lecture manuscript)</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>SW_forecasting<span class="ot">=</span><span class="fu">window</span>(SW_system,<span class="at">end=</span><span class="fu">c</span>(<span class="dv">2000</span>,<span class="dv">4</span>))</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>VAR_p_forecasting<span class="ot">=</span><span class="fu">VAR</span>(SW_forecasting, <span class="at">p =</span> <span class="dv">4</span>, <span class="at">type =</span> <span class="fu">c</span>(<span class="st">"const"</span>),<span class="at">season =</span> <span class="cn">NULL</span>, </span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>                      <span class="at">exogen =</span> <span class="cn">NULL</span>, <span class="at">lag.max =</span> <span class="cn">NULL</span>)</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>forecasts<span class="ot">=</span><span class="fu">predict</span>(VAR_p_forecasting,<span class="at">n.ahead=</span><span class="dv">4</span>,<span class="at">ci=</span><span class="fl">0.95</span>) <span class="co"># forecasts 4-periods ahead</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>forecasts<span class="sc">$</span>fcst</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$infl
          fcst     lower    upper       CI
@@ -1161,36 +1151,37 @@ $intr
 [3,] 6.465216 3.238797  9.691635 3.226419
 [4,] 6.417915 2.696100 10.139730 3.721815</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(forecasts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">png</span>(<span class="st">"VAR_forecasts_combined.png"</span>, <span class="at">width =</span> <span class="dv">1400</span>, <span class="at">height =</span> <span class="dv">700</span>, <span class="at">res =</span> <span class="dv">120</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(forecasts, <span class="at">main =</span> <span class="st">"VAR Forecasts (Level &amp; CI)"</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">fanchart</span>(forecasts, <span class="at">main =</span> <span class="st">"Fan Chart (95% CI)"</span>) <span class="do">## see http://www.jstatsoft.org/v27/i04/paper, p. 12.</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>quartz_off_screen 
+                2 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"VAR_forecasts_combined.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="TSE-ch11_files/figure-html/unnamed-chunk-1-11.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="VAR_forecasts_combined.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fanchart</span>(forecasts) <span class="do">## see http://www.jstatsoft.org/v27/i04/paper, p. 12.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="TSE-ch11_files/figure-html/unnamed-chunk-1-12.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#------- Granger causality tests  (+ instantaneous causality tests) --------</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Recall that H_0: "There is no Granger causality"</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Below, we first test that there is no Granger causality from inflation to </span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co"># unemployment and Federal Funds</span></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Notice that the program computes the (approximate) p-values based on </span></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="co"># the F-distribution (which has been found to be a good approximation in </span></span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="co"># some simulation experiments) instead of the chi^2-distribution.</span></span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>Gc_inf<span class="ot">=</span><span class="fu">causality</span>(VAR_lag_p, <span class="at">cause =</span> <span class="st">"Inflation"</span>)</span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>Gc_inf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#------- Granger causality tests  (+ instantaneous causality tests) --------</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Recall that H_0: "There is no Granger causality"</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Below, we first test that there is no Granger causality from inflation to </span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co"># unemployment and Federal Funds</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Notice that the program computes the (approximate) p-values based on </span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="co"># the F-distribution (which has been found to be a good approximation in </span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="co"># some simulation experiments) instead of the chi^2-distribution.</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>Gc_inf<span class="ot">=</span><span class="fu">causality</span>(VAR_lag_p, <span class="at">cause =</span> <span class="st">"Inflation"</span>)</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>Gc_inf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$Granger
 
@@ -1209,8 +1200,8 @@ $Instant
 data:  VAR object VAR_lag_p
 Chi-squared = 5.0489, df = 2, p-value = 0.0801</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>Gc_unem<span class="ot">=</span><span class="fu">causality</span>(VAR_lag_p, <span class="at">cause =</span> <span class="st">"Unemployment"</span>)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>Gc_unem</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>Gc_unem<span class="ot">=</span><span class="fu">causality</span>(VAR_lag_p, <span class="at">cause =</span> <span class="st">"Unemployment"</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>Gc_unem</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$Granger
 
@@ -1229,8 +1220,8 @@ $Instant
 data:  VAR object VAR_lag_p
 Chi-squared = 27.417, df = 2, p-value = 1.113e-06</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>Gc_ff<span class="ot">=</span><span class="fu">causality</span>(VAR_lag_p, <span class="at">cause =</span> <span class="st">"Fedfunds"</span>)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>Gc_ff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>Gc_ff<span class="ot">=</span><span class="fu">causality</span>(VAR_lag_p, <span class="at">cause =</span> <span class="st">"Fedfunds"</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>Gc_ff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$Granger
 
@@ -1249,8 +1240,8 @@ $Instant
 data:  VAR object VAR_lag_p
 Chi-squared = 29.563, df = 2, p-value = 3.805e-07</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>Gc_infunem<span class="ot">=</span><span class="fu">causality</span>(VAR_lag_p, <span class="at">cause =</span> <span class="fu">c</span>(<span class="st">"Inflation"</span>, <span class="st">"Unemployment"</span>))</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>Gc_infunem</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>Gc_infunem<span class="ot">=</span><span class="fu">causality</span>(VAR_lag_p, <span class="at">cause =</span> <span class="fu">c</span>(<span class="st">"Inflation"</span>, <span class="st">"Unemployment"</span>))</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>Gc_infunem</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$Granger
 
@@ -1269,8 +1260,8 @@ $Instant
 data:  VAR object VAR_lag_p
 Chi-squared = 29.563, df = 2, p-value = 3.805e-07</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>Gc_unemff<span class="ot">=</span><span class="fu">causality</span>(VAR_lag_p, <span class="at">cause =</span> <span class="fu">c</span>(<span class="st">"Unemployment"</span>, <span class="st">"Fedfunds"</span>))</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>Gc_unemff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>Gc_unemff<span class="ot">=</span><span class="fu">causality</span>(VAR_lag_p, <span class="at">cause =</span> <span class="fu">c</span>(<span class="st">"Unemployment"</span>, <span class="st">"Fedfunds"</span>))</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>Gc_unemff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$Granger
 
@@ -1289,8 +1280,8 @@ $Instant
 data:  VAR object VAR_lag_p
 Chi-squared = 5.0489, df = 2, p-value = 0.0801</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>Gc_ffinf<span class="ot">=</span><span class="fu">causality</span>(VAR_lag_p, <span class="at">cause =</span> <span class="fu">c</span>(<span class="st">"Inflation"</span>, <span class="st">"Fedfunds"</span>))</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>Gc_ffinf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>Gc_ffinf<span class="ot">=</span><span class="fu">causality</span>(VAR_lag_p, <span class="at">cause =</span> <span class="fu">c</span>(<span class="st">"Inflation"</span>, <span class="st">"Fedfunds"</span>))</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>Gc_ffinf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$Granger
 

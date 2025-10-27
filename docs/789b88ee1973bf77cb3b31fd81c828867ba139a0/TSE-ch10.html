@@ -101,9 +101,8 @@ function toggleCode(id) {
 
   </style>
 -->
-</head><body class="nav-sidebar docked">$$
+</head><body class="nav-sidebar docked">\usepackage{amsmath}
 \newcommand{\ubar}[1]{\mkern3mu\underline{\mkern-3mu#1\mkern-3mu}\mkern3mu}
-$$
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -360,7 +359,7 @@ Extra: Remaining autocorrelation in the linear (predictive) regression
 <div id="Extra17" style="display:none;">
 <p>Consider a linear regression (as above), but this time we set ARMA such as an MA(1) structure for the error term. This would lead to the model <span class="math display">\[\begin{equation*}
 y_t = \boldsymbol{x}^{\prime}_t \boldsymbol{\beta} + u_t, \quad u_t = a_t + \theta_1 a_{t-1},
-\end{equation*}\]</span> where <span class="math inline">\(a_t\)</span> is now an $ process (or white noise). However, in macro and especially financial econometrics, it is typical to proceed using the latter option, which is discussed next.</p>
+\end{equation*}\]</span> where <span class="math inline">\(a_t\)</span> is now an <span class="math inline">\(\mathsf{iid}\)</span> process (or white noise). However, in macro and especially financial econometrics, it is typical to proceed using the latter option, which is discussed next.</p>
 <p>As stated, the OLS estimator can be shown to be still consistent and asymptotically normal, even if the error term is autocorrelated and possibly also (conditionally) heteroskedastic. This is practically the message of the quasi-maximum likelihood estimator (QMLE).</p>
 <ul>
 <li>Cf., for example, the section concerning the AR-GARCH model.</li>
