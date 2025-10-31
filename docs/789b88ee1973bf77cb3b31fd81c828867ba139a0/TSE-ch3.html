@@ -409,7 +409,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p><span class="fig-caption">Figure: (Annualized) U.S. quarterly real GDP growth rate (1985:Q1-2007:Q2) (ggplot2 figure).</span></p>
+<p><span class="fig-caption">Figure: (Annualized) quarterly U.S. real GDP growth rate (1985:Q1-2007:Q2) (ggplot2 figure).</span></p>
 <p>It is important to note that <strong>weak stationarity does not imply the absence of variability</strong>. Even in a weakly stationary process, individual observations can vary substantially due to random shocks. What matters is that the statistical properties — the mean, variance, and autocovariance structure — remain constant over time. So, occasional high or low values in the series are entirely consistent with weak stationarity, as long as they are the result of random variation and not due to major structural changes in the process.</p>
 <ul>
 <li><p>We will soon see more examples of weakly stationary time series through simulations.</p></li>
@@ -439,7 +439,7 @@ window.Quarto = {
 <ul>
 <li>The latter just for the lags <span class="math inline">\(h&gt;0\)</span></li>
 </ul>
-<p>Due to the time invariance guaranteed by weak stationarity, it now seems evident that <span class="math inline">\(\mathsf{E}\left(y_{t}\right)=\mu\)</span> and <span class="math inline">\(\mathsf{Cor}\left(y_{t},y_{t+h}\right)=\gamma_{h}\)</span> can be estimated. One more problem remains: The autocorrelation function, in general, has an infinite number of quantities to be estimated. In practice, all of these cannot be estimated (without further restrictions). However, typically we can assume that <span class="math display">\[\begin{equation*}
+<p>Due to the time invariance guaranteed by weak stationarity, it now seems evident that <span class="math inline">\(\mathsf{E}\left(y_{t}\right)=\mu\)</span> and <span class="math inline">\(\mathsf{Cov}\left(y_{t},y_{t+h}\right)=\gamma_{h}\)</span> can be estimated. One more problem remains: The autocorrelation function, in general, has an infinite number of quantities to be estimated. In practice, all of these cannot be estimated (without further restrictions). However, typically we can assume that <span class="math display">\[\begin{equation*}
 \gamma_{h}\rightarrow0, \,\, \mathrm{when} \,\, h\rightarrow\infty.
 \end{equation*}\]</span> <!-- (#eq:Acfdecay) --> In this case, the random variables <span class="math inline">\(y_{t}\)</span> and <span class="math inline">\(y_{t+h}\)</span> become <strong>nearly uncorrelated when the distance <span class="math inline">\(h\)</span> is “large”</strong> – that is, when <span class="math inline">\(y_{t}\)</span> and <span class="math inline">\(y_{t+h}\)</span> are “far” from each other in time.</p>
 <ul>
