@@ -386,12 +386,12 @@ y_{t} - \mu \equiv z_t = u_{t}+\theta_1 u_{t-1}, \quad u_{t}\sim\mathsf{iid}\lef
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="MAonesimul.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<p><img src="MAonesimul.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:73.0%"></p>
 </figure>
 </div>
 </div>
 </div>
-<p><span class="fig-caption">Figure: Two simulated realizations of the MA(1) process and their (sample) autocorrelations.</span></p>
+<p><span class="fig-caption">Figure: Two simulated realizations of the MA(1) process and their (sample) autocorrelations, starting from the first autocorrelations (<span class="math inline">\(\mathsf{r}_1\)</span> and <span class="math inline">\(\mathsf{\rho}_1\)</span>).</span></p>
 <p>&nbsp;</p>
 <p>In Figure, on the left, the MA(1) coefficient <span class="math inline">\(\theta_1\)</span> is 0.9, on the right <span class="math inline">\(\theta_1= -0.9\)</span>. In addition to simulated time series, the figure plots sample autocorrelations (“sample ACF”) and theoretical autocorrelations (“theoretical ACF”) of these two processes. In these figures <span class="math inline">\(\mathsf{r}_0=1\)</span> are depicted.</p>
 <p>&nbsp;</p>
@@ -420,7 +420,7 @@ y_{t} = \mu + \sum_{j=-\infty}^{\infty}\psi_{j}u_{t-j}, \quad  u_{t}\sim\mathsf{
 </ul>
 <p>&nbsp;</p>
 <p>The mean and autocovariance function of <span class="math inline">\(y_{t}\)</span> (general linear process) can be calculated in a similar fashion as for the MA(1) process regardless of the infinite sum: <span class="math display">\[\begin{equation*}
-\mathsf{E}\left(y_{t}\right) = \mu + \sum_{j=-\infty}^{\infty}\mathsf{E}\left(\psi_{j}u_{t-j}\right)=\sum_{j=-\infty}^{\infty}\psi_{j}\mathsf{E}\left(u_{t-j}\right)=\mu,
+\mathsf{E}\left(y_{t}\right) = \mu + \sum_{j=-\infty}^{\infty}\mathsf{E}\left(\psi_{j}u_{t-j}\right) = \mu + \sum_{j=-\infty}^{\infty}\psi_{j}\mathsf{E}\left(u_{t-j}\right)=\mu,
 \end{equation*}\]</span> and denoting (cf.&nbsp;Section 2 on deterministic components) <span class="math inline">\(z_t \equiv y_t - \mu\)</span>, we get <span class="math display">\[\begin{equation*}
 \mathsf{Var}\left(y_{t}\right)= \mathsf{Var}\left(z_{t}\right) =\sum_{j=-\infty}^{\infty}\mathsf{Var}\left(\psi_{j}u_{t-j}\right)=\sum_{j=-\infty}^{\infty}\psi_{j}^{2}\mathsf{Var}\left(u_{t-j}\right)=\sigma^{2}\sum_{j=-\infty}^{\infty}\psi_{j}^{2}.
 \end{equation*}\]</span> Moreover, because <span class="math inline">\(\mathsf{Cov}\left(y_{t},y_{t+h}\right) = \mathsf{Cov}\left(z_{t},z_{t+h}\right)\)</span>, for <span class="math inline">\(h&gt;0\)</span>, <span class="math display">\[\begin{eqnarray}
@@ -501,12 +501,12 @@ y_{t} = \nu \sum_{j=0}^{\infty}\phi_1^{j} + \sum_{j=0}^{\infty}\phi_1^{j}u_{t-j}
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="ARonesimul.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<p><img src="ARonesimul.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:73.0%"></p>
 </figure>
 </div>
 </div>
 </div>
-<p><span class="fig-caption">Figure: Two simulated realizations of the AR(1) process and their autocorrelations.</span></p>
+<p><span class="fig-caption">Figure: Two simulated realizations of the AR(1) process and their autocorrelations, starting from the first autocorrelations (<span class="math inline">\(\mathsf{r}_1\)</span> and <span class="math inline">\(\mathsf{\rho}_1\)</span>).</span></p>
 <p>&nbsp;</p>
 <p>Figure presents two simulated realizations of length 150 of an AR(1) process with <span class="math inline">\(u_{t}\sim\mathsf{nid}\left(0,1\right)\)</span>. On the left, the AR coefficient <span class="math inline">\(\phi_1\)</span> is 0.7, on the right -0.7. For simplicity, the constant term (and hence the mean) is set to 0. In addition to simulated time series, the figure plots sample autocorrelations and theoretical autocorrelations of these two processes.</p>
 <ul>
@@ -544,7 +544,7 @@ y_{t}=\phi_1^{t}y_{0} + \nu \sum_{j=0}^{t-1}\phi_1^{j} + \sum_{j=0}^{t-1}\phi_1^
 <ul>
 <li>In this case, the AR(1) process therefore has no stationary solution.</li>
 </ul>
-<p>When <span class="math inline">\(\phi=1\)</span> and <span class="math inline">\(t\geq1\)</span>, the AR(1) process reduces to <span class="math display">\[\begin{equation*}
+<p>When <span class="math inline">\(\phi_1=1\)</span> and <span class="math inline">\(t\geq1\)</span>, the AR(1) process reduces to <span class="math display">\[\begin{equation*}
 y_{t} = \nu + y_{t-1}+u_{t},\,\, u_{t}\sim \mathsf{iid}\left(0,\sigma^{2}\right).
 \end{equation*}\]</span> This is called a <strong>random walk</strong>. This name is due to the “wandering” nature of the realizations of the process.</p>
 <ul>
@@ -560,7 +560,7 @@ y_{t} = \nu + y_{t-1}+u_{t},\,\, u_{t}\sim \mathsf{iid}\left(0,\sigma^{2}\right)
 </div>
 </div>
 </div>
-<p><span class="fig-caption">Figure: A simulated realizations of the random walk process (assuming <span class="math inline">\(u_t \thicksim \mathsf{nid}(0,1)\)</span>) (left) and its first-difference (right).</span></p>
+<p><span class="fig-caption">Figure: A simulated realization of the random walk process (assuming <span class="math inline">\(u_t \thicksim \mathsf{nid}(0,1)\)</span>) (left) and its first-difference (right).</span></p>
 <p>&nbsp;</p>
 <p>The random walk and its generalizations play a central role in the analysis of <strong>nonstationary time series</strong>. We will come back to this in Sections 12–13.</p>
 <p>&nbsp;</p>
@@ -731,25 +731,29 @@ R code: Simulate MA(1) process and autocorrelations
 <div id="r-code5" style="display:none;">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tseries)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">1</span>))  <span class="co"># Set up the plotting area to have 3 rows and 2 columns</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forecast)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">1</span>))</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the first set of figures</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>y1 <span class="ot">&lt;-</span> <span class="fu">arima.sim</span>(<span class="fu">list</span>(<span class="at">order=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">ma=</span><span class="fu">c</span>(<span class="fl">0.9</span>)), <span class="at">n=</span><span class="dv">150</span>, <span class="at">sd=</span><span class="dv">1</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>y2 <span class="ot">&lt;-</span> <span class="fu">arima.sim</span>(<span class="fu">list</span>(<span class="at">order=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">ma=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.9</span>)), <span class="at">n=</span><span class="dv">150</span>, <span class="at">sd=</span><span class="dv">1</span>)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y1, <span class="at">type=</span><span class="st">"l"</span>, <span class="at">main=</span><span class="st">"MA(1) process: theta_1 = 0.9"</span>)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y2, <span class="at">type=</span><span class="st">"l"</span>, <span class="at">main=</span><span class="st">"MA(1) process: theta_1 = -0.9"</span>)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>acor1 <span class="ot">&lt;-</span> <span class="fu">acf</span>(<span class="fu">ts</span>(y1), <span class="at">lag=</span><span class="dv">40</span>, <span class="at">type=</span><span class="st">"correlation"</span>, <span class="at">main=</span><span class="st">"Sample ACF"</span>, <span class="at">xlab=</span><span class="st">""</span>, <span class="at">ylab=</span><span class="st">""</span>)</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>acor2 <span class="ot">&lt;-</span> <span class="fu">acf</span>(<span class="fu">ts</span>(y2), <span class="at">lag=</span><span class="dv">40</span>, <span class="at">type=</span><span class="st">"correlation"</span>, <span class="at">main=</span><span class="st">"Sample ACF"</span>, <span class="at">xlab=</span><span class="st">""</span>, <span class="at">ylab=</span><span class="st">""</span>)</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>acf1u <span class="ot">&lt;-</span> <span class="fu">ARMAacf</span>(<span class="at">ma=</span><span class="fu">c</span>(<span class="fl">0.9</span>), <span class="at">lag.max=</span><span class="dv">40</span>, <span class="at">pacf=</span><span class="cn">FALSE</span>)</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(acf1u, <span class="at">type=</span><span class="st">"h"</span>, <span class="at">xlab=</span><span class="st">"Lag"</span>, <span class="at">ylab=</span><span class="st">" "</span>, <span class="at">main=</span><span class="st">"Theoretical ACF"</span>)</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>acf2u <span class="ot">&lt;-</span> <span class="fu">ARMAacf</span>(<span class="at">ma=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.9</span>), <span class="at">lag.max=</span><span class="dv">40</span>, <span class="at">pacf=</span><span class="cn">FALSE</span>)</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(acf2u, <span class="at">type=</span><span class="st">"h"</span>, <span class="at">xlab=</span><span class="st">"Lag"</span>, <span class="at">ylab=</span><span class="st">" "</span>, <span class="at">main=</span><span class="st">"Theoretical ACF"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>))  <span class="co"># Set up the plotting area to have 3 rows and 2 columns</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the first set of figures</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>y1 <span class="ot">&lt;-</span> <span class="fu">arima.sim</span>(<span class="fu">list</span>(<span class="at">order=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">ma=</span><span class="fu">c</span>(<span class="fl">0.9</span>)), <span class="at">n=</span><span class="dv">150</span>, <span class="at">sd=</span><span class="dv">1</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>y2 <span class="ot">&lt;-</span> <span class="fu">arima.sim</span>(<span class="fu">list</span>(<span class="at">order=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">ma=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.9</span>)), <span class="at">n=</span><span class="dv">150</span>, <span class="at">sd=</span><span class="dv">1</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y1, <span class="at">type=</span><span class="st">"l"</span>, <span class="at">main=</span><span class="st">"MA(1) process: theta_1 = 0.9"</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y2, <span class="at">type=</span><span class="st">"l"</span>, <span class="at">main=</span><span class="st">"MA(1) process: theta_1 = -0.9"</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample ACF plots with fixed y-axis limits</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">Acf</span>(y1, <span class="at">main=</span><span class="st">"Sample ACF"</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))  <span class="co"># forecast package</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">Acf</span>(y2, <span class="at">main=</span><span class="st">"Sample ACF"</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))  <span class="co"># forecast package</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Theoretical ACF plots with fixed y-axis limits</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>acf1u <span class="ot">&lt;-</span> <span class="fu">ARMAacf</span>(<span class="at">ma=</span><span class="fu">c</span>(<span class="fl">0.9</span>), <span class="at">lag.max=</span><span class="dv">21</span>, <span class="at">pacf=</span><span class="cn">FALSE</span>)[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(acf1u, <span class="at">type=</span><span class="st">"h"</span>, <span class="at">xlab=</span><span class="st">"Lag"</span>, <span class="at">ylab=</span><span class="st">" "</span>, <span class="at">main=</span><span class="st">"Theoretical ACF"</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>acf2u <span class="ot">&lt;-</span> <span class="fu">ARMAacf</span>(<span class="at">ma=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.9</span>), <span class="at">lag.max=</span><span class="dv">21</span>, <span class="at">pacf=</span><span class="cn">FALSE</span>)[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(acf2u, <span class="at">type=</span><span class="st">"h"</span>, <span class="at">xlab=</span><span class="st">"Lag"</span>, <span class="at">ylab=</span><span class="st">" "</span>, <span class="at">main=</span><span class="st">"Theoretical ACF"</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -765,25 +769,28 @@ R code: Simulate AR(1) process and autocorrelations
 <div id="r-code6" style="display:none;">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tseries)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">1</span>))  <span class="co"># Set up the plotting area to have 3 rows and 2 columns</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forecast)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>))  <span class="co"># Set up the plotting area to have 3 rows and 2 columns</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the first set of figures</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>y1 <span class="ot">&lt;-</span> <span class="fu">arima.sim</span>(<span class="fu">list</span>(<span class="at">order=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">ar=</span><span class="fu">c</span>(<span class="fl">0.7</span>)), <span class="at">n=</span><span class="dv">150</span>, <span class="at">sd=</span><span class="dv">1</span>)</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>y2 <span class="ot">&lt;-</span> <span class="fu">arima.sim</span>(<span class="fu">list</span>(<span class="at">order=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">ar=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.7</span>)), <span class="at">n=</span><span class="dv">150</span>, <span class="at">sd=</span><span class="dv">1</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a> </span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y1, <span class="at">type=</span><span class="st">"l"</span>, <span class="at">main=</span><span class="st">"AR(1) process: phi_1 = 0.7"</span>)</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y2, <span class="at">type=</span><span class="st">"l"</span>, <span class="at">main=</span><span class="st">"AR(1) process: phi_1 = -0.7"</span>)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>acor1 <span class="ot">&lt;-</span> <span class="fu">acf</span>(<span class="fu">ts</span>(y1), <span class="at">lag=</span><span class="dv">40</span>, <span class="at">type=</span><span class="st">"correlation"</span>, <span class="at">main=</span><span class="st">"Sample ACF"</span>, <span class="at">xlab=</span><span class="st">""</span>, <span class="at">ylab=</span><span class="st">""</span>)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>acor2 <span class="ot">&lt;-</span> <span class="fu">acf</span>(<span class="fu">ts</span>(y2), <span class="at">lag=</span><span class="dv">40</span>, <span class="at">type=</span><span class="st">"correlation"</span>, <span class="at">main=</span><span class="st">"Sample ACF"</span>, <span class="at">xlab=</span><span class="st">""</span>, <span class="at">ylab=</span><span class="st">""</span>)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>acf1u <span class="ot">&lt;-</span> <span class="fu">ARMAacf</span>(<span class="at">ar=</span><span class="fu">c</span>(<span class="fl">0.9</span>), <span class="at">lag.max=</span><span class="dv">40</span>, <span class="at">pacf=</span><span class="cn">FALSE</span>)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(acf1u, <span class="at">type=</span><span class="st">"h"</span>, <span class="at">xlab=</span><span class="st">"Lag"</span>, <span class="at">ylab=</span><span class="st">" "</span>, <span class="at">main=</span><span class="st">"Theoretical ACF"</span>)</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>acf2u <span class="ot">&lt;-</span> <span class="fu">ARMAacf</span>(<span class="at">ar=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.9</span>), <span class="at">lag.max=</span><span class="dv">40</span>, <span class="at">pacf=</span><span class="cn">FALSE</span>)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(acf2u, <span class="at">type=</span><span class="st">"h"</span>, <span class="at">xlab=</span><span class="st">"Lag"</span>, <span class="at">ylab=</span><span class="st">" "</span>, <span class="at">main=</span><span class="st">"Theoretical ACF"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#acor1 &lt;- acf(ts(y1), lag=40, type="correlation", main="Sample ACF", xlab="", ylab="")</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#acor2 &lt;- acf(ts(y2), lag=40, type="correlation", main="Sample ACF", xlab="", ylab="")</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>acor1 <span class="ot">&lt;-</span> <span class="fu">Acf</span>(y1, <span class="at">main=</span><span class="st">"Sample ACF"</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))  <span class="co"># forecast package</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>acor2 <span class="ot">&lt;-</span> <span class="fu">Acf</span>(y2, <span class="at">main=</span><span class="st">"Sample ACF"</span>,<span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))  <span class="co"># forecast package</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>acf1u <span class="ot">&lt;-</span> <span class="fu">ARMAacf</span>(<span class="at">ar=</span><span class="fu">c</span>(<span class="fl">0.7</span>), <span class="at">lag.max=</span><span class="dv">21</span>, <span class="at">pacf=</span><span class="cn">FALSE</span>)[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(acf1u, <span class="at">type=</span><span class="st">"h"</span>, <span class="at">xlab=</span><span class="st">"Lag"</span>, <span class="at">ylab=</span><span class="st">" "</span>, <span class="at">main=</span><span class="st">"Theoretical ACF"</span>,<span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>acf2u <span class="ot">&lt;-</span> <span class="fu">ARMAacf</span>(<span class="at">ar=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.7</span>), <span class="at">lag.max=</span><span class="dv">21</span>, <span class="at">pacf=</span><span class="cn">FALSE</span>)[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(acf2u, <span class="at">type=</span><span class="st">"h"</span>, <span class="at">xlab=</span><span class="st">"Lag"</span>, <span class="at">ylab=</span><span class="st">" "</span>, <span class="at">main=</span><span class="st">"Theoretical ACF"</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -819,6 +826,147 @@ R code: Simulate a random walk process
 </figure>
 </div>
 </div>
+</div>
+</div>
+<button class="toggle-button toggle-button-r" onclick="toggleCode('r-code72')">
+R code: Sample autocorrelations, Ljung-Box and McLeod-Li tests
+</button>
+<div id="r-code72" style="display:none;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tseries)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  LOAD LIBRARIES</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------------------------</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>packages_to_load <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"tseries"</span>, <span class="st">"forecast"</span>, <span class="st">"ggplot2"</span>, <span class="st">"readxl"</span>, <span class="st">"dplyr"</span>, </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"lubridate"</span>, <span class="st">"astsa"</span>, <span class="st">"TSA"</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (pkg <span class="cf">in</span> packages_to_load) {</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(pkg, <span class="at">character.only =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(pkg)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">library</span>(pkg, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#  DATA ACQUISITION AND PREPARATION</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------------------------</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>start_date <span class="ot">&lt;-</span> <span class="st">"1984-10-01"</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>end_date   <span class="ot">&lt;-</span> <span class="st">"2007-04-01"</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>full_data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"GDPC1-qdata.xlsx"</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>raw_data <span class="ot">&lt;-</span> full_data <span class="sc">%&gt;%</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">date =</span> Date, <span class="at">value =</span> GDPC1) <span class="sc">%&gt;%</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(start_date) <span class="sc">&amp;</span> date <span class="sc">&lt;=</span> <span class="fu">as.Date</span>(end_date))</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>gdp_ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(raw_data<span class="sc">$</span>value, </span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>             <span class="at">start =</span> <span class="fu">c</span>(<span class="fu">year</span>(raw_data<span class="sc">$</span>date[<span class="dv">1</span>]), <span class="fu">quarter</span>(raw_data<span class="sc">$</span>date[<span class="dv">1</span>])), </span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>             <span class="at">frequency =</span> <span class="dv">4</span>)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>gdp_growth <span class="ot">&lt;-</span> <span class="fu">diff</span>(<span class="fu">log</span>(gdp_ts)) <span class="sc">*</span> <span class="dv">400</span>  <span class="co"># Annualized growth rate</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>gdp_growth <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(gdp_growth)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="co">#  VISUALIZATION AND MANUAL IDENTIFICATION</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------------------------</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(gdp_growth) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"(Annualized) quarterly U.S. real GDP growth rate (1985:Q1-2007:Q2)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TSE-ch4_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample autocorrelations</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Acf</span>(gdp_growth, <span class="at">main=</span><span class="st">"ACF of GDP Growth"</span>)  <span class="co"># forecast package</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TSE-ch4_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Extended Ljung-Box Test ---</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Extended Ljung-Box Test for multiple lags:</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Extended Ljung-Box Test for multiple lags:</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>lags_to_test <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">12</span>, <span class="dv">16</span>, <span class="dv">20</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>lb_results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Lag=</span><span class="fu">integer</span>(), <span class="st">"Q-statistic"</span><span class="ot">=</span><span class="fu">double</span>(), <span class="st">"p-value"</span><span class="ot">=</span><span class="fu">double</span>())</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (l <span class="cf">in</span> lags_to_test) {</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  test <span class="ot">&lt;-</span> <span class="fu">Box.test</span>(gdp_growth, <span class="at">type =</span> <span class="st">"Ljung-Box"</span>, <span class="at">lag =</span> l, <span class="at">fitdf =</span> <span class="dv">0</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  lb_results[<span class="fu">nrow</span>(lb_results) <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="fu">c</span>(l, <span class="fu">round</span>(test<span class="sc">$</span>statistic, <span class="dv">3</span>), <span class="fu">round</span>(test<span class="sc">$</span>p.value, <span class="dv">3</span>))</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(lb_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Lag Q.statistic p.value
+1   4      16.487   0.002
+2   8      19.494   0.012
+3  12      27.942   0.006
+4  16      32.897   0.008
+5  20      34.679   0.022</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- McLeod-Li Test ---</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Extended McLeod-Li Test for multiple lags:</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Extended McLeod-Li Test for multiple lags:</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>ml_results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Lag =</span> <span class="fu">integer</span>(),</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">p_value =</span> <span class="fu">numeric</span>()</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (l <span class="cf">in</span> lags_to_test) {</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  test <span class="ot">&lt;-</span> TSA<span class="sc">::</span><span class="fu">McLeod.Li.test</span>(<span class="at">y =</span> gdp_growth, <span class="at">gof.lag =</span> l)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  pval <span class="ot">&lt;-</span> test<span class="sc">$</span>p.values[l] <span class="co"># Extract p-value for the current lag</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  ml_results[<span class="fu">nrow</span>(ml_results) <span class="sc">+</span> <span class="dv">1</span>, ] <span class="ot">&lt;-</span> <span class="fu">c</span>(l, <span class="fu">round</span>(pval, <span class="dv">3</span>)) <span class="co"># Append row: lag and p-value</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TSE-ch4_files/figure-html/unnamed-chunk-4-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TSE-ch4_files/figure-html/unnamed-chunk-4-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TSE-ch4_files/figure-html/unnamed-chunk-4-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TSE-ch4_files/figure-html/unnamed-chunk-4-6.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TSE-ch4_files/figure-html/unnamed-chunk-4-7.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ml_results) <span class="co"># This package does not print out the values of the test </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Lag p_value
+1   4   0.342
+2   8   0.564
+3  12   0.533
+4  16   0.688
+5  20   0.717</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># statistic (only p-values)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p>&nbsp;</p>
