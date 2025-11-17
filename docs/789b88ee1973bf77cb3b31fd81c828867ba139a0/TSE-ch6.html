@@ -293,7 +293,6 @@ window.Quarto = {
 </header>
 
 
-<span style="display:none">\( \newcommand{\ubar}[1]{\mkern3mu\underline{\mkern-3mu#1\mkern-3mu}\mkern3mu} \)</span>
 <p>In this section, we will consider how to estimate (unknown) values of the parameters of an ARMA(<span class="math inline">\(p,q\)</span>) model (or ARIMA(<span class="math inline">\(p,d,q\)</span>) model when introducing it in the latter Sections). In a nutshell, we observe the estimation to be possible with different methods depending on the model at hand:</p>
 <ul>
 <li><p>AR(<span class="math inline">\(p\)</span>): estimation can be done by (conditional) ordinary least squares (OLS).</p></li>
@@ -315,7 +314,7 @@ y_t= \boldsymbol{x}^{\prime}_t \boldsymbol{\beta} + u_t,
 </ul>
 <p>The usual (asymptotic) statistical properties of the resulting OLS estimator hold. In particular, it can be shown that:</p>
 <ul>
-<li><p>As the error term <span class="math inline">\(u_t\)</span> is uncorrelated with the lags of <span class="math inline">\(y_t\)</span>, we have <span class="math inline">\(\mathsf{E}(\boldsymbol{x}_t u_t)=\mathbf{0}\)</span>. That is, <span class="math inline">\(\mathsf{E}(u_t y_{t-j}) = 0\)</span> for <span class="math inline">\(j=1,2,\ldots,p\)</span>), and</p></li>
+<li><p>As the error term <span class="math inline">\(u_t\)</span> is uncorrelated with the lags of <span class="math inline">\(y_t\)</span>, we have <span class="math inline">\(\mathsf{E}(\boldsymbol{x}_t u_t)=\mathbf{0}\)</span>. That is, <span class="math inline">\(\mathsf{E}(u_t y_{t-j}) = 0\)</span> for <span class="math inline">\(j=1,2,\ldots,p\)</span>, and</p></li>
 <li><p>the OLS estimator <span class="math inline">\(\widehat{\boldsymbol{\beta}}\)</span> is a consistent estimator of <span class="math inline">\(\boldsymbol{\beta}\)</span>.</p></li>
 <li><p>Heteroskedasticity-autocorrelation consistent (HAC) standard errors, such as Newey-West standard errors, can, and often should, be automatically used to take the potential remaining conditional heteroskedasticity and autocorrelation in the residuals into account for detailed statistical inference (if this is the main objective in empirical analysis).</p></li>
 </ul>
@@ -414,12 +413,12 @@ Extra: Exact maximum likelihood estimation of ARMA models
 </ul>
 <p>In particular, the square roots of the diagonal elements of the matrix <span class="math inline">\(\widehat{\boldsymbol{\mathrm{V}}}(\boldsymbol{\widehat{\boldsymbol{\beta}}},\widehat{\sigma}^{2}\boldsymbol{)}^{-1}\)</span> can be used as approximate standard errors of the components of the estimator <span class="math inline">\(\boldsymbol{\widehat{\boldsymbol{\beta}}}\)</span>.</p>
 <ul>
-<li>For instance, an individual (<span class="math inline">\(i\)</span>th) estimated component of <span class="math inline">\(\boldsymbol{\widehat{\boldsymbol{\beta}}}\)</span>, that is <span class="math inline">\(\boldsymbol{\widehat{\boldsymbol{\beta}}}_i\)</span>, would be interpreted as “significantly” different from zero if its absolute value is at least 2 (specifically 1.96) times the size of its approximate standard error.</li>
+<li>For instance, an individual (<span class="math inline">\(i\)</span>th) estimated component of <span class="math inline">\(\boldsymbol{\widehat{\boldsymbol{\beta}}}\)</span>, that is <span class="math inline">\(\widehat{\beta}_i\)</span>, would be interpreted as “significantly” different from zero if its absolute value is at least 2 (specifically 1.96) times the size of its approximate standard error.</li>
 </ul>
 <p>Formally, let us denote <span class="math inline">\(\boldsymbol{\mathrm{V}}(\boldsymbol{\beta})^{-1} = [v^{ij}]\)</span>, its empirical counterpart is <span class="math inline">\(\widehat{\boldsymbol{\mathrm{V}}}(\widehat{\boldsymbol{\beta}}, \widehat{\sigma}^2)^{-1} = [\widehat {v}^{ij}]\)</span>, and <span class="math display">\[\begin{equation*}
-    \widehat{\boldsymbol{\beta}}_i \underset{as.}{\thicksim} \mathsf{N}(\boldsymbol{\beta}_i, v^{ii}).
+    \widehat{\beta}_i \underset{as.}{\thicksim} \mathsf{N}(\beta_i, v^{ii}).
 \end{equation*}\]</span> Thus null hypothesis <span class="math inline">\(\beta_i=0\)</span> gets rejected at the 5% significance level if the <span class="math inline">\(t\)</span>-ratio (cf.&nbsp;<span class="math inline">\(t\)</span>-test) <span class="math display">\[\begin{equation*}
-    \Big|\frac{\widehat{\boldsymbol{\beta}}_i}{\sqrt{\widehat {v}^{ii}}}\Big|\ge 1.96 \Leftrightarrow|\widehat{\boldsymbol{\beta}}_i| \ge 1.96 \sqrt{\widehat {v}^{ii}}
+    \Big|\frac{\widehat{\beta}_i}{\sqrt{\widehat {v}^{ii}}}\Big|\ge 1.96 \Leftrightarrow|\widehat{\beta}_i| \ge 1.96 \sqrt{\widehat {v}^{ii}}
 \end{equation*}\]</span> and the 95% confidence intervals for <span class="math inline">\(\beta_i\)</span> can be obtained by <span class="math display">\[\begin{equation*}
     \widehat{\beta}_i \pm 1.96 \cdot \mathrm{s.e.}(\widehat{\beta}_i) =1.96\sqrt{\widehat {v}^{ii}}.
 \end{equation*}\]</span> Tests constructed using likelihood ratio principles can also be used in a conventional manner.</p>
